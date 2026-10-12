@@ -1,0 +1,43 @@
+name: Sitewarden website security check
+description: Grade a website's TLS, certificate, headers, cookies, content, DNSSEC and email security, and fail below a grade.
+branding:
+  icon: shield
+  color: green
+inputs:
+  target:
+    description: Domain or URL to scan
+    required: true
+  fail-under:
+    description: Fail the step when the grade is worse than this (A+, A, A-, B, C, D, E, F)
+    default: B
+  extra-args:
+    description: Extra arguments for `sitewarden scan`
+    default: ""
+outputs:
+  grade:
+    description: The overall grade
+    value: ${{ steps.scan.outputs.grade }}
+  score:
+    description: The numeric score (0-100)
+    value: ${{ steps.scan.outputs.score }}
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+    - shell: bash
+      run: pip install --quiet "${{ github.action_path }}"
+    - id: scan
+      shell: bash
+      env:
+        TARGET: ${{ inputs.target }}
+        FAIL_UNDER: ${{ inputs.fail-under }}
+        EXTRA: ${{ inputs.extra-args }}
+      run: |
+        set +e
+        sitewarden scan "$TARGET" --json sitewarden-report.json --md sitewarden-report.md --fail-under "$FAIL_UNDER" $EXTRA
+        code=$?
+        python -c "import json;r=json.load(open('sitewarden-report.json'));print(f\"grade={r['grade']}\");print(f\"score={r['score']}\")" >> "$GITHUB_OUTPUT"
+        cat sitewarden-report.md >> "$GITHUB_STEP_SUMMARY"
+        exit $code

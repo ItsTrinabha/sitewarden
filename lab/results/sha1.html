@@ -1,0 +1,923 @@
+<!doctype html>
+<html lang="en" data-standalone="1">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>sha1.lab.test · F · Sitewarden report</title>
+<style>/* Sitewarden UI. No external fonts or assets: the app serves itself under a strict CSP. */
+:root {
+  --bg: #0a0f1a;
+  --bg-2: #0e1524;
+  --panel: #121a2b;
+  --panel-2: #172036;
+  --line: #233049;
+  --line-2: #2c3b5a;
+  --text: #e6edf7;
+  --muted: #94a3bd;
+  --faint: #64748b;
+  --accent: #5eead4;
+  --accent-2: #22c55e;
+  --link: #7dd3fc;
+  --crit: #ff4d6d;
+  --high: #ff6b4a;
+  --med: #f5b544;
+  --low: #60a5fa;
+  --info: #94a3b8;
+  --pass: #34d399;
+  --g-ap: #22c55e; --g-a: #34d399; --g-am: #6ee7b7; --g-b: #facc15; --g-c: #fb923c;
+  --g-d: #f87171; --g-e: #ef4444; --g-f: #e11d48;
+  --radius: 14px;
+  --mono: ui-monospace, "SF Mono", "Cascadia Code", "JetBrains Mono", Menlo, Consolas, monospace;
+  --sans: ui-sans-serif, -apple-system, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --shadow: 0 1px 0 rgba(255,255,255,.03) inset, 0 10px 30px -12px rgba(0,0,0,.6);
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #f6f8fb; --bg-2: #eef2f7; --panel: #ffffff; --panel-2: #f7f9fc; --line: #e2e8f0; --line-2: #cbd5e1;
+    --text: #0f172a; --muted: #475569; --faint: #64748b; --accent: #0d9488; --accent-2: #16a34a; --link: #0369a1;
+    --crit: #be123c; --high: #c2410c; --med: #b45309; --low: #1d4ed8; --info: #64748b; --pass: #047857;
+    --shadow: 0 1px 2px rgba(15,23,42,.06), 0 8px 24px -16px rgba(15,23,42,.25);
+  }
+}
+:root[data-theme="light"] {
+  --bg: #f6f8fb; --bg-2: #eef2f7; --panel: #ffffff; --panel-2: #f7f9fc; --line: #e2e8f0; --line-2: #cbd5e1;
+  --text: #0f172a; --muted: #475569; --faint: #64748b; --accent: #0d9488; --accent-2: #16a34a; --link: #0369a1;
+  --crit: #be123c; --high: #c2410c; --med: #b45309; --low: #1d4ed8; --info: #64748b; --pass: #047857;
+  --shadow: 0 1px 2px rgba(15,23,42,.06), 0 8px 24px -16px rgba(15,23,42,.25);
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--text); font: 15px/1.55 var(--sans);
+  background-image: radial-gradient(1200px 500px at 70% -10%, rgba(94,234,212,.08), transparent 60%),
+                    radial-gradient(900px 400px at -10% 10%, rgba(34,197,94,.06), transparent 60%);
+  background-attachment: fixed; min-height: 100vh;
+}
+a { color: var(--link); text-decoration: none; }
+a:hover { text-decoration: underline; }
+code, pre, .mono { font-family: var(--mono); font-size: 12.5px; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+.noscript { padding: 24px; }
+
+/* ---------- layout ---------- */
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+header.top { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(10px);
+  background: color-mix(in srgb, var(--bg) 82%, transparent); border-bottom: 1px solid var(--line); }
+header.top .wrap { display: flex; align-items: center; gap: 16px; height: 60px; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: .2px; color: var(--text); font-size: 17px; }
+.brand:hover { text-decoration: none; }
+.brand svg { width: 26px; height: 26px; }
+.top nav { margin-left: auto; display: flex; gap: 6px; align-items: center; }
+.top nav a, .icon-btn { color: var(--muted); padding: 6px 10px; border-radius: 8px; font-size: 14px; background: none; border: 0; cursor: pointer; }
+.top nav a:hover, .icon-btn:hover { background: var(--panel-2); color: var(--text); text-decoration: none; }
+.top .mini-form { display: none; }
+.top .mini-form input { width: 220px; }
+@media (min-width: 900px) { body.on-scan .top .mini-form { display: flex; } }
+footer { color: var(--faint); font-size: 13px; padding: 40px 0 50px; border-top: 1px solid var(--line); margin-top: 60px; }
+footer .wrap { display: flex; gap: 20px; flex-wrap: wrap; justify-content: space-between; }
+
+/* ---------- hero ---------- */
+.hero { padding: 72px 0 36px; text-align: center; }
+.eyebrow { display: inline-flex; gap: 8px; align-items: center; color: var(--accent); font-weight: 600; font-size: 13px;
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent); padding: 4px 12px; border-radius: 99px;
+  background: color-mix(in srgb, var(--accent) 8%, transparent); }
+.hero h1 { font-size: clamp(32px, 5.5vw, 56px); line-height: 1.08; margin: 18px auto 14px; max-width: 880px; letter-spacing: -1px; }
+.hero h1 .grad { background: linear-gradient(90deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hero p.lead { color: var(--muted); font-size: 18px; max-width: 700px; margin: 0 auto 30px; }
+form.scan-form { display: flex; gap: 10px; max-width: 640px; margin: 0 auto; }
+.scan-form input, .mini-form input {
+  flex: 1; min-width: 0; background: var(--panel); color: var(--text); border: 1px solid var(--line-2);
+  border-radius: 12px; padding: 14px 16px; font: 16px var(--sans); box-shadow: var(--shadow);
+}
+.mini-form input { padding: 7px 12px; font-size: 14px; border-radius: 9px; }
+.scan-form input::placeholder { color: var(--faint); }
+.btn { background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 92%, white), var(--accent));
+  color: #04201c; border: 0; border-radius: 12px; padding: 0 22px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+.btn:hover { filter: brightness(1.06); }
+.btn[disabled] { opacity: .6; cursor: progress; }
+.btn.small { padding: 7px 12px; border-radius: 9px; font-size: 14px; }
+.btn.ghost { background: var(--panel-2); color: var(--text); border: 1px solid var(--line-2); font-weight: 600; }
+.form-hint { color: var(--faint); font-size: 13px; margin-top: 12px; }
+.form-hint label { display: inline-flex; gap: 6px; align-items: center; cursor: pointer; }
+.examples { margin-top: 16px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.chip { border: 1px solid var(--line-2); background: var(--panel); color: var(--muted); padding: 4px 11px; border-radius: 99px; font-size: 13px; cursor: pointer; }
+.chip:hover { color: var(--text); border-color: var(--accent); }
+.error-box { max-width: 640px; margin: 16px auto 0; padding: 12px 14px; border-radius: 10px; color: var(--crit);
+  border: 1px solid color-mix(in srgb, var(--crit) 40%, transparent); background: color-mix(in srgb, var(--crit) 8%, transparent); }
+
+.features { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin: 56px 0 20px; }
+.feature { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); }
+.feature h3 { margin: 8px 0 6px; font-size: 15px; }
+.feature p { margin: 0; color: var(--muted); font-size: 14px; }
+.feature .ico { width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; font-size: 17px;
+  background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent); }
+.section-title { font-size: 13px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--faint); margin: 38px 0 12px; font-weight: 700; }
+.recent { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; }
+.recent a { display: flex; align-items: center; gap: 12px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; color: var(--text); }
+.recent a:hover { border-color: var(--line-2); text-decoration: none; background: var(--panel-2); }
+.recent .host { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; font-size: 14px; }
+.recent .when { color: var(--faint); font-size: 12px; }
+
+/* ---------- grade pills ---------- */
+.pill { display: inline-grid; place-items: center; min-width: 34px; height: 30px; padding: 0 7px; border-radius: 8px; font-weight: 800; color: #08111f; font-size: 14px; }
+.g-Ap { background: var(--g-ap); } .g-A { background: var(--g-a); } .g-Am { background: var(--g-am); }
+.g-B { background: var(--g-b); } .g-C { background: var(--g-c); } .g-D { background: var(--g-d); }
+.g-E { background: var(--g-e); color: #fff; } .g-F { background: var(--g-f); color: #fff; } .g-x { background: var(--line-2); color: var(--text); }
+
+/* ---------- progress ---------- */
+.progress-card { max-width: 720px; margin: 50px auto; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; box-shadow: var(--shadow); }
+.progress-card h2 { margin: 0 0 4px; font-size: 22px; }
+.progress-card .sub { color: var(--muted); margin-bottom: 18px; }
+.stages { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; }
+.stages li { display: flex; align-items: center; gap: 12px; padding: 9px 10px; border-radius: 10px; color: var(--faint); }
+.stages li.active { color: var(--text); background: var(--panel-2); }
+.stages li.done { color: var(--muted); }
+.stages .dot { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--line-2); flex: none; display: grid; place-items: center; font-size: 11px; }
+.stages li.done .dot { background: var(--pass); border-color: var(--pass); color: #04201c; }
+.stages li.active .dot { border-color: var(--accent); border-top-color: transparent; animation: spin .8s linear infinite; }
+.stages .msg { font-size: 13px; color: var(--faint); margin-left: auto; text-align: right; }
+.bar { height: 4px; background: var(--line); border-radius: 4px; overflow: hidden; margin: 18px 0 0; }
+.bar > span { display: block; height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transition: width .4s ease; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ---------- report: summary ---------- */
+.report { padding: 28px 0; }
+.summary { display: grid; grid-template-columns: 250px 1fr; gap: 18px; }
+@media (max-width: 860px) { .summary { grid-template-columns: 1fr; } }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+.card.pad { padding: 20px; }
+.grade-card { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px 16px; text-align: center; }
+.ring { position: relative; width: 170px; height: 170px; }
+.ring svg { transform: rotate(-90deg); }
+.ring .letter { position: absolute; inset: 0; display: grid; place-items: center; font-size: 64px; font-weight: 800; letter-spacing: -2px; }
+.ring .score { position: absolute; left: 0; right: 0; bottom: 26px; font-size: 13px; color: var(--muted); }
+.grade-card .capped { margin-top: 10px; font-size: 12.5px; color: var(--med); max-width: 220px; }
+.target-card h1 { margin: 0; font-size: 26px; word-break: break-all; letter-spacing: -.3px; }
+.target-card .meta { color: var(--muted); font-size: 13.5px; display: flex; gap: 6px 18px; flex-wrap: wrap; margin: 6px 0 16px; }
+.target-card .meta b { color: var(--text); font-weight: 600; }
+.counts { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.count { display: flex; align-items: center; gap: 7px; padding: 5px 10px; border-radius: 9px; background: var(--panel-2); border: 1px solid var(--line); font-size: 13px; cursor: pointer; }
+.count b { font-size: 15px; }
+.count .sw { width: 9px; height: 9px; border-radius: 3px; }
+.cats { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 8px; }
+.cat { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: var(--panel-2); border: 1px solid var(--line); border-radius: 11px; cursor: pointer; text-align: left; }
+.cat:hover { border-color: var(--line-2); }
+.cat .lbl { font-size: 13px; line-height: 1.25; }
+.cat .sc { font-size: 12px; color: var(--faint); }
+.cat .pill { min-width: 30px; height: 26px; font-size: 13px; }
+.actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+
+.top-issues { margin-top: 18px; }
+.top-issues h2, .panel h2 { font-size: 17px; margin: 0 0 12px; }
+
+/* ---------- tabs ---------- */
+.tabs { display: flex; gap: 4px; overflow-x: auto; border-bottom: 1px solid var(--line); margin: 26px 0 18px; scrollbar-width: thin; }
+.tab { background: none; border: 0; padding: 10px 14px; cursor: pointer; color: var(--muted); border-bottom: 2px solid transparent; white-space: nowrap; font-weight: 600; font-size: 14px; }
+.tab:hover { color: var(--text); }
+.tab.on { color: var(--text); border-bottom-color: var(--accent); }
+.tab .n { font-size: 11px; color: var(--faint); margin-left: 5px; }
+
+/* ---------- findings ---------- */
+.filters { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; align-items: center; }
+.filters .chip.on { color: var(--text); border-color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, var(--panel)); }
+.filters .spacer { flex: 1; }
+.findings { display: grid; gap: 8px; }
+.finding { background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--sev); border-radius: 12px; }
+.finding > button { display: flex; width: 100%; gap: 12px; align-items: center; padding: 12px 14px; background: none; border: 0; cursor: pointer; text-align: left; }
+.finding .title { font-weight: 600; flex: 1; }
+.finding .catname { color: var(--faint); font-size: 12px; white-space: nowrap; }
+.finding .chev { color: var(--faint); transition: transform .15s; }
+.finding.open .chev { transform: rotate(90deg); }
+.finding .body { display: none; padding: 0 16px 16px 16px; border-top: 1px solid var(--line); }
+.finding.open .body { display: block; }
+.finding .body p { margin: 12px 0 0; color: var(--muted); }
+.sev { --sev: var(--info); }
+.sev-critical { --sev: var(--crit); } .sev-high { --sev: var(--high); } .sev-medium { --sev: var(--med); }
+.sev-low { --sev: var(--low); } .sev-info { --sev: var(--info); } .sev-pass { --sev: var(--pass); }
+.badge { font-size: 11px; font-weight: 800; letter-spacing: .5px; text-transform: uppercase; padding: 3px 7px; border-radius: 6px;
+  color: var(--sev); background: color-mix(in srgb, var(--sev) 14%, transparent); border: 1px solid color-mix(in srgb, var(--sev) 35%, transparent); white-space: nowrap; }
+.kv { display: grid; grid-template-columns: 110px 1fr; gap: 6px 12px; margin-top: 12px; font-size: 14px; }
+.kv > div:nth-child(odd) { color: var(--faint); font-size: 13px; }
+.evidence { font-family: var(--mono); font-size: 12.5px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; word-break: break-word; white-space: pre-wrap; color: var(--text); }
+.fix { color: var(--pass); }
+.tags { display: flex; gap: 5px; flex-wrap: wrap; }
+.tag { font-size: 11.5px; font-family: var(--mono); padding: 2px 6px; border-radius: 5px; background: var(--panel-2); border: 1px solid var(--line); color: var(--muted); }
+.snips { margin-top: 12px; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.snips .bar2 { display: flex; gap: 2px; background: var(--panel-2); border-bottom: 1px solid var(--line); padding: 4px; align-items: center; }
+.snips .bar2 button { background: none; border: 0; padding: 4px 9px; border-radius: 6px; cursor: pointer; color: var(--muted); font-size: 12.5px; }
+.snips .bar2 button.on { background: var(--panel); color: var(--text); }
+.snips .bar2 .copy { margin-left: auto; }
+.snips pre { margin: 0; padding: 12px; overflow-x: auto; background: var(--bg-2); font-size: 12.5px; }
+.empty { color: var(--faint); padding: 18px; text-align: center; border: 1px dashed var(--line-2); border-radius: 12px; }
+
+/* ---------- detail panels ---------- */
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 14px; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); min-width: 0; }
+.panel + .panel { margin-top: 0; }
+.stack { display: grid; gap: 14px; }
+table.t { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+table.t th { text-align: left; color: var(--faint); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .6px; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+table.t td { padding: 7px 8px; border-bottom: 1px solid var(--line); vertical-align: top; word-break: break-word; }
+table.t tr:last-child td { border-bottom: 0; }
+.scroll-x { overflow-x: auto; }
+.yes { color: var(--pass); font-weight: 600; } .no { color: var(--faint); } .bad { color: var(--crit); font-weight: 600; } .warn { color: var(--med); font-weight: 600; }
+.strength { font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 5px; text-transform: uppercase; letter-spacing: .4px; }
+.strength.strong { color: var(--pass); background: color-mix(in srgb, var(--pass) 14%, transparent); }
+.strength.acceptable { color: var(--low); background: color-mix(in srgb, var(--low) 14%, transparent); }
+.strength.weak { color: var(--med); background: color-mix(in srgb, var(--med) 14%, transparent); }
+.strength.insecure { color: var(--crit); background: color-mix(in srgb, var(--crit) 14%, transparent); }
+.proto-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; }
+.proto { border: 1px solid var(--line); border-radius: 10px; padding: 10px; background: var(--panel-2); }
+.proto .n { font-weight: 700; } .proto .s { font-size: 13px; }
+.chain { display: grid; gap: 8px; }
+.cert { border: 1px solid var(--line); border-radius: 11px; padding: 12px; background: var(--panel-2); position: relative; }
+.cert .who { font-weight: 700; word-break: break-all; }
+.cert .sub2 { color: var(--muted); font-size: 13px; }
+.chain .arrow { text-align: center; color: var(--faint); font-size: 13px; line-height: 1; }
+.flow { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-family: var(--mono); font-size: 12.5px; }
+.flow .hop { background: var(--panel-2); border: 1px solid var(--line); border-radius: 8px; padding: 4px 8px; word-break: break-all; }
+.flow .st { color: var(--faint); }
+.tree { font-family: var(--mono); font-size: 12.5px; }
+.tree ul { list-style: none; margin: 0; padding-left: 18px; border-left: 1px dashed var(--line-2); }
+.tree > ul { padding-left: 0; border: 0; }
+.tree li { margin: 4px 0; }
+.tree .rec { color: var(--muted); word-break: break-all; }
+.comp { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.comp:last-child { border-bottom: 0; }
+.comp .mark { font-size: 18px; width: 22px; flex: none; }
+.comp ul { margin: 4px 0 0; padding-left: 18px; color: var(--muted); font-size: 13.5px; }
+.note { color: var(--faint); font-size: 13px; }
+.dl { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; font-size: 13.5px; }
+.dl dt { color: var(--faint); } .dl dd { margin: 0; word-break: break-word; }
+.copyline { display: flex; gap: 8px; align-items: center; margin-top: 8px; }
+.copyline input { flex: 1; min-width: 0; background: var(--bg-2); border: 1px solid var(--line); color: var(--text); border-radius: 8px; padding: 7px 10px; font: 12.5px var(--mono); }
+.toast { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%); background: var(--panel-2); border: 1px solid var(--line-2); padding: 9px 16px; border-radius: 10px; box-shadow: var(--shadow); font-size: 14px; z-index: 50; }
+.limits { margin-top: 26px; color: var(--faint); font-size: 13px; }
+.limits li { margin: 3px 0; }
+
+@media (max-width: 640px) {
+  .wrap { padding: 0 14px; }
+  form.scan-form { flex-direction: column; }
+  .btn { padding: 12px 18px; }
+  .hero { padding-top: 44px; }
+  .kv { grid-template-columns: 1fr; }
+  .stages .msg { display: none; }
+}
+@media print {
+  header.top, footer, .tabs, .filters, .actions, form { display: none !important; }
+  body { background: #fff; color: #000; }
+  .finding .body { display: block !important; }
+}
+
+.stack { display: flex; flex-direction: column; gap: 14px; }
+.strength { white-space: nowrap; }
+.icon-btn svg { display: block; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script type="application/json" id="report-data">{"tool": "sitewarden", "version": "1.0.0", "target": "sha1.lab.test", "port": 10448, "scanned_at": "2026-10-12T13:22:40+00:00", "notes": [], "errors": {}, "ip": "127.0.0.1", "registrable_domain": "lab.test", "http": {"https_chain": [{"url": "https://sha1.lab.test:10448/", "status": 200, "error": null, "location": null, "elapsed_ms": 11, "tls": null}], "http_chain": [], "hsts_preloaded": false, "hsts_preload_entry": null, "http_redirects": [], "https_redirects": [{"url": "https://sha1.lab.test:10448/", "status": 200, "error": null}], "http_listening": false, "hsts": null, "status": 200, "url": "https://sha1.lab.test:10448/", "cors": {"allow_origin": null, "allow_credentials": false, "reflects_origin": false}, "technology": {"server": "nginx/1.10.3", "frameworks": ["WordPress 4.9.8"]}, "response_headers": [["Server", "nginx/1.10.3"], ["Date", "Mon, 12 Oct 2026 13:22:40 GMT"], ["Content-Type", "text/html"], ["Content-Length", "647"], ["Last-Modified", "Mon, 12 Oct 2026 13:22:36 GMT"], ["Connection", "close"], ["ETag", "\"6accdf1c-287\""], ["Accept-Ranges", "bytes"]], "final_url": "https://sha1.lab.test:10448/", "csp": {"level": "none", "policies": []}, "security_txt": {"present": false}}, "cookies": [], "content": {"resources": 6, "inline_scripts": 0, "inline_event_handlers": 0, "forms": 1, "third_party_script_hosts": ["cdn.polyfill.io", "cdnjs.cloudflare.com", "code.jquery.com"], "scripts": ["https://code.jquery.com/jquery-1.12.4.min.js", "https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js", "https://sha1.lab.test:10448/js/legacy.js", "https://cdn.polyfill.io/v3/polyfill.min.js"], "libraries": [{"library": "jquery", "version": "1.12.4", "source": "https://code.jquery.com/jquery-1.12.4.min.js", "method": "cdn-url", "vulnerabilities": [{"severity": "medium", "summary": "parseHTML() executes scripts in event handlers", "cve": [], "ghsa": null, "below": "2.2.0", "info": ["http://research.insecurelabs.org/jquery/test/", "https://bugs.jquery.com/ticket/11974"]}, {"severity": "low", "summary": "jQuery 1.x and 2.x are End-of-Life and no longer receiving security updates", "cve": [], "ghsa": null, "below": "2.999.999", "info": ["https://github.com/jquery/jquery.com/issues/162"]}, {"severity": "medium", "summary": "3rd party CORS request may execute", "cve": ["CVE-2015-9251"], "ghsa": "GHSA-rmxg-73gg-4p98", "below": "3.0.0-beta1", "info": ["http://blog.jquery.com/2016/01/08/jquery-2-2-and-1-12-released/", "http://research.insecurelabs.org/jquery/test/", "https://github.com/advisories/GHSA-rmxg-73gg-4p98"]}, {"severity": "medium", "summary": "jQuery before 3.4.0, as used in Drupal, Backdrop CMS, and other products, mishandles jQuery.extend(true, {}, ...) because of Object.prototype pollution", "cve": ["CVE-2019-11358"], "ghsa": "GHSA-6c3j-c64m-qhgq", "below": "3.4.0", "info": ["https://blog.jquery.com/2019/04/10/jquery-3-4-0-released/", "https://github.com/jquery/jquery/commit/753d591aea698e57d6db58c9f722cd0808619b1b", "https://nvd.nist.gov/vuln/detail/CVE-2019-11358"]}, {"severity": "medium", "summary": "passing HTML containing <option> elements from untrusted sources - even after sanitizing it - to one of jQuery's DOM manipulation methods (i.e. .html(), .append(), and others) may execute untrusted code.", "cve": ["CVE-2020-11023"], "ghsa": "GHSA-jpcq-cgw6-v4j6", "below": "3.5.0", "info": ["https://blog.jquery.com/2020/04/10/jquery-3-5-0-released/"]}, {"severity": "medium", "summary": "Regex in its jQuery.htmlPrefilter sometimes may introduce XSS", "cve": ["CVE-2020-11022"], "ghsa": "GHSA-gxr4-xjj5-5px2", "below": "3.5.0", "info": ["https://blog.jquery.com/2020/04/10/jquery-3-5-0-released/"]}], "worst": "medium"}, {"library": "angularjs", "version": "1.5.8", "source": "https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js", "method": "cdn-url", "vulnerabilities": [{"severity": "medium", "summary": "Cross-Site Scripting via JSONP", "cve": [], "ghsa": "GHSA-28hp-fgcr-2r4h", "below": "1.6.0", "info": ["https://github.com/advisories/GHSA-28hp-fgcr-2r4h"]}, {"severity": "medium", "summary": "DOS in $sanitize", "cve": [], "ghsa": null, "below": "1.6.3", "info": ["https://github.com/angular/angular.js/blob/master/CHANGELOG.md", "https://github.com/angular/angular.js/pull/15699"]}, {"severity": "medium", "summary": "Universal CSP bypass via add-on in Firefox", "cve": [], "ghsa": null, "below": "1.6.3", "info": ["http://pastebin.com/raw/kGrdaypP", "https://github.com/mozilla/addons-linter/issues/1000#issuecomment-282083435"]}, {"severity": "low", "summary": "XSS in $sanitize in Safari/Firefox", "cve": [], "ghsa": null, "below": "1.6.5", "info": ["https://github.com/angular/angular.js/commit/8f31f1ff43b673a24f84422d5c13d6312b2c4d94"]}, {"severity": "low", "summary": "XSS through SVG if enableSvg is set", "cve": [], "ghsa": null, "below": "1.6.9", "info": ["https://github.com/angular/angular.js/blob/master/CHANGELOG.md#169-fiery-basilisk-2018-02-02", "https://vulnerabledoma.in/ngSanitize1.6.8_bypass.html"]}, {"severity": "high", "summary": "Prototype pollution", "cve": ["CVE-2019-10768"], "ghsa": "GHSA-89mq-4x47-5v83", "below": "1.7.9", "info": ["https://github.com/angular/angular.js/blob/master/CHANGELOG.md#179-pollution-eradication-2019-11-19", "https://github.com/angular/angular.js/commit/726f49dcf6c23106ddaf5cfd5e2e592841db743a"]}, {"severity": "medium", "summary": "XSS via JQLite DOM manipulation functions in AngularJS", "cve": [], "ghsa": "GHSA-5cp4-xmrw-59wf", "below": "1.8.0", "info": ["https://github.com/advisories/GHSA-5cp4-xmrw-59wf"]}, {"severity": "medium", "summary": "XSS may be triggered in AngularJS applications that sanitize user-controlled HTML snippets before passing them to JQLite methods like JQLite.prepend, JQLite.after, JQLite.append, JQLite.replaceWith, JQLite.append, new JQLite and angular.element.", "cve": ["CVE-2020-7676"], "ghsa": "GHSA-mhp6-pxh8-r675", "below": "1.8.0", "info": ["https://github.com/advisories/GHSA-5cp4-xmrw-59wf", "https://nvd.nist.gov/vuln/detail/CVE-2020-7676"]}, {"severity": "medium", "summary": "angular vulnerable to regular expression denial of service via the $resource service", "cve": ["CVE-2023-26117"], "ghsa": "GHSA-2qqx-w9hr-q5gx", "below": "1.8.4", "info": ["https://github.com/advisories/GHSA-2qqx-w9hr-q5gx"]}, {"severity": "medium", "summary": "angular vulnerable to regular expression denial of service via the angular.copy() utility", "cve": ["CVE-2023-26116"], "ghsa": "GHSA-2vrf-hf26-jrp5", "below": "1.8.4", "info": ["https://github.com/advisories/GHSA-2vrf-hf26-jrp5"]}, {"severity": "medium", "summary": "Angular (deprecated package) Cross-site Scripting", "cve": ["CVE-2022-25869"], "ghsa": "GHSA-prc3-vjfx-vhm9", "below": "1.8.4", "info": ["https://github.com/advisories/GHSA-prc3-vjfx-vhm9"]}, {"severity": "medium", "summary": "angular vulnerable to regular expression denial of service via the <input type=\"url\"> element", "cve": ["CVE-2023-26118"], "ghsa": "GHSA-qwqh-hm9m-p5hr", "below": "1.8.4", "info": ["https://github.com/advisories/GHSA-qwqh-hm9m-p5hr"]}, {"severity": "low", "summary": "AngularJS improperly sanitizes SVG elements", "cve": ["CVE-2025-0716"], "ghsa": "GHSA-j58c-ww9w-pwp5", "below": "1.8.4", "info": ["https://github.com/advisories/GHSA-j58c-ww9w-pwp5", "https://nvd.nist.gov/vuln/detail/CVE-2025-0716", "https://codepen.io/herodevs/pen/qEWQmpd/a86a0d29310e12c7a3756768e6c7b915"]}, {"severity": "low", "summary": "AngularJS allows attackers to bypass common image source restrictions", "cve": ["CVE-2024-8373"], "ghsa": "GHSA-mqm9-c95h-x2p6", "below": "1.8.4", "info": ["https://github.com/advisories/GHSA-mqm9-c95h-x2p6", "https://nvd.nist.gov/vuln/detail/CVE-2024-8373", "https://codepen.io/herodevs/full/bGPQgMp/8da9ce87e99403ee13a295c305ebfa0b"]}, {"severity": "high", "summary": "Angular's deprecated package has a Cross-Site Scripting issue", "cve": ["CVE-2026-11998"], "ghsa": "GHSA-7x27-g8rg-x87w", "below": "1.8.4", "info": ["https://access.redhat.com/security/cve/CVE-2026-11998", "https://bugzilla.redhat.com/show_bug.cgi?id=2492579", "https://codepen.io/herodevs/pen/JobQdmz/5b3896f56fab66f20cd25e698cf3faa8"]}, {"severity": "high", "summary": "angular vulnerable to super-linear runtime due to backtracking", "cve": ["CVE-2024-21490"], "ghsa": "GHSA-4w4v-5hc9-xrr2", "below": "1.8.4", "info": ["https://github.com/advisories/GHSA-4w4v-5hc9-xrr2", "https://nvd.nist.gov/vuln/detail/CVE-2024-21490", "https://github.com/angular/angular.js"]}, {"severity": "low", "summary": "AngularJS allows attackers to bypass common image source restrictions", "cve": ["CVE-2024-8372"], "ghsa": "GHSA-m9gf-397r-hwpg", "below": "1.8.4", "info": ["https://github.com/advisories/GHSA-m9gf-397r-hwpg", "https://nvd.nist.gov/vuln/detail/CVE-2024-8372", "https://codepen.io/herodevs/full/xxoQRNL/0072e627abe03e9cda373bc75b4c1017"]}, {"severity": "medium", "summary": "AngularJS Incomplete Filtering of Special Elements vulnerability", "cve": ["CVE-2025-2336"], "ghsa": "GHSA-4p4w-6hg8-63wx", "below": "1.8.4", "info": ["https://github.com/advisories/GHSA-4p4w-6hg8-63wx", "https://nvd.nist.gov/vuln/detail/CVE-2025-2336", "https://codepen.io/herodevs/pen/bNGYaXx/412a3a4218387479898912f60c269c6c"]}, {"severity": "medium", "summary": "AngularJS Regular expression Denial of Service (ReDoS)", "cve": ["CVE-2025-4690"], "ghsa": "GHSA-hfff-63hg-f47j", "below": "1.9.9", "info": ["https://github.com/advisories/GHSA-hfff-63hg-f47j", "https://nvd.nist.gov/vuln/detail/CVE-2025-4690", "https://codepen.io/herodevs/pen/RNNEPzP/751b91eab7730dff277523f3d50e4b77"]}, {"severity": "low", "summary": "End-of-Life: Long term support for AngularJS has been discontinued as of December 31, 2021", "cve": [], "ghsa": null, "below": "1.999", "info": ["https://docs.angularjs.org/misc/version-support-status"]}], "worst": "high"}, {"library": "jquery", "version": "1.8.3", "source": "https://sha1.lab.test:10448/js/legacy.js", "method": "filecontent", "vulnerabilities": [{"severity": "medium", "summary": "Selector interpreted as HTML", "cve": ["CVE-2012-6708"], "ghsa": "GHSA-2pqj-h3vj-pqgw", "below": "1.9.0b1", "info": ["http://bugs.jquery.com/ticket/11290", "http://research.insecurelabs.org/jquery/test/", "https://nvd.nist.gov/vuln/detail/CVE-2012-6708"]}, {"severity": "medium", "summary": "Versions of jQuery prior to 1.9.0 are vulnerable to Cross-Site Scripting (XSS). The load method fails to recognize and strip script tags containing whitespace in the closing tag (e.g. <\/script >), allowing enclosed script logic to execute and enabling attackers to run arbitrary JavaScript in a victim's browser.", "cve": ["CVE-2020-7656"], "ghsa": "GHSA-q4m3-2j7h-f7xw", "below": "1.9.0", "info": ["https://github.com/advisories/GHSA-q4m3-2j7h-f7xw", "https://nvd.nist.gov/vuln/detail/CVE-2020-7656", "https://research.insecurelabs.org/jquery/test/"]}, {"severity": "medium", "summary": "3rd party CORS request may execute", "cve": ["CVE-2015-9251"], "ghsa": "GHSA-rmxg-73gg-4p98", "below": "1.12.0", "info": ["http://blog.jquery.com/2016/01/08/jquery-2-2-and-1-12-released/", "http://research.insecurelabs.org/jquery/test/", "https://github.com/advisories/GHSA-rmxg-73gg-4p98"]}, {"severity": "medium", "summary": "parseHTML() executes scripts in event handlers", "cve": [], "ghsa": null, "below": "2.2.0", "info": ["http://research.insecurelabs.org/jquery/test/", "https://bugs.jquery.com/ticket/11974"]}, {"severity": "low", "summary": "jQuery 1.x and 2.x are End-of-Life and no longer receiving security updates", "cve": [], "ghsa": null, "below": "2.999.999", "info": ["https://github.com/jquery/jquery.com/issues/162"]}, {"severity": "medium", "summary": "jQuery before 3.4.0, as used in Drupal, Backdrop CMS, and other products, mishandles jQuery.extend(true, {}, ...) because of Object.prototype pollution", "cve": ["CVE-2019-11358"], "ghsa": "GHSA-6c3j-c64m-qhgq", "below": "3.4.0", "info": ["https://blog.jquery.com/2019/04/10/jquery-3-4-0-released/", "https://github.com/jquery/jquery/commit/753d591aea698e57d6db58c9f722cd0808619b1b", "https://nvd.nist.gov/vuln/detail/CVE-2019-11358"]}, {"severity": "medium", "summary": "passing HTML containing <option> elements from untrusted sources - even after sanitizing it - to one of jQuery's DOM manipulation methods (i.e. .html(), .append(), and others) may execute untrusted code.", "cve": ["CVE-2020-11023"], "ghsa": "GHSA-jpcq-cgw6-v4j6", "below": "3.5.0", "info": ["https://blog.jquery.com/2020/04/10/jquery-3-5-0-released/"]}], "worst": "medium"}]}, "dns": {"host": "sha1.lab.test", "domain": "lab.test", "a": ["127.0.0.1"], "aaaa": [], "ns": ["ns1.lab.test.", "ns2.lab.test."], "ns_networks": ["192.0.2.0/24", "198.51.100.0/24"], "dnssec": {"domain": "lab.test", "status": "secure", "detail": "Chain of trust validated from the root: . -> test. -> lab.test.", "weak_algorithms": [], "resolver_ad": false, "chain": [{"zone": ".", "signed": true, "secure": true, "ds": [], "keys": ["KSK 5262 ECDSAP256SHA256", "ZSK 57325 ECDSAP256SHA256"], "algorithms": [], "error": null}, {"zone": "test.", "signed": true, "secure": true, "ds": ["19546 ECDSAP256SHA256 SHA-256"], "keys": ["ZSK 28529 ECDSAP256SHA256", "KSK 19546 ECDSAP256SHA256"], "algorithms": ["ECDSAP256SHA256"], "error": null}, {"zone": "lab.test.", "signed": true, "secure": true, "ds": ["27127 ECDSAP256SHA256 SHA-256"], "keys": ["KSK 27127 ECDSAP256SHA256", "ZSK 58462 ECDSAP256SHA256"], "algorithms": ["ECDSAP256SHA256"], "error": null}]}, "caa": {"name": "lab.test", "records": ["0 iodef \"mailto:security@lab.test\"", "0 issue \"letsencrypt.org\""]}}, "tls": {"host": "sha1.lab.test", "ip": "127.0.0.1", "port": 10448, "reachable": true, "error": null, "protocols": {"TLS 1.3": false, "TLS 1.2": true, "TLS 1.1": true, "TLS 1.0": true, "SSL 3.0": false, "SSL 2.0": false}, "ciphers": {"TLS 1.2": [{"code": "0x002F", "name": "TLS_RSA_WITH_AES_128_CBC_SHA", "openssl": "AES128-SHA", "kx": "RSA", "auth": "RSA", "cipher": "AES_128_CBC", "bits": 128, "mac": "SHA", "forward_secret": false, "aead": false, "strength": "weak"}, {"code": "0x000A", "name": "TLS_RSA_WITH_3DES_EDE_CBC_SHA", "openssl": "", "kx": "RSA", "auth": "RSA", "cipher": "3DES_EDE_CBC", "bits": 112, "mac": "SHA", "forward_secret": false, "aead": false, "strength": "weak"}], "TLS 1.1": [{"code": "0x002F", "name": "TLS_RSA_WITH_AES_128_CBC_SHA", "openssl": "AES128-SHA", "kx": "RSA", "auth": "RSA", "cipher": "AES_128_CBC", "bits": 128, "mac": "SHA", "forward_secret": false, "aead": false, "strength": "weak"}, {"code": "0x000A", "name": "TLS_RSA_WITH_3DES_EDE_CBC_SHA", "openssl": "", "kx": "RSA", "auth": "RSA", "cipher": "3DES_EDE_CBC", "bits": 112, "mac": "SHA", "forward_secret": false, "aead": false, "strength": "weak"}], "TLS 1.0": [{"code": "0x002F", "name": "TLS_RSA_WITH_AES_128_CBC_SHA", "openssl": "AES128-SHA", "kx": "RSA", "auth": "RSA", "cipher": "AES_128_CBC", "bits": 128, "mac": "SHA", "forward_secret": false, "aead": false, "strength": "weak"}, {"code": "0x000A", "name": "TLS_RSA_WITH_3DES_EDE_CBC_SHA", "openssl": "", "kx": "RSA", "auth": "RSA", "cipher": "3DES_EDE_CBC", "bits": 112, "mac": "SHA", "forward_secret": false, "aead": false, "strength": "weak"}]}, "server_preference": {"TLS 1.2": false, "TLS 1.1": false, "TLS 1.0": false}, "groups": [], "groups_tls12": [], "post_quantum": [], "features": {"ocsp_stapling": false, "secure_renegotiation": true, "extended_master_secret": false, "session_tickets": true, "tls_compression": false, "heartbeat_extension": true, "fallback_scsv": true, "sct_tls_extension": false, "alpn": [], "tls13_downgrade_protection": null, "sni_required": false}, "sslv2_ciphers": [], "handshakes": 29, "notes": []}, "certificates": [{"auth": "RSA", "presented": [{"subject": "sha1.lab.test", "subject_dn": "CN=sha1.lab.test", "issuer": "sha1.lab.test", "issuer_dn": "CN=sha1.lab.test", "issuer_org": null, "serial": "d2630dfd9c5812660ed290d6a2f9d8aca2c3fab", "not_before": "2026-10-12T13:22:36+00:00", "not_after": "2026-11-11T13:22:36+00:00", "days_left": 29, "lifetime_days": 30, "key": "RSA 1024", "key_type": "RSA", "key_bits": 1024, "signature": "SHA1 with sha1WithRSAEncryption", "sha256": "aaaff9f6bd166a73dba008ef4d1968fe3986c51f40f8975b40fa037a16e35b31", "spki_sha256": "46c537852f47d18015c81a215b890321545622b88437703d19ccb7f782a5da7c", "self_signed": true, "is_ca": true}], "leaf": {"subject": "sha1.lab.test", "subject_dn": "CN=sha1.lab.test", "issuer": "sha1.lab.test", "issuer_dn": "CN=sha1.lab.test", "issuer_org": null, "serial": "d2630dfd9c5812660ed290d6a2f9d8aca2c3fab", "not_before": "2026-10-12T13:22:36+00:00", "not_after": "2026-11-11T13:22:36+00:00", "days_left": 29, "lifetime_days": 30, "key": "RSA 1024", "key_type": "RSA", "key_bits": 1024, "signature": "SHA1 with sha1WithRSAEncryption", "sha256": "aaaff9f6bd166a73dba008ef4d1968fe3986c51f40f8975b40fa037a16e35b31", "spki_sha256": "46c537852f47d18015c81a215b890321545622b88437703d19ccb7f782a5da7c", "self_signed": true, "is_ca": true}, "names": ["sha1.lab.test"], "trusted": false, "trust_error": "validation failed: basicConstraints.cA must not be asserted in an EE certificate (encountered processing <Certificate(subject=<Name(CN=sha1.lab.test)>, ...)>)", "path": [], "aia_fetched": false, "hostname_ok": true, "validation": "unknown", "scts": 0, "must_staple": false, "ocsp_urls": [], "crl_urls": [], "revocation": {}}], "mozilla": {"modern": {"compliant": false, "problems": ["protocols not in profile: TLSv1.0, TLSv1.1, TLSv1.2", "TLS 1.3 missing", "2 TLS 1.2 suites outside the profile", "RSA certificate not allowed"], "oldest_clients": ["Firefox 63", "Android 10.0", "Chrome 70", "Edge 75", "Java 11", "OpenSSL 1.1.1", "Opera 57", "Safari 12.1"]}, "intermediate": {"compliant": false, "problems": ["protocols not in profile: TLSv1.0, TLSv1.1", "TLS 1.3 missing", "2 TLS 1.2 suites outside the profile", "RSA key below 2048 bits"], "oldest_clients": ["Firefox 31.3.0", "Android 4.4.2", "Chrome 49", "Edge 15 on Windows 10", "IE 11 on Windows 10", "Java 8u161", "OpenSSL 1.0.1l", "Opera 20", "Safari 9"]}, "guidelines_version": 6.0}, "email": {"domain": "lab.test", "mx": ["mail.lab.test"], "null_mx": false, "spf": {"record": "v=spf1 ip4:192.0.2.0/24 include:_spf.lab.test. -all", "all": "-", "lookups": 1, "void_lookups": 0, "errors": [], "warnings": [], "includes": ["_spf.lab.test."], "tree": {"domain": "lab.test", "record": "v=spf1 ip4:192.0.2.0/24 include:_spf.lab.test. -all", "children": [{"domain": "_spf.lab.test.", "record": "v=spf1 ip4:198.51.100.0/24 -all", "children": []}]}}, "dmarc": {"record": "v=DMARC1; p=reject; rua=mailto:dmarc@lab.test; adkim=s; aspf=s", "tags": {"v": "DMARC1", "p": "reject", "rua": "mailto:dmarc@lab.test", "adkim": "s", "aspf": "s"}}, "dkim": [{"selector": "selector1", "record": "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1gzUTpiFdjDi2BsrCQNBdUUmBv8efdyml92IS1LE2hp3qmGIUNLXT8s6MySLs0uo2xFGqI19ICxJQ6S6IvPAXGzO+C9yVxQNpjnNdHswLRSKL3XQXT6A3xX89CzBdVX05HRazCfoLR", "testing": false, "revoked": false, "key_type": "rsa", "bits": 2048}], "mta_sts": null}, "grade": "F", "score": 32.2, "categories": {"tls": {"label": "TLS protocols & ciphers", "score": 20, "grade": "F", "counts": {"critical": 0, "high": 1, "medium": 2, "low": 4, "info": 2, "pass": 3}, "skipped": false}, "certificate": {"label": "Certificate", "score": 0, "grade": "F", "counts": {"critical": 1, "high": 2, "medium": 0, "low": 0, "info": 0, "pass": 2}, "skipped": false}, "headers": {"label": "HTTP security headers", "score": 15, "grade": "F", "counts": {"critical": 0, "high": 1, "medium": 3, "low": 2, "info": 5, "pass": 0}, "skipped": false}, "cookies": {"label": "Cookies", "score": 100, "grade": "A+", "counts": {"critical": 0, "high": 0, "medium": 0, "low": 0, "info": 1, "pass": 0}, "skipped": false}, "content": {"label": "Page content & scripts", "score": 0, "grade": "F", "counts": {"critical": 1, "high": 3, "medium": 3, "low": 2, "info": 1, "pass": 0}, "skipped": false}, "dns": {"label": "DNS & domain", "score": 100, "grade": "A+", "counts": {"critical": 0, "high": 0, "medium": 0, "low": 0, "info": 1, "pass": 3}, "skipped": false}, "email": {"label": "Email authentication", "score": 85, "grade": "A-", "counts": {"critical": 0, "high": 0, "medium": 1, "low": 0, "info": 0, "pass": 4}, "skipped": false}}, "capped_by": [], "skipped": [], "compliance": {"pci_dss_4": {"name": "PCI DSS v4.0 req. 4.2.1 (strong cryptography in transit)", "compliant": false, "problems": ["SSL or early TLS (1.0) enabled", "TLS 1.1 enabled (PCI SSC guidance treats it as insecure)", "insecure cipher suites (export/NULL/RC4/DES/3DES)", "certificate not valid and trusted"]}, "nist_800_52r2": {"name": "NIST SP 800-52 Rev. 2 (US federal TLS guidelines)", "compliant": false, "problems": ["TLS 1.3 not supported (required since January 2024)", "protocols older than TLS 1.2 enabled", "2 suites outside the SP 800-52r2 approved list (e.g. TLS_RSA_WITH_3DES_EDE_CBC_SHA)", "RSA key below 2048 bits"]}, "mozilla_modern": {"name": "Mozilla Modern profile (v6.0)", "compliant": false, "problems": ["protocols not in profile: TLSv1.0, TLSv1.1, TLSv1.2", "TLS 1.3 missing", "2 TLS 1.2 suites outside the profile", "RSA certificate not allowed"]}, "mozilla_intermediate": {"name": "Mozilla Intermediate profile (v6.0)", "compliant": false, "problems": ["protocols not in profile: TLSv1.0, TLSv1.1", "TLS 1.3 missing", "2 TLS 1.2 suites outside the profile", "RSA key below 2048 bits"]}, "owasp_headers": {"name": "OWASP Secure Headers baseline", "compliant": false, "problems": ["missing or weak Strict-Transport-Security", "missing or weak Content-Security-Policy", "missing or weak frame-ancestors / X-Frame-Options", "missing or weak X-Content-Type-Options"]}, "bulk_sender": {"name": "Gmail / Yahoo bulk-sender authentication (2024)", "compliant": true, "problems": []}}, "findings": [{"id": "cert.untrusted", "category": "certificate", "severity": "critical", "title": "Self-signed certificate", "detail": "Validation against the Mozilla root store failed: validation failed: basicConstraints.cA must not be asserted in an EE certificate (encountered processing <Certificate(subject=<Name(CN=sha1.lab.test)>, ...)>). Browsers will show a security warning, and users trained to click through warnings can be intercepted.", "evidence": "Presented chain: sha1.lab.test", "fix": "Use a certificate from a publicly trusted CA (Let's Encrypt is free) and serve the full chain.", "snippets": {}, "refs": [], "cap": "F", "tags": ["CWE-295"]}, {"id": "content.compromised_cdn", "category": "content", "severity": "critical", "title": "Loads script from a known-compromised CDN", "detail": "Sold in 2024 and used to inject malware into more than 100,000 sites (Sansec, June 2024). Whoever controls that host can run any code in your visitors' browsers.", "evidence": "https://cdn.polyfill.io/v3/polyfill.min.js, https://cdn.polyfill.io/v3/polyfill.min.js", "fix": "Remove the script tag immediately.", "snippets": {}, "refs": ["https://sansec.io/research/polyfill-supply-chain-attack"], "cap": "F", "tags": ["CWE-829", "CWE-506"]}, {"id": "cert.key", "category": "certificate", "severity": "high", "title": "Weak certificate key (RSA 1024)", "detail": "1024-bit RSA has been within reach of well-funded attackers for years and is no longer issued by public CAs.", "evidence": null, "fix": "Reissue with RSA 2048+ or ECDSA P-256.", "snippets": {}, "refs": [], "cap": "B", "tags": ["CWE-326"]}, {"id": "cert.signature", "category": "certificate", "severity": "high", "title": "Certificate signed with a broken hash (SHA1 with sha1WithRSAEncryption)", "detail": "SHA-1 collisions are practical (SHAttered, 2017); browsers reject SHA-1 leaf certificates.", "evidence": null, "fix": "Reissue the certificate; every public CA signs with SHA-256 or better.", "snippets": {}, "refs": [], "cap": "C", "tags": []}, {"id": "content.form_http", "category": "content", "severity": "high", "title": "Form submits over plain HTTP (password field)", "detail": "Whatever the user types is sent unencrypted.", "evidence": "<form action=\"http://legacy.lab.test:10080/login\">", "fix": null, "snippets": {}, "refs": [], "cap": null, "tags": ["CWE-319"]}, {"id": "content.mixed_active", "category": "content", "severity": "high", "title": "Active mixed content: 1 script/style/frame URL(s) over HTTP", "detail": "Browsers block these, which breaks the page; where they are not blocked (older browsers, some WebViews) a network attacker can replace them and take over the page.", "evidence": "http://legacy.lab.test:10080/style.css", "fix": "Load every subresource over HTTPS.", "snippets": {}, "refs": [], "cap": null, "tags": ["CWE-319", "CWE-311"]}, {"id": "content.vulnerable_library", "category": "content", "severity": "high", "title": "angularjs 1.5.8 has 20 known vulnerabilities", "detail": "Angular (deprecated package) Cross-site Scripting; Angular's deprecated package has a Cross-Site Scripting issue; AngularJS Incomplete Filtering of Special Elements vulnerability; AngularJS Regular expression Denial of Service (ReDoS); AngularJS allows attackers to bypass common image source restrictions; AngularJS improperly sanitizes SVG elements; Cross-Site Scripting via JSONP; DOS in $sanitize", "evidence": "https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js (cdn-url) | CVE-2019-10768, CVE-2020-7676, CVE-2022-25869, CVE-2023-26116, CVE-2023-26117, CVE-2023-26118", "fix": "Upgrade angularjs to 1.999 or later.", "snippets": {}, "refs": ["https://github.com/advisories/GHSA-28hp-fgcr-2r4h", "https://github.com/angular/angular.js/blob/master/CHANGELOG.md", "https://github.com/angular/angular.js/pull/15699"], "cap": null, "tags": ["CWE-1104", "OWASP A06:2021", "CVE-2019-10768", "CVE-2020-7676", "CVE-2022-25869", "CVE-2023-26116"]}, {"id": "hdr.eol_software", "category": "headers", "severity": "high", "title": "End-of-life software advertised: nginx/1.10.3", "detail": "nginx 1.10.3 is several years out of date. Known vulnerabilities in it will not be patched.", "evidence": "server: nginx/1.10.3", "fix": null, "snippets": {}, "refs": [], "cap": null, "tags": ["CWE-1104", "OWASP A06:2021"]}, {"id": "tls.no_fs", "category": "tls", "severity": "high", "title": "No forward secrecy", "detail": "Every suite uses static RSA key exchange: anyone who later obtains the private key (breach, subpoena, cloud snapshot) can decrypt all recorded past traffic.", "evidence": null, "fix": "Offer ECDHE suites.", "snippets": {"nginx": "ssl_protocols TLSv1.2 TLSv1.3;\nssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305;\nssl_prefer_server_ciphers off;", "apache": "SSLProtocol -all +TLSv1.2 +TLSv1.3\nSSLCipherSuite ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305\nSSLHonorCipherOrder off", "caddy": "# Caddy's defaults already match Mozilla Intermediate; remove custom 'ciphers' lines.", "haproxy": "ssl-default-bind-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305\nssl-default-bind-ciphersuites TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256"}, "refs": [], "cap": "B", "tags": ["CWE-327"]}, {"id": "content.sri", "category": "content", "severity": "medium", "title": "2 CDN resource(s) without Subresource Integrity", "detail": "If the CDN or the package is compromised, the modified file runs on your site. These are fixed, versioned files, so an integrity hash costs nothing.", "evidence": "https://code.jquery.com/jquery-1.12.4.min.js, https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js", "fix": null, "snippets": {"html": "<script src=\"https://cdn.example.com/lib.min.js\"\n        integrity=\"sha384-<base64 hash>\"\n        crossorigin=\"anonymous\"><\/script>\n<!-- hash: openssl dgst -sha384 -binary lib.min.js | openssl base64 -A -->"}, "refs": ["https://www.w3.org/TR/SRI/"], "cap": null, "tags": ["CWE-353", "CWE-829"]}, {"id": "content.vulnerable_library", "category": "content", "severity": "medium", "title": "jquery 1.12.4 has 6 known vulnerabilities", "detail": "3rd party CORS request may execute; Regex in its jQuery.htmlPrefilter sometimes may introduce XSS; jQuery 1.x and 2.x are End-of-Life and no longer receiving security updates; jQuery before 3.4.0, as used in Drupal, Backdrop CMS, and other products, mishandles jQuery.extend(true, {}, ...) because of Object.prototype pollution; parseHTML() executes scripts in event handlers; passing HTML containing", "evidence": "https://code.jquery.com/jquery-1.12.4.min.js (cdn-url) | CVE-2015-9251, CVE-2019-11358, CVE-2020-11022, CVE-2020-11023", "fix": "Upgrade jquery to 3.5.0 or later.", "snippets": {}, "refs": ["http://research.insecurelabs.org/jquery/test/", "https://bugs.jquery.com/ticket/11974", "https://github.com/jquery/jquery.com/issues/162"], "cap": null, "tags": ["CWE-1104", "OWASP A06:2021", "CVE-2015-9251", "CVE-2019-11358", "CVE-2020-11022", "CVE-2020-11023"]}, {"id": "content.vulnerable_library", "category": "content", "severity": "medium", "title": "jquery 1.8.3 has 7 known vulnerabilities", "detail": "3rd party CORS request may execute; Selector interpreted as HTML; Versions of jQuery prior to 1.9.0 are vulnerable to Cross-Site Scripting (XSS). The load method fails to recognize and strip script tags containing whitespace in the closing tag (e.g. <\/script >), allowing enclosed script logic to execute and enabling attackers to run arbitrary JavaScript in a victim's browser.; jQuery 1.x and 2.x a", "evidence": "https://sha1.lab.test:10448/js/legacy.js (filecontent) | CVE-2012-6708, CVE-2015-9251, CVE-2019-11358, CVE-2020-11023, CVE-2020-7656", "fix": "Upgrade jquery to 3.5.0 or later.", "snippets": {}, "refs": ["http://bugs.jquery.com/ticket/11290", "http://research.insecurelabs.org/jquery/test/", "https://nvd.nist.gov/vuln/detail/CVE-2012-6708"], "cap": null, "tags": ["CWE-1104", "OWASP A06:2021", "CVE-2012-6708", "CVE-2015-9251", "CVE-2019-11358", "CVE-2020-11023"]}, {"id": "mtasts.policy_unreachable", "category": "email", "severity": "medium", "title": "MTA-STS policy file cannot be fetched", "detail": "The DNS record exists but https://mta-sts.lab.test/.well-known/mta-sts.txt failed, so senders ignore the policy. It must be served over HTTPS with a valid certificate.", "evidence": "connection refused", "fix": null, "snippets": {}, "refs": [], "cap": null, "tags": []}, {"id": "csp.missing", "category": "headers", "severity": "medium", "title": "No Content Security Policy", "detail": "CSP is the main browser-side defence that stops injected scripts (XSS) from running. Without it, any markup-injection bug becomes code execution in your users' sessions.", "evidence": null, "fix": "Start with a nonce-based strict policy, deployed first as Report-Only.", "snippets": {"nginx": "add_header Content-Security-Policy \"default-src 'self'; script-src 'self' 'nonce-$request_id' 'strict-dynamic'; object-src 'none'; base-uri 'none'; frame-ancestors 'self'; form-action 'self'; upgrade-insecure-requests\" always;", "apache": "Header always set Content-Security-Policy \"default-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'self'; form-action 'self'; upgrade-insecure-requests\"", "caddy": "header Content-Security-Policy \"default-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'self'; form-action 'self'\"", "express": "app.use(helmet.contentSecurityPolicy({ directives: { defaultSrc: [\"'self'\"], objectSrc: [\"'none'\"], baseUri: [\"'none'\"], frameAncestors: [\"'self'\"] } }));"}, "refs": ["https://web.dev/articles/strict-csp", "https://csp-evaluator.withgoogle.com/"], "cap": null, "tags": ["CWE-79", "OWASP A05:2021"]}, {"id": "hdr.framing", "category": "headers", "severity": "medium", "title": "Page can be embedded by any site (clickjacking)", "detail": "No X-Frame-Options or CSP frame-ancestors. A malicious page can load this site in an invisible frame and trick users into clicking buttons on it.", "evidence": null, "fix": "Send CSP frame-ancestors 'self' (and X-Frame-Options: SAMEORIGIN for old browsers).", "snippets": {"nginx": "add_header Content-Security-Policy \"frame-ancestors 'self'\" always;\nadd_header X-Frame-Options SAMEORIGIN always;", "apache": "Header always set X-Frame-Options SAMEORIGIN\nHeader always append Content-Security-Policy \"frame-ancestors 'self'\"", "caddy": "header X-Frame-Options SAMEORIGIN", "express": "app.use(helmet.frameguard({ action: 'sameorigin' }));"}, "refs": [], "cap": null, "tags": ["CWE-1021", "OWASP A04:2021"]}, {"id": "hsts.missing", "category": "headers", "severity": "medium", "title": "HTTP Strict Transport Security (HSTS) not enabled", "detail": "Without HSTS a network attacker can strip HTTPS (sslstrip) whenever a user follows an http:// link or types the bare domain, and users can click through certificate warnings.", "evidence": null, "fix": "Send Strict-Transport-Security with max-age of at least one year.", "snippets": {"nginx": "add_header Strict-Transport-Security \"max-age=63072000; includeSubDomains; preload\" always;", "apache": "Header always set Strict-Transport-Security \"max-age=63072000; includeSubDomains; preload\"", "caddy": "header Strict-Transport-Security \"max-age=63072000; includeSubDomains; preload\"", "express": "app.use(helmet.hsts({ maxAge: 63072000, includeSubDomains: true, preload: true }));", "cloudflare": "SSL/TLS -> Edge Certificates -> HTTP Strict Transport Security (HSTS): enable, max-age 12 months, include subdomains, preload"}, "refs": ["https://www.rfc-editor.org/rfc/rfc6797"], "cap": null, "tags": ["CWE-319", "CWE-523"]}, {"id": "tls.legacy_protocols", "category": "tls", "severity": "medium", "title": "TLS 1.0 and TLS 1.1 enabled", "detail": "These versions are deprecated by RFC 8996, rely on MD5/SHA-1 in the handshake, and are banned for cardholder data by PCI DSS. Every browser removed support in 2020.", "evidence": null, "fix": "Allow only TLS 1.2 and TLS 1.3.", "snippets": {"nginx": "ssl_protocols TLSv1.2 TLSv1.3;", "apache": "SSLProtocol -all +TLSv1.2 +TLSv1.3", "caddy": "tls {\n    protocols tls1.2 tls1.3\n}", "haproxy": "ssl-default-bind-options ssl-min-ver TLSv1.2 no-tls-tickets", "iis": "# PowerShell (reboot required)\nNew-Item 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\SecurityProviders\\SCHANNEL\\Protocols\\TLS 1.0\\Server' -Force |\n  New-ItemProperty -Name Enabled -Value 0 -PropertyType DWord -Force\n# repeat for 'TLS 1.1', 'SSL 3.0', 'SSL 2.0'"}, "refs": ["https://www.rfc-editor.org/rfc/rfc8996"], "cap": "B", "tags": ["CWE-327", "PCI-DSS 4.2.1"]}, {"id": "tls.sweet32", "category": "tls", "severity": "medium", "title": "64-bit block ciphers accepted (SWEET32)", "detail": "3DES and IDEA use 64-bit blocks; birthday collisions on long-lived connections leak plaintext (CVE-2016-2183).", "evidence": "TLS_RSA_WITH_3DES_EDE_CBC_SHA", "fix": "Remove 3DES/IDEA suites.", "snippets": {"nginx": "ssl_protocols TLSv1.2 TLSv1.3;\nssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305;\nssl_prefer_server_ciphers off;", "apache": "SSLProtocol -all +TLSv1.2 +TLSv1.3\nSSLCipherSuite ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305\nSSLHonorCipherOrder off", "caddy": "# Caddy's defaults already match Mozilla Intermediate; remove custom 'ciphers' lines.", "haproxy": "ssl-default-bind-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305\nssl-default-bind-ciphersuites TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256"}, "refs": [], "cap": "B", "tags": ["CVE-2016-2183"]}, {"id": "content.generator", "category": "content", "severity": "low", "title": "CMS version disclosed: WordPress 4.9.8", "detail": "The generator tag tells attackers exactly which CMS release (and known bugs) to target.", "evidence": null, "fix": "Remove the generator meta tag.", "snippets": {}, "refs": [], "cap": null, "tags": ["CWE-200"]}, {"id": "content.mixed_passive", "category": "content", "severity": "low", "title": "Passive mixed content: 1 media URL(s) over HTTP", "detail": "Images and media over HTTP can be swapped or used to track users; browsers now auto-upgrade or block them.", "evidence": "http://legacy.lab.test:10080/logo.png", "fix": null, "snippets": {}, "refs": [], "cap": null, "tags": ["CWE-319"]}, {"id": "hdr.disclosure", "category": "headers", "severity": "low", "title": "Software versions disclosed in headers", "detail": "Exact version banners let attackers match the server against public exploits without probing.", "evidence": "server: nginx/1.10.3", "fix": null, "snippets": {"nginx": "server_tokens off;\nproxy_hide_header X-Powered-By;", "apache": "ServerTokens Prod\nServerSignature Off\nHeader always unset X-Powered-By", "php": "; php.ini\nexpose_php = Off", "express": "app.disable('x-powered-by');", "iis": "<system.webServer>\n  <security><requestFiltering removeServerHeader=\"true\" /><\/security>\n  <httpProtocol><customHeaders><remove name=\"X-Powered-By\" /><\/customHeaders><\/httpProtocol>\n<\/system.webServer>"}, "refs": [], "cap": null, "tags": ["CWE-200"]}, {"id": "hdr.nosniff", "category": "headers", "severity": "low", "title": "X-Content-Type-Options: nosniff not set", "detail": "Browsers may guess ('sniff') content types and run an uploaded file as script or HTML.", "evidence": null, "fix": null, "snippets": {"nginx": "add_header X-Content-Type-Options nosniff always;", "apache": "Header always set X-Content-Type-Options nosniff", "caddy": "header X-Content-Type-Options nosniff", "express": "app.use(helmet.noSniff());"}, "refs": [], "cap": null, "tags": ["CWE-430"]}, {"id": "tls.cbc", "category": "tls", "severity": "low", "title": "2 CBC-mode suites offered with TLS 1.2", "detail": "CBC with MAC-then-encrypt has a long history of padding-oracle bugs (Lucky13, POODLE-TLS, GOLDENDOODLE). Mozilla's Intermediate profile uses AEAD suites only.", "evidence": "TLS_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_3DES_EDE_CBC_SHA", "fix": "Offer only AES-GCM and ChaCha20-Poly1305 suites.", "snippets": {"nginx": "ssl_protocols TLSv1.2 TLSv1.3;\nssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305;\nssl_prefer_server_ciphers off;", "apache": "SSLProtocol -all +TLSv1.2 +TLSv1.3\nSSLCipherSuite ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305\nSSLHonorCipherOrder off", "caddy": "# Caddy's defaults already match Mozilla Intermediate; remove custom 'ciphers' lines.", "haproxy": "ssl-default-bind-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305\nssl-default-bind-ciphersuites TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256"}, "refs": [], "cap": null, "tags": []}, {"id": "tls.client_preference", "category": "tls", "severity": "low", "title": "Server follows client cipher order while weak suites exist", "detail": "With weak suites still enabled, the server should enforce its own (strong-first) order.", "evidence": null, "fix": "Enable server cipher preference or remove the weak suites.", "snippets": {"nginx": "ssl_protocols TLSv1.2 TLSv1.3;\nssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305;\nssl_prefer_server_ciphers off;", "apache": "SSLProtocol -all +TLSv1.2 +TLSv1.3\nSSLCipherSuite ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305\nSSLHonorCipherOrder off", "caddy": "# Caddy's defaults already match Mozilla Intermediate; remove custom 'ciphers' lines.", "haproxy": "ssl-default-bind-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305\nssl-default-bind-ciphersuites TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256"}, "refs": [], "cap": null, "tags": []}, {"id": "tls.ems", "category": "tls", "severity": "low", "title": "Extended Master Secret not supported", "detail": "RFC 7627 binds the session keys to the full handshake and closes the triple-handshake attack.", "evidence": null, "fix": null, "snippets": {}, "refs": [], "cap": null, "tags": []}, {"id": "tls.tls13", "category": "tls", "severity": "low", "title": "TLS 1.3 not supported", "detail": "TLS 1.3 is faster (one round trip) and drops every legacy algorithm. All current browsers use it.", "evidence": null, "fix": "Enable TLS 1.3 (OpenSSL 1.1.1+, nginx 1.13+).", "snippets": {"nginx": "ssl_protocols TLSv1.2 TLSv1.3;", "apache": "SSLProtocol -all +TLSv1.2 +TLSv1.3", "caddy": "tls {\n    protocols tls1.2 tls1.3\n}", "haproxy": "ssl-default-bind-options ssl-min-ver TLSv1.2 no-tls-tickets", "iis": "# PowerShell (reboot required)\nNew-Item 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\SecurityProviders\\SCHANNEL\\Protocols\\TLS 1.0\\Server' -Force |\n  New-ItemProperty -Name Enabled -Value 0 -PropertyType DWord -Force\n# repeat for 'TLS 1.1', 'SSL 3.0', 'SSL 2.0'"}, "refs": [], "cap": "A-", "tags": []}, {"id": "content.third_party", "category": "content", "severity": "info", "title": "3 third-party script host(s) can run code on this page", "detail": "Every one of these providers, and anyone who compromises them, has full control over the page. Dynamic analytics/tag scripts cannot use SRI, so keep the list short and use CSP to pin it.", "evidence": "cdn.polyfill.io, cdnjs.cloudflare.com, code.jquery.com", "fix": null, "snippets": {}, "refs": [], "cap": null, "tags": []}, {"id": "cookie.none", "category": "cookies", "severity": "info", "title": "No cookies set on the scanned pages", "detail": "", "evidence": null, "fix": null, "snippets": {}, "refs": [], "cap": null, "tags": []}, {"id": "dns.ipv6", "category": "dns", "severity": "info", "title": "No IPv6 (AAAA) address", "detail": "IPv6-only clients and networks cannot connect directly.", "evidence": null, "fix": null, "snippets": {}, "refs": [], "cap": null, "tags": []}, {"id": "hdr.coop", "category": "headers", "severity": "info", "title": "No Cross-Origin-Opener-Policy", "detail": "COOP severs window references from cross-origin popups, blocking a class of cross-site leaks (XS-Leaks) and tabnabbing.", "evidence": null, "fix": null, "snippets": {"nginx": "add_header Cross-Origin-Opener-Policy same-origin always;\nadd_header Cross-Origin-Resource-Policy same-site always;", "apache": "Header always set Cross-Origin-Opener-Policy same-origin\nHeader always set Cross-Origin-Resource-Policy same-site", "caddy": "header Cross-Origin-Opener-Policy same-origin\nheader Cross-Origin-Resource-Policy same-site", "express": "app.use(helmet.crossOriginOpenerPolicy()); app.use(helmet.crossOriginResourcePolicy({ policy: 'same-site' }));"}, "refs": [], "cap": null, "tags": []}, {"id": "hdr.permissions", "category": "headers", "severity": "info", "title": "No Permissions-Policy", "detail": "Restricting powerful features (camera, microphone, geolocation, payment) limits what injected or third-party code can do.", "evidence": null, "fix": null, "snippets": {"nginx": "add_header Permissions-Policy \"camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()\" always;", "apache": "Header always set Permissions-Policy \"camera=(), microphone=(), geolocation=(), payment=(), usb=()\"", "caddy": "header Permissions-Policy \"camera=(), microphone=(), geolocation=(), payment=(), usb=()\""}, "refs": [], "cap": null, "tags": []}, {"id": "hdr.referrer", "category": "headers", "severity": "info", "title": "No Referrer-Policy header", "detail": "Browsers default to strict-origin-when-cross-origin, which is reasonable. Setting it explicitly protects users of older browsers.", "evidence": null, "fix": null, "snippets": {"nginx": "add_header Referrer-Policy strict-origin-when-cross-origin always;", "apache": "Header always set Referrer-Policy strict-origin-when-cross-origin", "caddy": "header Referrer-Policy strict-origin-when-cross-origin", "express": "app.use(helmet.referrerPolicy({ policy: 'strict-origin-when-cross-origin' }));"}, "refs": [], "cap": null, "tags": []}, {"id": "http.port80_closed", "category": "headers", "severity": "info", "title": "Port 80 (plain HTTP) is closed or unreachable", "detail": "Visitors who type the bare domain rely on HSTS or the browser's HTTPS-first mode to reach you.", "evidence": null, "fix": null, "snippets": {}, "refs": [], "cap": null, "tags": []}, {"id": "sectxt.missing", "category": "headers", "severity": "info", "title": "No security.txt", "detail": "RFC 9116 security.txt tells researchers how to report vulnerabilities. Without it, reports often go to the wrong inbox or nowhere.", "evidence": null, "fix": null, "snippets": {"file": "# /.well-known/security.txt (RFC 9116)\nContact: mailto:security@example.com\nExpires: 2027-12-31T23:59:59Z\nPreferred-Languages: en\nCanonical: https://example.com/.well-known/security.txt\nPolicy: https://example.com/security-policy"}, "refs": ["https://www.rfc-editor.org/rfc/rfc9116", "https://securitytxt.org/"], "cap": null, "tags": []}, {"id": "tls.beast", "category": "tls", "severity": "info", "title": "TLS 1.0 with CBC suites (BEAST)", "detail": "BEAST (CVE-2011-3389) is mitigated in every modern browser by record splitting; it is listed for completeness.", "evidence": null, "fix": null, "snippets": {}, "refs": [], "cap": null, "tags": ["CVE-2011-3389"]}, {"id": "tls.heartbeat", "category": "tls", "severity": "info", "title": "TLS heartbeat extension enabled", "detail": "Heartbeat is unused by browsers and was the vector for Heartbleed (CVE-2014-0160). Sitewarden does not send heartbeat requests, so Heartbleed itself is not tested.", "evidence": null, "fix": null, "snippets": {}, "refs": [], "cap": null, "tags": ["CVE-2014-0160"]}, {"id": "cert.hostname", "category": "certificate", "severity": "pass", "title": "Certificate covers sha1.lab.test", "detail": "", "evidence": "1 name(s): sha1.lab.test", "fix": null, "snippets": {}, "refs": [], "cap": null, "tags": []}, {"id": "cert.validity", "category": "certificate", "severity": "pass", "title": "Certificate valid for another 29 days", "detail": "", "evidence": "2026-10-12 to 2026-11-11", "fix": null, "snippets": {}, "refs": [], "cap": null, "tags": []}, {"id": "caa.present", "category": "dns", "severity": "pass", "title": "CAA restricts certificate issuance (at lab.test)", "detail": "", "evidence": "0 iodef \"mailto:security@lab.test\"; 0 issue \"letsencrypt.org\"", "fix": null, "snippets": {}, "refs": [], "cap": null, "tags": []}, {"id": "dns.ns", "category": "dns", "severity": "pass", "title": "2 name servers across 2 networks", "detail": "", "evidence": "ns1.lab.test, ns2.lab.test", "fix": null, "snippets": {}, "refs": [], "cap": null, "tags": []}, {"id": "dnssec.secure", "category": "dns", "severity": "pass", "title": "DNSSEC signed and validated from the root", "detail": "Chain of trust validated from the root: . -> test. -> lab.test.", "evidence": null, "fix": null, "snippets": {}, "refs": [], "cap": null, "tags": []}, {"id": "dkim.key", "category": "email", "severity": "pass", "title": "DKIM key 'selector1' (rsa 2048)", "detail": "", "evidence": null, "fix": null, "snippets": {}, "refs": [], "cap": null, "tags": []}, {"id": "dmarc.enforced", "category": "email", "severity": "pass", "title": "DMARC enforced (p=reject)", "detail": "", "evidence": "v=DMARC1; p=reject; rua=mailto:dmarc@lab.test; adkim=s; aspf=s", "fix": null, "snippets": {}, "refs": [], "cap": null, "tags": []}, {"id": "spf.valid", "category": "email", "severity": "pass", "title": "SPF record valid (-all hard fail, 1/10 lookups)", "detail": "", "evidence": "v=spf1 ip4:192.0.2.0/24 include:_spf.lab.test. -all", "fix": null, "snippets": {}, "refs": [], "cap": null, "tags": []}, {"id": "tlsrpt.present", "category": "email", "severity": "pass", "title": "SMTP TLS reporting (TLS-RPT) configured", "detail": "", "evidence": null, "fix": null, "snippets": {}, "refs": [], "cap": null, "tags": []}, {"id": "tls.fallback_scsv", "category": "tls", "severity": "pass", "title": "Downgrade protection (TLS_FALLBACK_SCSV) works", "detail": "", "evidence": null, "fix": null, "snippets": {}, "refs": [], "cap": null, "tags": []}, {"id": "tls.renegotiation", "category": "tls", "severity": "pass", "title": "Secure renegotiation supported", "detail": "", "evidence": null, "fix": null, "snippets": {}, "refs": [], "cap": null, "tags": []}, {"id": "tls.tls12", "category": "tls", "severity": "pass", "title": "TLS 1.2 supported", "detail": "", "evidence": null, "fix": null, "snippets": {}, "refs": [], "cap": null, "tags": []}], "summary": {"critical": 2, "high": 7, "medium": 9, "low": 8, "info": 10, "pass": 12}, "duration_ms": 258, "limitations": ["Passive checks only: Sitewarden sends ordinary TLS handshakes, page requests and DNS queries, the same traffic a browser or mail server produces.", "Not tested: Heartbleed, ROBOT, application-level flaws (SQL injection, XSS) and anything behind a login."]}</script>
+<script>/* Sitewarden web UI.
+ * Every string from a report (headers, cookies, certificate names...) comes from the scanned site and is
+ * untrusted, so the UI only ever builds DOM nodes and sets textContent. The server also enforces
+ * Trusted Types, which turns any accidental innerHTML into an exception instead of an XSS bug. */
+(() => {
+  "use strict";
+
+  // ------------------------------------------------------------------ helpers
+  const $app = document.getElementById("app");
+  const STANDALONE = document.documentElement.dataset.standalone === "1";
+
+  function h(tag, attrs, ...kids) {
+    const el = document.createElement(tag);
+    if (attrs) {
+      for (const [k, v] of Object.entries(attrs)) {
+        if (v === null || v === undefined || v === false) continue;
+        if (k === "class") el.className = v;
+        else if (k === "text") el.textContent = v;
+        else if (k.startsWith("on")) el.addEventListener(k.slice(2), v);
+        else if (k === "style") el.style.cssText = v; // CSSOM, so the strict style-src CSP allows it
+        else el.setAttribute(k, v === true ? "" : String(v));
+      }
+    }
+    for (const kid of kids.flat(Infinity)) {
+      if (kid === null || kid === undefined || kid === false) continue;
+      el.append(kid instanceof Node ? kid : document.createTextNode(String(kid)));
+    }
+    return el;
+  }
+  const svgNS = "http://www.w3.org/2000/svg";
+  function s(tag, attrs, ...kids) {
+    const el = document.createElementNS(svgNS, tag);
+    for (const [k, v] of Object.entries(attrs || {})) el.setAttribute(k, String(v));
+    kids.forEach((k) => el.append(k));
+    return el;
+  }
+  const clear = (el) => { while (el.firstChild) el.removeChild(el.firstChild); return el; };
+  const gradeClass = (g) => "g-" + ({ "A+": "Ap", "A-": "Am" }[g] || (g && /^[A-F]$/.test(g) ? g : "x"));
+  const pill = (g) => h("span", { class: "pill " + gradeClass(g) }, g || "–");
+  const SEVS = ["critical", "high", "medium", "low", "info", "pass"];
+  const SEV_LABEL = { critical: "Critical", high: "High", medium: "Medium", low: "Low", info: "Info", pass: "Passed" };
+  const CAT_TAB = { tls: "tls", certificate: "cert", headers: "http", cookies: "http", content: "content", dns: "dns", email: "email" };
+  function ago(ts) {
+    const d = Date.now() / 1000 - ts;
+    if (d < 90) return "just now";
+    if (d < 3600) return Math.round(d / 60) + " min ago";
+    if (d < 86400) return Math.round(d / 3600) + " h ago";
+    return Math.round(d / 86400) + " d ago";
+  }
+  function toast(msg) {
+    const t = h("div", { class: "toast", role: "status" }, msg);
+    document.body.append(t);
+    setTimeout(() => t.remove(), 1800);
+  }
+  async function copy(text) {
+    try { await navigator.clipboard.writeText(text); toast("Copied"); } catch { toast("Copy failed"); }
+  }
+  function download(name, text, type) {
+    const url = URL.createObjectURL(new Blob([text], { type }));
+    const a = h("a", { href: url, download: name });
+    document.body.append(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+  }
+  async function api(path, opts) {
+    const r = await fetch(path, Object.assign({ headers: { "Content-Type": "application/json" } }, opts));
+    let body = null;
+    try { body = await r.json(); } catch { /* empty */ }
+    if (!r.ok) throw new Error((body && body.error) || ("HTTP " + r.status));
+    return body;
+  }
+
+  // ------------------------------------------------------------------ theme
+  function themeIcon() {
+    const NS = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(NS, "svg");
+    svg.setAttribute("viewBox", "0 0 24 24");
+    svg.setAttribute("width", "18");
+    svg.setAttribute("height", "18");
+    svg.setAttribute("aria-hidden", "true");
+    const ring = document.createElementNS(NS, "circle");
+    for (const [k, v] of [["cx", "12"], ["cy", "12"], ["r", "9"], ["fill", "none"], ["stroke", "currentColor"], ["stroke-width", "2"]]) ring.setAttribute(k, v);
+    const half = document.createElementNS(NS, "path");
+    half.setAttribute("d", "M12 3a9 9 0 0 1 0 18z");
+    half.setAttribute("fill", "currentColor");
+    svg.append(ring, half);
+    return svg;
+  }
+  function applyTheme(t) {
+    if (t) document.documentElement.dataset.theme = t; else delete document.documentElement.dataset.theme;
+  }
+  let theme = null;
+  try { theme = localStorage.getItem("sw-theme"); } catch { /* storage blocked */ }
+  applyTheme(theme);
+  function toggleTheme() {
+    const dark = theme ? theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+    theme = dark ? "light" : "dark";
+    applyTheme(theme);
+    try { localStorage.setItem("sw-theme", theme); } catch { /* ignore */ }
+  }
+
+  // ------------------------------------------------------------------ chrome
+  function logo() {
+    return s("svg", { viewBox: "0 0 64 64", "aria-hidden": "true" },
+      s("defs", {}, (() => { const g = s("linearGradient", { id: "lg", x1: 0, y1: 0, x2: 1, y2: 1 },
+        s("stop", { offset: 0, "stop-color": "#5eead4" }), s("stop", { offset: 1, "stop-color": "#22c55e" })); return g; })()),
+      s("path", { d: "M32 4 8 13v17c0 15 10 26 24 30 14-4 24-15 24-30V13L32 4z", fill: "url(#lg)" }),
+      s("path", { d: "m21 32 8 8 15-16", fill: "none", stroke: "#0b1220", "stroke-width": 6, "stroke-linecap": "round", "stroke-linejoin": "round" }));
+  }
+  function header() {
+    const input = h("input", { name: "target", placeholder: "Scan another site", autocomplete: "off", spellcheck: "false", "aria-label": "Domain" });
+    const form = h("form", { class: "mini-form", onsubmit: (e) => { e.preventDefault(); startScan(input.value, false); } }, input);
+    return h("header", { class: "top" }, h("div", { class: "wrap" },
+      h("a", { class: "brand", href: "/", onclick: nav("/") }, logo(), "Sitewarden"),
+      h("nav", {}, STANDALONE ? null : form,
+        STANDALONE ? null : h("a", { href: "/api/docs" }, "API"),
+        h("button", { class: "icon-btn", title: "Toggle theme", "aria-label": "Toggle theme", onclick: toggleTheme }, themeIcon()))));
+  }
+  function footer() {
+    return h("footer", {}, h("div", { class: "wrap" },
+      h("div", {}, "Sitewarden · passive website security grading. Open source, MIT licensed."),
+      h("div", {}, "Checks only what any visitor or mail server can see. No attack payloads are sent.")));
+  }
+  function nav(path) {
+    return (e) => { if (e) e.preventDefault(); history.pushState({}, "", path); route(); };
+  }
+  function page(...content) {
+    clear($app);
+    $app.append(header(), h("main", {}, ...content), footer());
+    window.scrollTo(0, 0);
+  }
+
+  // ------------------------------------------------------------------ home
+  const FEATURES = [
+    ["🔒", "TLS deep scan", "Hand-built handshakes enumerate every protocol (SSL 2 to TLS 1.3), cipher suite and key-exchange group, including post-quantum ML-KEM."],
+    ["📜", "Certificate trust", "Full path validation against the Mozilla root store, incomplete-chain detection, OCSP/CRL revocation and Certificate Transparency."],
+    ["🛡️", "Headers & CSP", "HSTS and preload status, a Content Security Policy evaluator built on Google's strict-CSP research, CORS, clickjacking and more."],
+    ["🍪", "Cookies & content", "Session cookie flags, mixed content, Subresource Integrity, compromised CDNs and known-vulnerable JavaScript libraries."],
+    ["🌐", "DNS integrity", "DNSSEC validated from the root trust anchor, CAA cross-checked with the real certificate, dangling CNAME takeover risk."],
+    ["✉️", "Email spoofing", "SPF with the 10-lookup rule, DMARC policy and reporting, DKIM key strength, MTA-STS, TLS-RPT and STARTTLS on your mail servers."],
+  ];
+  async function home(prefill) {
+    const input = h("input", { name: "target", placeholder: "example.com", autocomplete: "off", spellcheck: "false", autofocus: true, "aria-label": "Domain to scan", value: prefill || "" });
+    const hidden = h("input", { type: "checkbox", name: "hidden" });
+    const btn = h("button", { class: "btn", type: "submit" }, "Scan");
+    const err = h("div");
+    const form = h("form", { class: "scan-form", onsubmit: async (e) => {
+      e.preventDefault();
+      btn.disabled = true; clear(err);
+      try { await startScan(input.value, hidden.checked); }
+      catch (ex) { err.append(h("div", { class: "error-box" }, ex.message)); }
+      finally { btn.disabled = false; }
+    } }, input, btn);
+    const recentBox = h("div");
+    page(h("div", { class: "wrap" },
+      h("section", { class: "hero" },
+        h("span", { class: "eyebrow" }, "● Free · passive · open source"),
+        h("h1", {}, "How secure is your website, ", h("span", { class: "grad" }, "really?")),
+        h("p", { class: "lead" }, "One scan grades TLS, certificates, HTTP security headers, cookies, page scripts, DNSSEC and email spoofing protection, and tells you exactly how to fix each problem."),
+        form,
+        h("div", { class: "form-hint" }, h("label", {}, hidden, "Don't list my scan on this page")),
+        err,
+        h("div", { class: "examples" }, ["github.com", "mozilla.org", "cloudflare.com", "wikipedia.org"].map((d) =>
+          h("button", { class: "chip", type: "button", onclick: () => { input.value = d; form.requestSubmit(); } }, d)))),
+      h("div", { class: "features" }, FEATURES.map(([ico, t, d]) =>
+        h("div", { class: "feature" }, h("div", { class: "ico" }, ico), h("h3", {}, t), h("p", {}, d)))),
+      recentBox));
+    input.focus();
+    try {
+      const data = await api("/api/recent");
+      if (data.recent.length) {
+        recentBox.append(h("div", { class: "section-title" }, `Recently scanned · ${data.stats.scans} scans of ${data.stats.sites} sites`),
+          h("div", { class: "recent" }, data.recent.map((r) =>
+            h("a", { href: "/scan/" + r.id, onclick: nav("/scan/" + r.id) }, pill(r.grade),
+              h("div", { style: "min-width:0" }, h("div", { class: "host" }, r.target), h("div", { class: "when" }, ago(r.finished)))))));
+      }
+    } catch { /* recent list is optional */ }
+  }
+  async function startScan(target, hidden) {
+    target = (target || "").trim();
+    if (!target) throw new Error("Enter a domain name such as example.com");
+    const res = await api("/api/scans", { method: "POST", body: JSON.stringify({ target, hidden }) });
+    nav("/scan/" + res.id)();
+  }
+
+  // ------------------------------------------------------------------ scan progress
+  const STAGES = [
+    ["resolve", "Resolving the domain"], ["tls", "TLS handshakes"], ["certificate", "Certificate chain & revocation"],
+    ["http", "HTTPS, redirects & headers"], ["content", "Page scripts & libraries"], ["dns", "DNSSEC, CAA & name servers"],
+    ["email", "SPF, DMARC, DKIM & MTA-STS"], ["grade", "Grading"],
+  ];
+  async function scanView(id) {
+    let data;
+    try { data = await api("/api/scans/" + encodeURIComponent(id)); }
+    catch (e) { page(h("div", { class: "wrap" }, h("div", { class: "error-box", style: "margin-top:40px" }, e.message))); return; }
+    if (data.status === "done") { renderReport(data.report, data); return; }
+    if (data.status === "error") { scanError(data); return; }
+
+    const items = STAGES.map(([key, label]) => {
+      const msg = h("span", { class: "msg" });
+      const li = h("li", { "data-stage": key }, h("span", { class: "dot" }), h("span", {}, label), msg);
+      return [key, li, msg];
+    });
+    const barFill = h("span", { style: "width:4%" });
+    page(h("div", { class: "wrap" }, h("div", { class: "progress-card" },
+      h("h2", {}, "Scanning " + data.target),
+      h("div", { class: "sub" }, "This usually takes 15 to 60 seconds. You can share this page's address."),
+      h("ul", { class: "stages" }, items.map((x) => x[1])),
+      h("div", { class: "bar" }, barFill))));
+    document.body.classList.add("on-scan");
+    const seen = new Set();
+    function apply(ev) {
+      seen.add(ev.stage);
+      const reached = STAGES.map(([k]) => k).filter((k) => seen.has(k));
+      items.forEach(([key, li, msg]) => {
+        const done = seen.has(key) && key !== ev.stage && ev.stage !== "error";
+        li.classList.toggle("active", key === ev.stage);
+        li.classList.toggle("done", done || (seen.has(key) && ["done"].includes(ev.stage)));
+        const dot = li.querySelector(".dot");
+        dot.textContent = li.classList.contains("done") ? "✓" : "";
+        if (key === ev.stage) msg.textContent = ev.message;
+      });
+      barFill.style.width = Math.max(4, Math.round((reached.length / STAGES.length) * 100)) + "%";
+    }
+    data.progress.forEach(apply);
+    const finish = async () => {
+      const d = await api("/api/scans/" + encodeURIComponent(id));
+      if (d.status === "done") renderReport(d.report, d);
+      else if (d.status === "error") scanError(d);
+      else setTimeout(finish, 1200);
+    };
+    if (window.EventSource) {
+      const es = new EventSource("/api/scans/" + encodeURIComponent(id) + "/events");
+      es.onmessage = (m) => { try { apply(JSON.parse(m.data)); } catch { /* ignore */ } };
+      es.addEventListener("end", () => { es.close(); finish(); });
+      es.onerror = () => { es.close(); setTimeout(finish, 1500); };
+    } else {
+      setTimeout(finish, 1500);
+    }
+  }
+  function scanError(d) {
+    page(h("div", { class: "wrap" }, h("div", { class: "progress-card" },
+      h("h2", {}, "Could not scan " + d.target), h("div", { class: "error-box", style: "margin:12px 0 0;max-width:none" }, d.error || "Unknown error"),
+      h("div", { class: "actions" }, h("a", { class: "btn small", href: "/", onclick: nav("/") }, "Try another site")))));
+  }
+
+  // ------------------------------------------------------------------ report
+  function ring(grade, score) {
+    const r = 74, c = 2 * Math.PI * r;
+    const pct = Math.max(0, Math.min(100, score || 0)) / 100;
+    const color = getComputedStyle(document.documentElement).getPropertyValue("--" + gradeClass(grade).replace("g-", "g-").toLowerCase()) || "";
+    const fg = s("circle", { cx: 85, cy: 85, r, fill: "none", "stroke-width": 12, "stroke-linecap": "round",
+      "stroke-dasharray": `${c * pct} ${c}`, class: "ringfg" });
+    fg.style.stroke = color.trim() || "var(--accent)";
+    return h("div", { class: "ring" },
+      s("svg", { width: 170, height: 170, viewBox: "0 0 170 170" },
+        s("circle", { cx: 85, cy: 85, r, fill: "none", stroke: "var(--line)", "stroke-width": 12 }), fg),
+      h("div", { class: "letter" }, grade), h("div", { class: "score" }, `${score} / 100`));
+  }
+
+  function snippetBox(snips) {
+    const names = Object.keys(snips || {});
+    if (!names.length) return null;
+    const pre = h("pre");
+    const btns = [];
+    let current = names[0];
+    const show = (n) => { current = n; pre.textContent = snips[n]; btns.forEach((b) => b.classList.toggle("on", b.dataset.n === n)); };
+    names.forEach((n) => btns.push(h("button", { type: "button", "data-n": n, onclick: () => show(n) }, n)));
+    const box = h("div", { class: "snips" }, h("div", { class: "bar2" }, btns,
+      h("button", { type: "button", class: "copy", onclick: () => copy(snips[current]) }, "Copy")), pre);
+    show(current);
+    return box;
+  }
+
+  function findingEl(f, open) {
+    const body = h("div", { class: "body" },
+      f.detail ? h("p", {}, f.detail) : null,
+      h("div", { class: "kv" },
+        f.evidence ? [h("div", {}, "Evidence"), h("div", { class: "evidence" }, f.evidence)] : null,
+        f.fix ? [h("div", {}, "Fix"), h("div", { class: "fix" }, f.fix)] : null,
+        f.tags && f.tags.length ? [h("div", {}, "References"), h("div", { class: "tags" }, f.tags.map((t) => h("span", { class: "tag" }, t)))] : null,
+        f.refs && f.refs.length ? [h("div", {}, "Read more"), h("div", {}, f.refs.map((u) => h("div", {}, h("a", { href: u, target: "_blank", rel: "noopener noreferrer" }, u))))] : null,
+        f.cap ? [h("div", {}, "Grade cap"), h("div", {}, "While this stands, the overall grade cannot be better than ", pill(f.cap))] : null),
+      snippetBox(f.snippets));
+    const el = h("div", { class: `finding sev sev-${f.severity}` + (open ? " open" : "") },
+      h("button", { type: "button", "aria-expanded": open ? "true" : "false", onclick: () => {
+        el.classList.toggle("open");
+        el.firstChild.setAttribute("aria-expanded", el.classList.contains("open") ? "true" : "false");
+      } }, h("span", { class: "badge" }, SEV_LABEL[f.severity]), h("span", { class: "title" }, f.title),
+        h("span", { class: "catname" }, (report && report.categories[f.category] || {}).label || f.category), h("span", { class: "chev" }, "›")),
+      body);
+    return el;
+  }
+
+  let report = null;
+  let meta = null;
+  let activeTab = "findings";
+  let sevFilter = new Set(["critical", "high", "medium", "low"]);
+  let catFilter = null;
+
+  function renderReport(r, m) {
+    report = r; meta = m || {};
+    activeTab = "findings"; catFilter = null;
+    sevFilter = new Set(["critical", "high", "medium", "low"]);
+    document.title = `${r.target} · ${r.grade} · Sitewarden`;
+    drawReport();
+  }
+
+  function drawReport() {
+    const r = report;
+    const counts = r.summary || {};
+    const tech = (r.http && r.http.technology) || {};
+    const certs = r.certificates || [];
+    const shareUrl = STANDALONE ? null : location.origin + "/scan/" + (r.id || meta.id || "");
+
+    const gradeCard = h("div", { class: "card grade-card" }, ring(r.grade, r.score),
+      r.capped_by && r.capped_by.length ? h("div", { class: "capped" }, "Capped by: " + r.capped_by.join("; ")) : null);
+    const metaBits = [
+      r.ip ? ["IP", r.ip] : null,
+      tech.server ? ["Server", tech.server] : null,
+      tech.edge ? ["Edge", tech.edge] : null,
+      certs[0] ? ["Issuer", certs[0].leaf.issuer] : null,
+      ["Scanned", new Date(r.scanned_at).toLocaleString()],
+      ["Took", (r.duration_ms / 1000).toFixed(1) + " s"],
+    ].filter(Boolean);
+    const target = h("div", { class: "card pad target-card" },
+      h("h1", {}, r.target + (r.port && r.port !== 443 ? ":" + r.port : "")),
+      h("div", { class: "meta" }, metaBits.map(([k, v]) => h("span", {}, k + " ", h("b", {}, v)))),
+      h("div", { class: "counts" }, SEVS.map((sv) => h("button", { type: "button", class: `count sev sev-${sv}`, onclick: () => {
+        sevFilter = new Set([sv]); catFilter = null; activeTab = "findings"; drawReport();
+        document.querySelector(".tabs").scrollIntoView({ behavior: "smooth" });
+      } }, h("span", { class: "sw", style: "background:var(--sev)" }), h("b", {}, counts[sv] || 0), SEV_LABEL[sv]))),
+      h("div", { class: "cats" }, Object.entries(r.categories).map(([k, c]) => h("button", { type: "button", class: "cat", onclick: () => {
+        if (c.skipped) return;
+        catFilter = k; sevFilter = new Set(SEVS); activeTab = "findings"; drawReport();
+        document.querySelector(".tabs").scrollIntoView({ behavior: "smooth" });
+      } }, pill(c.skipped ? null : c.grade), h("div", {}, h("div", { class: "lbl" }, c.label), h("div", { class: "sc" }, c.skipped ? "skipped" : c.score + "/100"))))),
+      h("div", { class: "actions" },
+        STANDALONE ? null : h("button", { class: "btn small ghost", type: "button", onclick: () => copy(shareUrl) }, "Copy link"),
+        h("button", { class: "btn small ghost", type: "button", onclick: () => download(`sitewarden-${r.target}.json`, JSON.stringify(r, null, 2), "application/json") }, "JSON"),
+        STANDALONE ? null : h("a", { class: "btn small ghost", href: `/api/scans/${r.id}/report.md` }, "Markdown"),
+        STANDALONE ? null : h("a", { class: "btn small ghost", href: `/api/scans/${r.id}/report.html` }, "HTML report"),
+        STANDALONE ? null : h("button", { class: "btn small ghost", type: "button", onclick: rescan }, "Rescan"),
+        h("button", { class: "btn small ghost", type: "button", onclick: () => window.print() }, "Print")));
+
+    const top = (r.findings || []).filter((f) => ["critical", "high", "medium"].includes(f.severity)).slice(0, 5);
+    const topBox = top.length ? h("div", { class: "top-issues" }, h("div", { class: "section-title", style: "margin-top:24px" }, "Fix these first"),
+      h("div", { class: "findings" }, top.map((f) => findingEl(f, false)))) : h("div", { class: "top-issues" },
+      h("div", { class: "section-title", style: "margin-top:24px" }, "Fix these first"), h("div", { class: "empty" }, "No critical, high or medium issues. Nicely done."));
+
+    const tabs = [
+      ["findings", "All findings", (r.findings || []).filter((f) => f.severity !== "pass").length],
+      ["tls", "TLS", null], ["cert", "Certificate", certs.length || null], ["http", "HTTP & cookies", null],
+      ["content", "Content", null], ["dns", "DNS", null], ["email", "Email", null], ["compliance", "Compliance", null], ["share", "Badge & API", null],
+    ];
+    const tabBar = h("div", { class: "tabs", role: "tablist" }, tabs.map(([k, label, n]) =>
+      h("button", { type: "button", role: "tab", class: "tab" + (activeTab === k ? " on" : ""), "aria-selected": activeTab === k ? "true" : "false",
+        onclick: () => { activeTab = k; drawReport(); } }, label, n ? h("span", { class: "n" }, n) : null)));
+    const panel = h("div", { role: "tabpanel" }, TABS[activeTab]());
+
+    const notes = (r.notes || []).concat(Object.entries(r.errors || {}).map(([k, v]) => `Error in ${k}: ${v}`));
+    page(h("div", { class: "wrap report" },
+      h("div", { class: "summary" }, gradeCard, target),
+      topBox, tabBar, panel,
+      notes.length ? h("ul", { class: "limits" }, notes.map((n) => h("li", {}, n))) : null,
+      h("ul", { class: "limits" }, (r.limitations || []).map((n) => h("li", {}, n)))));
+    if (!STANDALONE) document.body.classList.add("on-scan");
+  }
+
+  async function rescan() {
+    try {
+      const res = await api("/api/scans", { method: "POST", body: JSON.stringify({ target: report.target, force: true }) });
+      nav("/scan/" + res.id)();
+    } catch (e) { toast(e.message); }
+  }
+
+  // ------------------------------------------------------------------ tab: findings
+  function tabFindings() {
+    const all = report.findings || [];
+    const list = all.filter((f) => sevFilter.has(f.severity) && (!catFilter || f.category === catFilter));
+    const chips = SEVS.map((sv) => h("button", { type: "button", class: "chip" + (sevFilter.has(sv) ? " on" : ""), onclick: () => {
+      if (sevFilter.has(sv)) sevFilter.delete(sv); else sevFilter.add(sv);
+      drawReport();
+    } }, `${SEV_LABEL[sv]} ${all.filter((f) => f.severity === sv && (!catFilter || f.category === catFilter)).length}`));
+    return h("div", {},
+      h("div", { class: "filters" }, chips, h("span", { class: "spacer" }),
+        catFilter ? h("button", { type: "button", class: "chip on", onclick: () => { catFilter = null; drawReport(); } }, (report.categories[catFilter] || {}).label + " ✕") : null),
+      list.length ? h("div", { class: "findings" }, list.map((f) => findingEl(f, list.length <= 3)))
+        : h("div", { class: "empty" }, "Nothing matches these filters."));
+  }
+
+  // ------------------------------------------------------------------ tab: TLS
+  const yn = (v, goodWhenTrue = true) => v === null || v === undefined ? h("span", { class: "no" }, "n/a")
+    : h("span", { class: (v === goodWhenTrue) ? "yes" : "bad" }, v ? "Yes" : "No");
+  function tabTLS() {
+    const t = report.tls;
+    if (!t) return h("div", { class: "empty" }, "TLS was not tested.");
+    const protoOrder = ["TLS 1.3", "TLS 1.2", "TLS 1.1", "TLS 1.0", "SSL 3.0", "SSL 2.0"];
+    const good = { "TLS 1.3": true, "TLS 1.2": true };
+    const protos = h("div", { class: "proto-grid" }, protoOrder.map((p) => {
+      const on = t.protocols[p];
+      const cls = on ? (good[p] ? "yes" : "bad") : (good[p] && p === "TLS 1.3" ? "warn" : "no");
+      return h("div", { class: "proto" }, h("div", { class: "n" }, p), h("div", { class: "s " + cls }, on ? "Enabled" : "Disabled"));
+    }));
+    const cipherTables = Object.entries(t.ciphers || {}).map(([p, list]) => h("div", { class: "panel" },
+      h("h2", {}, `${p} cipher suites (${list.length})`),
+      t.server_preference && t.server_preference[p] !== undefined && t.server_preference[p] !== null
+        ? h("div", { class: "note" }, t.server_preference[p] ? "Server enforces its own order (listed in server preference order)." : "Server follows the client's order.") : null,
+      h("div", { class: "scroll-x" }, h("table", { class: "t" },
+        h("thead", {}, h("tr", {}, h("th", {}, "Suite"), h("th", {}, "Key exchange"), h("th", {}, "Bits"), h("th", {}, "Rating"))),
+        h("tbody", {}, list.map((c) => h("tr", {},
+          h("td", { class: "mono" }, c.name, h("div", { class: "note" }, c.code + (c.openssl ? " · " + c.openssl : ""))),
+          h("td", {}, c.kx === "ANY" ? "(TLS 1.3)" : c.kx + (c.dh_bits ? ` ${c.dh_bits}-bit` : ""), c.forward_secret ? "" : h("div", { class: "note" }, "no forward secrecy")),
+          h("td", {}, c.bits),
+          h("td", {}, h("span", { class: "strength " + c.strength }, c.strength)))))))));
+    const f = t.features || {};
+    const feat = [
+      ["Post-quantum key exchange", (t.post_quantum || []).length ? h("span", { class: "yes" }, t.post_quantum.join(", ")) : h("span", { class: "no" }, "No")],
+      ["Key exchange groups", (t.groups || []).join(", ") || "n/a"],
+      ["ALPN", (f.alpn || []).join(", ") || "none"],
+      ["OCSP stapling", yn(f.ocsp_stapling)],
+      ["Secure renegotiation", yn(f.secure_renegotiation)],
+      ["Extended master secret", yn(f.extended_master_secret)],
+      ["Downgrade protection (FALLBACK_SCSV)", yn(f.fallback_scsv)],
+      ["TLS 1.3 downgrade sentinel", yn(f.tls13_downgrade_protection)],
+      ["TLS compression (CRIME)", yn(f.tls_compression, false)],
+      ["Heartbeat extension", yn(f.heartbeat_extension, false)],
+      ["Session tickets", f.session_tickets === null || f.session_tickets === undefined ? "n/a" : (f.session_tickets ? "Yes" : "No")],
+      ["SNI required", f.sni_required ? "Yes" : "No"],
+      ["Handshakes performed", t.handshakes],
+    ];
+    return h("div", { class: "stack" },
+      h("div", { class: "grid2" },
+        h("div", { class: "panel" }, h("h2", {}, "Protocol versions"), protos),
+        h("div", { class: "panel" }, h("h2", {}, "Handshake features"), h("dl", { class: "dl" }, feat.map(([k, v]) => [h("dt", {}, k), h("dd", {}, v)])))),
+      report.mozilla ? h("div", { class: "panel" }, h("h2", {}, "Mozilla server-side TLS profiles"),
+        ["modern", "intermediate"].map((p) => compRow(`Mozilla ${p[0].toUpperCase() + p.slice(1)}`, report.mozilla[p]))) : null,
+      cipherTables.length ? h("div", { class: "stack" }, cipherTables) : null);
+  }
+
+  // ------------------------------------------------------------------ tab: certificate
+  function tabCert() {
+    const certs = report.certificates || [];
+    if (!certs.length) return h("div", { class: "empty" }, "No certificate was analysed.");
+    return h("div", { class: "stack" }, certs.map((c) => {
+      const leaf = c.leaf;
+      const rev = c.revocation || {};
+      const days = leaf.days_left;
+      return h("div", { class: "grid2" },
+        h("div", { class: "panel" }, h("h2", {}, `${c.auth === "server" ? "" : c.auth + " "}certificate`),
+          h("dl", { class: "dl" },
+            [["Subject", leaf.subject], ["Names", (c.names || []).join(", ")], ["Issuer", leaf.issuer_dn],
+              ["Valid", `${leaf.not_before.slice(0, 10)} to ${leaf.not_after.slice(0, 10)}`],
+              ["Expires in", h("span", { class: days < 0 ? "bad" : days < 21 ? "warn" : "yes" }, days + " days")],
+              ["Key", leaf.key], ["Signature", leaf.signature], ["Validation", c.validation],
+              ["Trusted", c.trusted ? h("span", { class: "yes" }, "Yes (Mozilla root store)") : h("span", { class: "bad" }, "No: " + (c.trust_error || ""))],
+              ["Hostname match", yn(c.hostname_ok)],
+              ["CT (embedded SCTs)", String(c.scts)],
+              ["OCSP Must-Staple", c.must_staple ? "Yes" : "No"],
+              ["Revocation", rev.status ? `${rev.status}${rev.method ? " via " + rev.method : ""}` : "not checked"],
+              ["Serial", h("span", { class: "mono" }, leaf.serial)],
+              ["SHA-256", h("span", { class: "mono" }, leaf.sha256)],
+              ["SPKI SHA-256", h("span", { class: "mono" }, leaf.spki_sha256)],
+            ].map(([k, v]) => [h("dt", {}, k), h("dd", {}, v)]))),
+        h("div", { class: "panel" }, h("h2", {}, "Chain sent by the server"),
+          h("div", { class: "chain" }, c.presented.map((p, i) => [
+            i ? h("div", { class: "arrow" }, "▲ signed by ▼") : null,
+            h("div", { class: "cert" }, h("div", { class: "who" }, p.subject),
+              h("div", { class: "sub2" }, `${p.key} · ${p.signature} · expires ${p.not_after.slice(0, 10)}${p.self_signed ? " · self-signed" : ""}`))])),
+          c.path && c.path.length ? h("div", { style: "margin-top:14px" }, h("div", { class: "note" }, "Validated trust path" + (c.aia_fetched ? " (needed an intermediate the server did not send)" : "")),
+            h("div", { class: "flow", style: "margin-top:6px" }, c.path.map((p, i) => [i ? "→" : null, h("span", { class: "hop" }, p)]))) : null));
+    }));
+  }
+
+  // ------------------------------------------------------------------ tab: HTTP
+  function hopsFlow(chain) {
+    if (!chain || !chain.length) return h("span", { class: "note" }, "not tested");
+    return h("div", { class: "flow" }, chain.map((hop, i) => [i ? "→" : null,
+      h("span", { class: "hop" }, hop.url, " ", h("span", { class: "st" }, hop.error ? `(${hop.error})` : `[${hop.status}]`))]));
+  }
+  function tabHTTP() {
+    const x = report.http;
+    if (!x) return h("div", { class: "empty" }, "HTTP was not tested.");
+    const hdrs = x.response_headers || [];
+    const cookies = report.cookies || [];
+    const csp = x.csp || {};
+    return h("div", { class: "stack" },
+      h("div", { class: "panel" }, h("h2", {}, "Redirects"),
+        h("div", { class: "note" }, "Plain HTTP"), hopsFlow(x.http_chain),
+        h("div", { class: "note", style: "margin-top:10px" }, "HTTPS"), hopsFlow(x.https_chain),
+        h("dl", { class: "dl", style: "margin-top:14px" },
+          h("dt", {}, "HSTS"), h("dd", {}, x.hsts ? h("span", { class: "mono" }, x.hsts.raw) : h("span", { class: "bad" }, "not set")),
+          h("dt", {}, "HSTS preloaded"), h("dd", {}, x.hsts_preloaded ? h("span", { class: "yes" }, "Yes (" + x.hsts_preload_entry + ")") : "No"),
+          h("dt", {}, "CSP"), h("dd", {}, csp.level || "none"),
+          h("dt", {}, "security.txt"), h("dd", {}, x.security_txt && x.security_txt.present ? h("span", { class: "yes" }, x.security_txt.path) : "not found"))),
+      csp.policies && csp.policies.length ? h("div", { class: "panel" }, h("h2", {}, "Content Security Policy"),
+        csp.policies.map((p) => h("div", { class: "scroll-x", style: "margin-bottom:10px" }, h("div", { class: "note" }, p.source),
+          h("table", { class: "t" }, h("tbody", {}, Object.entries(p.directives).map(([d, v]) =>
+            h("tr", {}, h("td", { class: "mono", style: "white-space:nowrap" }, d), h("td", { class: "mono" }, v.join(" ") || "(empty)")))))))) : null,
+      h("div", { class: "panel" }, h("h2", {}, `Cookies (${cookies.length})`), cookies.length ? h("div", { class: "scroll-x" }, h("table", { class: "t" },
+        h("thead", {}, h("tr", {}, ["Name", "Secure", "HttpOnly", "SameSite", "Scope", "Lifetime"].map((c) => h("th", {}, c)))),
+        h("tbody", {}, cookies.map((c) => h("tr", {},
+          h("td", { class: "mono" }, c.name, c.session_like ? h("div", { class: "note" }, "session-like") : null),
+          h("td", {}, yn(c.secure)), h("td", {}, c.session_like ? yn(c.httponly) : (c.httponly ? "Yes" : "No")),
+          h("td", {}, c.samesite || h("span", { class: c.session_like ? "warn" : "no" }, "not set")),
+          h("td", { class: "mono" }, (c.domain ? "Domain=" + c.domain : "host-only") + (c.path ? " Path=" + c.path : "")),
+          h("td", {}, c.lifetime_days === null ? "session" : c.lifetime_days + " d")))))) : h("div", { class: "note" }, "No cookies were set.")),
+      h("div", { class: "panel" }, h("h2", {}, "Response headers"), h("div", { class: "note" }, x.final_url || ""),
+        h("div", { class: "scroll-x" }, h("table", { class: "t" }, h("tbody", {}, hdrs.map(([k, v]) =>
+          h("tr", {}, h("td", { class: "mono", style: "white-space:nowrap" }, k), h("td", { class: "mono" }, v))))))));
+  }
+
+  // ------------------------------------------------------------------ tab: content
+  function tabContent() {
+    const c = report.content;
+    if (!c || c.note) return h("div", { class: "empty" }, (c && c.note) || "Page content was not analysed.");
+    const libs = c.libraries || [];
+    return h("div", { class: "stack" },
+      h("div", { class: "grid2" },
+        h("div", { class: "panel" }, h("h2", {}, "Page"), h("dl", { class: "dl" },
+          [["Subresources", c.resources], ["External scripts", (c.scripts || []).length], ["Inline scripts", c.inline_scripts],
+            ["Inline event handlers", c.inline_event_handlers], ["Forms", c.forms]].map(([k, v]) => [h("dt", {}, k), h("dd", {}, v)]))),
+        h("div", { class: "panel" }, h("h2", {}, `Third-party script hosts (${(c.third_party_script_hosts || []).length})`),
+          (c.third_party_script_hosts || []).length ? h("div", { class: "tags" }, c.third_party_script_hosts.map((d) => h("span", { class: "tag" }, d)))
+            : h("div", { class: "note" }, "None. Every script is first-party."))),
+      h("div", { class: "panel" }, h("h2", {}, `JavaScript libraries (${libs.length})`), libs.length ? h("div", { class: "scroll-x" }, h("table", { class: "t" },
+        h("thead", {}, h("tr", {}, ["Library", "Version", "Known vulnerabilities", "Found in"].map((x) => h("th", {}, x)))),
+        h("tbody", {}, libs.map((l) => h("tr", {},
+          h("td", {}, l.library), h("td", { class: "mono" }, l.version),
+          h("td", {}, l.vulnerabilities.length ? h("span", { class: l.worst === "high" || l.worst === "critical" ? "bad" : "warn" },
+            `${l.vulnerabilities.length} (${l.worst})`, h("div", { class: "note" }, [...new Set(l.vulnerabilities.flatMap((v) => v.cve))].slice(0, 5).join(", "))) : h("span", { class: "yes" }, "none known")),
+          h("td", { class: "mono" }, l.source)))))) : h("div", { class: "note" }, "No known libraries detected (detection uses the Retire.js database).")),
+      h("div", { class: "panel" }, h("h2", {}, "Scripts loaded"), h("div", { class: "scroll-x" }, h("table", { class: "t" }, h("tbody", {},
+        (c.scripts || []).map((u) => h("tr", {}, h("td", { class: "mono" }, u))))))));
+  }
+
+  // ------------------------------------------------------------------ tab: DNS
+  function tabDNS() {
+    const d = report.dns;
+    if (!d || d.dns_unavailable) return h("div", { class: "empty" }, "DNS was not tested.");
+    const sec = d.dnssec || {};
+    return h("div", { class: "stack" },
+      h("div", { class: "grid2" },
+        h("div", { class: "panel" }, h("h2", {}, "Records"), h("dl", { class: "dl" },
+          [["Domain", d.domain], ["A", (d.a || []).join(", ") || "none"], ["AAAA", (d.aaaa || []).join(", ") || "none"],
+            ["Name servers", (d.ns || []).join(", ")], ["NS networks", (d.ns_networks || []).join(", ")],
+            ["CAA", d.caa && d.caa.records.length ? h("div", {}, d.caa.records.map((r) => h("div", { class: "mono" }, r)), h("div", { class: "note" }, "at " + d.caa.name)) : "none"],
+          ].map(([k, v]) => [h("dt", {}, k), h("dd", {}, v)]))),
+        h("div", { class: "panel" }, h("h2", {}, "DNSSEC chain of trust"),
+          h("div", { style: "margin-bottom:10px" }, h("span", { class: sec.status === "secure" ? "yes" : sec.status === "bogus" ? "bad" : "warn" }, (sec.status || "unknown").toUpperCase()), " ", h("span", { class: "note" }, sec.detail || "")),
+          h("div", { class: "chain" }, (sec.chain || []).map((z, i) => [i ? h("div", { class: "arrow" }, "▼ DS") : null,
+            h("div", { class: "cert" }, h("div", { class: "who" }, z.zone === "." ? ". (root)" : z.zone),
+              h("div", { class: "sub2" }, z.secure ? "validated" : (z.signed ? "signed" : "unsigned"), z.error ? " · " + z.error : ""),
+              z.keys && z.keys.length ? h("div", { class: "note mono" }, z.keys.slice(0, 4).join(" · ")) : null)])))),
+      d.cname_platforms ? h("div", { class: "panel" }, h("h2", {}, "Hosted platforms (CNAME)"), d.cname_platforms.map((c) => h("div", { class: "mono" }, `${c.name} → ${c.target} (${c.platform})`))) : null);
+  }
+
+  // ------------------------------------------------------------------ tab: email
+  function spfTree(node) {
+    if (!node) return null;
+    return h("li", {}, h("b", {}, node.domain), h("div", { class: "rec" }, node.record),
+      node.children && node.children.length ? h("ul", {}, node.children.map(spfTree)) : null);
+  }
+  function tabEmail() {
+    const e = report.email;
+    if (!e) return h("div", { class: "empty" }, "Email was not tested.");
+    const spf = e.spf || {};
+    const dm = e.dmarc;
+    return h("div", { class: "stack" },
+      h("div", { class: "grid2" },
+        h("div", { class: "panel" }, h("h2", {}, "Mail servers"), h("dl", { class: "dl" },
+          h("dt", {}, "Domain"), h("dd", {}, e.domain),
+          h("dt", {}, "MX"), h("dd", {}, (e.mx || []).join(", ") || (e.null_mx ? "null MX (no mail)" : "none")),
+          (e.smtp || []).map((m) => [h("dt", {}, m.host), h("dd", {}, m.error && m.starttls === null ? h("span", { class: "note" }, m.error)
+            : [yn(m.starttls), " STARTTLS", m.tls_version ? " · " + m.tls_version : "", m.cert_valid === false ? h("span", { class: "warn" }, " · invalid cert") : ""])]))),
+        h("div", { class: "panel" }, h("h2", {}, "DMARC"), dm ? h("div", {}, h("div", { class: "evidence" }, dm.record),
+          h("dl", { class: "dl", style: "margin-top:10px" }, Object.entries(dm.tags).map(([k, v]) => [h("dt", { class: "mono" }, k), h("dd", { class: "mono" }, v)])))
+          : h("div", { class: "bad" }, "No DMARC record"))),
+      h("div", { class: "panel" }, h("h2", {}, `SPF (${spf.lookups ?? 0}/10 DNS lookups)`), spf.record
+        ? h("div", { class: "tree" }, h("ul", {}, spfTree(spf.tree)), (spf.errors || []).map((x) => h("div", { class: "bad" }, x)))
+        : h("div", { class: "bad" }, "No SPF record")),
+      h("div", { class: "grid2" },
+        h("div", { class: "panel" }, h("h2", {}, "DKIM keys found"), (e.dkim || []).length ? h("table", { class: "t" },
+          h("tbody", {}, e.dkim.map((k) => h("tr", {}, h("td", { class: "mono" }, k.selector), h("td", {}, k.revoked ? "revoked" : `${k.key_type || "?"} ${k.bits || ""}`), h("td", {}, k.testing ? "test mode" : "")))))
+          : h("div", { class: "note" }, "None under common selectors. DKIM selectors cannot be listed, so this is not proof DKIM is off.")),
+        h("div", { class: "panel" }, h("h2", {}, "MTA-STS"), e.mta_sts ? h("dl", { class: "dl" },
+          h("dt", {}, "Mode"), h("dd", {}, e.mta_sts.mode || "?"), h("dt", {}, "MX"), h("dd", { class: "mono" }, (e.mta_sts.mx || []).join(", ")),
+          h("dt", {}, "Max age"), h("dd", {}, e.mta_sts.max_age || "?")) : h("div", { class: "note" }, "No MTA-STS policy."))));
+  }
+
+  // ------------------------------------------------------------------ tab: compliance
+  function compRow(name, c) {
+    if (!c) return null;
+    return h("div", { class: "comp" }, h("div", { class: "mark " + (c.compliant ? "yes" : "bad") }, c.compliant ? "✔" : "✘"),
+      h("div", {}, h("b", {}, c.name || name), c.compliant ? h("div", { class: "note" }, "Meets the requirements Sitewarden can observe externally.")
+        : h("ul", {}, (c.problems || []).map((p) => h("li", {}, p)))));
+  }
+  function tabCompliance() {
+    const comp = report.compliance || {};
+    return h("div", { class: "panel" }, h("h2", {}, "Standards"),
+      Object.entries(comp).map(([k, v]) => compRow(k, v)),
+      h("p", { class: "note" }, "External checks can show non-compliance but cannot prove compliance: these standards also cover things only visible from inside your systems."));
+  }
+
+  // ------------------------------------------------------------------ tab: share
+  function tabShare() {
+    if (STANDALONE) return h("div", { class: "empty" }, "Open the hosted report to get a badge.");
+    const badge = `${location.origin}/badge/${report.target}.svg`;
+    const page2 = `${location.origin}/scan/${report.id}`;
+    const md = `[![Sitewarden grade](${badge})](${page2})`;
+    const line = (label, value) => h("div", { style: "margin-top:12px" }, h("div", { class: "note" }, label),
+      h("div", { class: "copyline" }, h("input", { readonly: true, value }), h("button", { class: "btn small ghost", type: "button", onclick: () => copy(value) }, "Copy")));
+    return h("div", { class: "grid2" },
+      h("div", { class: "panel" }, h("h2", {}, "Grade badge"), h("img", { src: `/badge/${report.target}.svg`, alt: "Sitewarden grade badge", height: 20 }),
+        line("Markdown", md), line("Image URL", badge), line("Report link", page2)),
+      h("div", { class: "panel" }, h("h2", {}, "API & CLI"),
+        h("p", { class: "note" }, "Start a scan and poll it:"),
+        h("pre", { class: "evidence" }, `curl -s -X POST ${location.origin}/api/scans \\\n  -H 'Content-Type: application/json' \\\n  -d '{"target":"${report.target}"}'\n\ncurl -s ${location.origin}/api/scans/<id>`),
+        h("p", { class: "note" }, "Or run it locally and fail CI below a grade:"),
+        h("pre", { class: "evidence" }, `pip install sitewarden\nsitewarden scan ${report.target} --fail-under B`)));
+  }
+
+  const TABS = { findings: tabFindings, tls: tabTLS, cert: tabCert, http: tabHTTP, content: tabContent, dns: tabDNS, email: tabEmail, compliance: tabCompliance, share: tabShare };
+
+  // ------------------------------------------------------------------ router
+  function route() {
+    document.body.classList.remove("on-scan");
+    if (STANDALONE) {
+      const data = JSON.parse(document.getElementById("report-data").textContent);
+      renderReport(data, {});
+      return;
+    }
+    const m = location.pathname.match(/^\/scan\/([A-Za-z0-9_-]{8,40})\/?$/);
+    if (m) { scanView(m[1]); return; }
+    const q = new URLSearchParams(location.search).get("url");
+    home(q || "");
+  }
+  window.addEventListener("popstate", route);
+  route();
+})();
+</script>
+</body>
+</html>

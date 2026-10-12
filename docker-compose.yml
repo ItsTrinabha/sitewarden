@@ -1,0 +1,21 @@
+services:
+  sitewarden:
+    build: .
+    image: sitewarden:1.0.0
+    ports:
+      - "8080:8080"
+    volumes:
+      - sitewarden-data:/data
+    environment:
+      SITEWARDEN_RATE_LIMIT: "20"          # scans per client address per hour
+      SITEWARDEN_CACHE_SECONDS: "900"      # reuse a result for 15 minutes
+      SITEWARDEN_MAX_CONCURRENT: "4"
+      SITEWARDEN_SECURITY_CONTACT: "mailto:security@example.com"
+      # SITEWARDEN_TRUST_PROXY: "1"        # set when running behind a reverse proxy
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    restart: unless-stopped
+volumes:
+  sitewarden-data:

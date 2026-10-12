@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sitewarden"
+version = "1.0.0"
+description = "Passive website security grader: TLS, certificates, headers, CSP, cookies, content, DNSSEC and email spoofing protection."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.11"
+authors = [{ name = "Sitewarden contributors" }]
+keywords = ["security", "tls", "ssl", "scanner", "csp", "hsts", "dnssec", "dmarc", "spf", "headers"]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Environment :: Console",
+  "Environment :: Web Environment",
+  "Intended Audience :: Developers",
+  "Intended Audience :: System Administrators",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Topic :: Security",
+  "Topic :: Internet :: WWW/HTTP",
+]
+dependencies = [
+  "cryptography>=42",
+  "dnspython>=2.6",
+  "certifi>=2024.2.2",
+]
+
+[project.optional-dependencies]
+web = ["fastapi>=0.110", "uvicorn>=0.29"]
+dev = ["pytest>=8", "httpx>=0.27", "ruff>=0.5", "fastapi>=0.110", "uvicorn>=0.29"]
+
+[project.scripts]
+sitewarden = "sitewarden.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["sitewarden*"]
+
+[tool.setuptools.package-data]
+"sitewarden.data" = ["*.json", "*.gz"]
+"sitewarden.web" = ["static/*"]
+
+[tool.ruff]
+line-length = 125
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["E501", "B008", "UP042"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["docker: needs Docker to run the nginx test range"]
+filterwarnings = ["ignore:The anyio.abc.BlockingPortal alias:DeprecationWarning"]

@@ -1,0 +1,1869 @@
+{
+  "tool": "sitewarden",
+  "version": "1.0.0",
+  "target": "sha1.lab.test",
+  "port": 10448,
+  "scanned_at": "2026-10-12T13:22:40+00:00",
+  "notes": [],
+  "errors": {},
+  "ip": "127.0.0.1",
+  "registrable_domain": "lab.test",
+  "http": {
+    "https_chain": [
+      {
+        "url": "https://sha1.lab.test:10448/",
+        "status": 200,
+        "error": null,
+        "location": null,
+        "elapsed_ms": 11,
+        "tls": null
+      }
+    ],
+    "http_chain": [],
+    "hsts_preloaded": false,
+    "hsts_preload_entry": null,
+    "http_redirects": [],
+    "https_redirects": [
+      {
+        "url": "https://sha1.lab.test:10448/",
+        "status": 200,
+        "error": null
+      }
+    ],
+    "http_listening": false,
+    "hsts": null,
+    "status": 200,
+    "url": "https://sha1.lab.test:10448/",
+    "cors": {
+      "allow_origin": null,
+      "allow_credentials": false,
+      "reflects_origin": false
+    },
+    "technology": {
+      "server": "nginx/1.10.3",
+      "frameworks": [
+        "WordPress 4.9.8"
+      ]
+    },
+    "response_headers": [
+      [
+        "Server",
+        "nginx/1.10.3"
+      ],
+      [
+        "Date",
+        "Mon, 12 Oct 2026 13:22:40 GMT"
+      ],
+      [
+        "Content-Type",
+        "text/html"
+      ],
+      [
+        "Content-Length",
+        "647"
+      ],
+      [
+        "Last-Modified",
+        "Mon, 12 Oct 2026 13:22:36 GMT"
+      ],
+      [
+        "Connection",
+        "close"
+      ],
+      [
+        "ETag",
+        "\"6accdf1c-287\""
+      ],
+      [
+        "Accept-Ranges",
+        "bytes"
+      ]
+    ],
+    "final_url": "https://sha1.lab.test:10448/",
+    "csp": {
+      "level": "none",
+      "policies": []
+    },
+    "security_txt": {
+      "present": false
+    }
+  },
+  "cookies": [],
+  "content": {
+    "resources": 6,
+    "inline_scripts": 0,
+    "inline_event_handlers": 0,
+    "forms": 1,
+    "third_party_script_hosts": [
+      "cdn.polyfill.io",
+      "cdnjs.cloudflare.com",
+      "code.jquery.com"
+    ],
+    "scripts": [
+      "https://code.jquery.com/jquery-1.12.4.min.js",
+      "https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js",
+      "https://sha1.lab.test:10448/js/legacy.js",
+      "https://cdn.polyfill.io/v3/polyfill.min.js"
+    ],
+    "libraries": [
+      {
+        "library": "jquery",
+        "version": "1.12.4",
+        "source": "https://code.jquery.com/jquery-1.12.4.min.js",
+        "method": "cdn-url",
+        "vulnerabilities": [
+          {
+            "severity": "medium",
+            "summary": "parseHTML() executes scripts in event handlers",
+            "cve": [],
+            "ghsa": null,
+            "below": "2.2.0",
+            "info": [
+              "http://research.insecurelabs.org/jquery/test/",
+              "https://bugs.jquery.com/ticket/11974"
+            ]
+          },
+          {
+            "severity": "low",
+            "summary": "jQuery 1.x and 2.x are End-of-Life and no longer receiving security updates",
+            "cve": [],
+            "ghsa": null,
+            "below": "2.999.999",
+            "info": [
+              "https://github.com/jquery/jquery.com/issues/162"
+            ]
+          },
+          {
+            "severity": "medium",
+            "summary": "3rd party CORS request may execute",
+            "cve": [
+              "CVE-2015-9251"
+            ],
+            "ghsa": "GHSA-rmxg-73gg-4p98",
+            "below": "3.0.0-beta1",
+            "info": [
+              "http://blog.jquery.com/2016/01/08/jquery-2-2-and-1-12-released/",
+              "http://research.insecurelabs.org/jquery/test/",
+              "https://github.com/advisories/GHSA-rmxg-73gg-4p98"
+            ]
+          },
+          {
+            "severity": "medium",
+            "summary": "jQuery before 3.4.0, as used in Drupal, Backdrop CMS, and other products, mishandles jQuery.extend(true, {}, ...) because of Object.prototype pollution",
+            "cve": [
+              "CVE-2019-11358"
+            ],
+            "ghsa": "GHSA-6c3j-c64m-qhgq",
+            "below": "3.4.0",
+            "info": [
+              "https://blog.jquery.com/2019/04/10/jquery-3-4-0-released/",
+              "https://github.com/jquery/jquery/commit/753d591aea698e57d6db58c9f722cd0808619b1b",
+              "https://nvd.nist.gov/vuln/detail/CVE-2019-11358"
+            ]
+          },
+          {
+            "severity": "medium",
+            "summary": "passing HTML containing <option> elements from untrusted sources - even after sanitizing it - to one of jQuery's DOM manipulation methods (i.e. .html(), .append(), and others) may execute untrusted code.",
+            "cve": [
+              "CVE-2020-11023"
+            ],
+            "ghsa": "GHSA-jpcq-cgw6-v4j6",
+            "below": "3.5.0",
+            "info": [
+              "https://blog.jquery.com/2020/04/10/jquery-3-5-0-released/"
+            ]
+          },
+          {
+            "severity": "medium",
+            "summary": "Regex in its jQuery.htmlPrefilter sometimes may introduce XSS",
+            "cve": [
+              "CVE-2020-11022"
+            ],
+            "ghsa": "GHSA-gxr4-xjj5-5px2",
+            "below": "3.5.0",
+            "info": [
+              "https://blog.jquery.com/2020/04/10/jquery-3-5-0-released/"
+            ]
+          }
+        ],
+        "worst": "medium"
+      },
+      {
+        "library": "angularjs",
+        "version": "1.5.8",
+        "source": "https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js",
+        "method": "cdn-url",
+        "vulnerabilities": [
+          {
+            "severity": "medium",
+            "summary": "Cross-Site Scripting via JSONP",
+            "cve": [],
+            "ghsa": "GHSA-28hp-fgcr-2r4h",
+            "below": "1.6.0",
+            "info": [
+              "https://github.com/advisories/GHSA-28hp-fgcr-2r4h"
+            ]
+          },
+          {
+            "severity": "medium",
+            "summary": "DOS in $sanitize",
+            "cve": [],
+            "ghsa": null,
+            "below": "1.6.3",
+            "info": [
+              "https://github.com/angular/angular.js/blob/master/CHANGELOG.md",
+              "https://github.com/angular/angular.js/pull/15699"
+            ]
+          },
+          {
+            "severity": "medium",
+            "summary": "Universal CSP bypass via add-on in Firefox",
+            "cve": [],
+            "ghsa": null,
+            "below": "1.6.3",
+            "info": [
+              "http://pastebin.com/raw/kGrdaypP",
+              "https://github.com/mozilla/addons-linter/issues/1000#issuecomment-282083435"
+            ]
+          },
+          {
+            "severity": "low",
+            "summary": "XSS in $sanitize in Safari/Firefox",
+            "cve": [],
+            "ghsa": null,
+            "below": "1.6.5",
+            "info": [
+              "https://github.com/angular/angular.js/commit/8f31f1ff43b673a24f84422d5c13d6312b2c4d94"
+            ]
+          },
+          {
+            "severity": "low",
+            "summary": "XSS through SVG if enableSvg is set",
+            "cve": [],
+            "ghsa": null,
+            "below": "1.6.9",
+            "info": [
+              "https://github.com/angular/angular.js/blob/master/CHANGELOG.md#169-fiery-basilisk-2018-02-02",
+              "https://vulnerabledoma.in/ngSanitize1.6.8_bypass.html"
+            ]
+          },
+          {
+            "severity": "high",
+            "summary": "Prototype pollution",
+            "cve": [
+              "CVE-2019-10768"
+            ],
+            "ghsa": "GHSA-89mq-4x47-5v83",
+            "below": "1.7.9",
+            "info": [
+              "https://github.com/angular/angular.js/blob/master/CHANGELOG.md#179-pollution-eradication-2019-11-19",
+              "https://github.com/angular/angular.js/commit/726f49dcf6c23106ddaf5cfd5e2e592841db743a"
+            ]
+          },
+          {
+            "severity": "medium",
+            "summary": "XSS via JQLite DOM manipulation functions in AngularJS",
+            "cve": [],
+            "ghsa": "GHSA-5cp4-xmrw-59wf",
+            "below": "1.8.0",
+            "info": [
+              "https://github.com/advisories/GHSA-5cp4-xmrw-59wf"
+            ]
+          },
+          {
+            "severity": "medium",
+            "summary": "XSS may be triggered in AngularJS applications that sanitize user-controlled HTML snippets before passing them to JQLite methods like JQLite.prepend, JQLite.after, JQLite.append, JQLite.replaceWith, JQLite.append, new JQLite and angular.element.",
+            "cve": [
+              "CVE-2020-7676"
+            ],
+            "ghsa": "GHSA-mhp6-pxh8-r675",
+            "below": "1.8.0",
+            "info": [
+              "https://github.com/advisories/GHSA-5cp4-xmrw-59wf",
+              "https://nvd.nist.gov/vuln/detail/CVE-2020-7676"
+            ]
+          },
+          {
+            "severity": "medium",
+            "summary": "angular vulnerable to regular expression denial of service via the $resource service",
+            "cve": [
+              "CVE-2023-26117"
+            ],
+            "ghsa": "GHSA-2qqx-w9hr-q5gx",
+            "below": "1.8.4",
+            "info": [
+              "https://github.com/advisories/GHSA-2qqx-w9hr-q5gx"
+            ]
+          },
+          {
+            "severity": "medium",
+            "summary": "angular vulnerable to regular expression denial of service via the angular.copy() utility",
+            "cve": [
+              "CVE-2023-26116"
+            ],
+            "ghsa": "GHSA-2vrf-hf26-jrp5",
+            "below": "1.8.4",
+            "info": [
+              "https://github.com/advisories/GHSA-2vrf-hf26-jrp5"
+            ]
+          },
+          {
+            "severity": "medium",
+            "summary": "Angular (deprecated package) Cross-site Scripting",
+            "cve": [
+              "CVE-2022-25869"
+            ],
+            "ghsa": "GHSA-prc3-vjfx-vhm9",
+            "below": "1.8.4",
+            "info": [
+              "https://github.com/advisories/GHSA-prc3-vjfx-vhm9"
+            ]
+          },
+          {
+            "severity": "medium",
+            "summary": "angular vulnerable to regular expression denial of service via the <input type=\"url\"> element",
+            "cve": [
+              "CVE-2023-26118"
+            ],
+            "ghsa": "GHSA-qwqh-hm9m-p5hr",
+            "below": "1.8.4",
+            "info": [
+              "https://github.com/advisories/GHSA-qwqh-hm9m-p5hr"
+            ]
+          },
+          {
+            "severity": "low",
+            "summary": "AngularJS improperly sanitizes SVG elements",
+            "cve": [
+              "CVE-2025-0716"
+            ],
+            "ghsa": "GHSA-j58c-ww9w-pwp5",
+            "below": "1.8.4",
+            "info": [
+              "https://github.com/advisories/GHSA-j58c-ww9w-pwp5",
+              "https://nvd.nist.gov/vuln/detail/CVE-2025-0716",
+              "https://codepen.io/herodevs/pen/qEWQmpd/a86a0d29310e12c7a3756768e6c7b915"
+            ]
+          },
+          {
+            "severity": "low",
+            "summary": "AngularJS allows attackers to bypass common image source restrictions",
+            "cve": [
+              "CVE-2024-8373"
+            ],
+            "ghsa": "GHSA-mqm9-c95h-x2p6",
+            "below": "1.8.4",
+            "info": [
+              "https://github.com/advisories/GHSA-mqm9-c95h-x2p6",
+              "https://nvd.nist.gov/vuln/detail/CVE-2024-8373",
+              "https://codepen.io/herodevs/full/bGPQgMp/8da9ce87e99403ee13a295c305ebfa0b"
+            ]
+          },
+          {
+            "severity": "high",
+            "summary": "Angular's deprecated package has a Cross-Site Scripting issue",
+            "cve": [
+              "CVE-2026-11998"
+            ],
+            "ghsa": "GHSA-7x27-g8rg-x87w",
+            "below": "1.8.4",
+            "info": [
+              "https://access.redhat.com/security/cve/CVE-2026-11998",
+              "https://bugzilla.redhat.com/show_bug.cgi?id=2492579",
+              "https://codepen.io/herodevs/pen/JobQdmz/5b3896f56fab66f20cd25e698cf3faa8"
+            ]
+          },
+          {
+            "severity": "high",
+            "summary": "angular vulnerable to super-linear runtime due to backtracking",
+            "cve": [
+              "CVE-2024-21490"
+            ],
+            "ghsa": "GHSA-4w4v-5hc9-xrr2",
+            "below": "1.8.4",
+            "info": [
+              "https://github.com/advisories/GHSA-4w4v-5hc9-xrr2",
+              "https://nvd.nist.gov/vuln/detail/CVE-2024-21490",
+              "https://github.com/angular/angular.js"
+            ]
+          },
+          {
+            "severity": "low",
+            "summary": "AngularJS allows attackers to bypass common image source restrictions",
+            "cve": [
+              "CVE-2024-8372"
+            ],
+            "ghsa": "GHSA-m9gf-397r-hwpg",
+            "below": "1.8.4",
+            "info": [
+              "https://github.com/advisories/GHSA-m9gf-397r-hwpg",
+              "https://nvd.nist.gov/vuln/detail/CVE-2024-8372",
+              "https://codepen.io/herodevs/full/xxoQRNL/0072e627abe03e9cda373bc75b4c1017"
+            ]
+          },
+          {
+            "severity": "medium",
+            "summary": "AngularJS Incomplete Filtering of Special Elements vulnerability",
+            "cve": [
+              "CVE-2025-2336"
+            ],
+            "ghsa": "GHSA-4p4w-6hg8-63wx",
+            "below": "1.8.4",
+            "info": [
+              "https://github.com/advisories/GHSA-4p4w-6hg8-63wx",
+              "https://nvd.nist.gov/vuln/detail/CVE-2025-2336",
+              "https://codepen.io/herodevs/pen/bNGYaXx/412a3a4218387479898912f60c269c6c"
+            ]
+          },
+          {
+            "severity": "medium",
+            "summary": "AngularJS Regular expression Denial of Service (ReDoS)",
+            "cve": [
+              "CVE-2025-4690"
+            ],
+            "ghsa": "GHSA-hfff-63hg-f47j",
+            "below": "1.9.9",
+            "info": [
+              "https://github.com/advisories/GHSA-hfff-63hg-f47j",
+              "https://nvd.nist.gov/vuln/detail/CVE-2025-4690",
+              "https://codepen.io/herodevs/pen/RNNEPzP/751b91eab7730dff277523f3d50e4b77"
+            ]
+          },
+          {
+            "severity": "low",
+            "summary": "End-of-Life: Long term support for AngularJS has been discontinued as of December 31, 2021",
+            "cve": [],
+            "ghsa": null,
+            "below": "1.999",
+            "info": [
+              "https://docs.angularjs.org/misc/version-support-status"
+            ]
+          }
+        ],
+        "worst": "high"
+      },
+      {
+        "library": "jquery",
+        "version": "1.8.3",
+        "source": "https://sha1.lab.test:10448/js/legacy.js",
+        "method": "filecontent",
+        "vulnerabilities": [
+          {
+            "severity": "medium",
+            "summary": "Selector interpreted as HTML",
+            "cve": [
+              "CVE-2012-6708"
+            ],
+            "ghsa": "GHSA-2pqj-h3vj-pqgw",
+            "below": "1.9.0b1",
+            "info": [
+              "http://bugs.jquery.com/ticket/11290",
+              "http://research.insecurelabs.org/jquery/test/",
+              "https://nvd.nist.gov/vuln/detail/CVE-2012-6708"
+            ]
+          },
+          {
+            "severity": "medium",
+            "summary": "Versions of jQuery prior to 1.9.0 are vulnerable to Cross-Site Scripting (XSS). The load method fails to recognize and strip script tags containing whitespace in the closing tag (e.g. </script >), allowing enclosed script logic to execute and enabling attackers to run arbitrary JavaScript in a victim's browser.",
+            "cve": [
+              "CVE-2020-7656"
+            ],
+            "ghsa": "GHSA-q4m3-2j7h-f7xw",
+            "below": "1.9.0",
+            "info": [
+              "https://github.com/advisories/GHSA-q4m3-2j7h-f7xw",
+              "https://nvd.nist.gov/vuln/detail/CVE-2020-7656",
+              "https://research.insecurelabs.org/jquery/test/"
+            ]
+          },
+          {
+            "severity": "medium",
+            "summary": "3rd party CORS request may execute",
+            "cve": [
+              "CVE-2015-9251"
+            ],
+            "ghsa": "GHSA-rmxg-73gg-4p98",
+            "below": "1.12.0",
+            "info": [
+              "http://blog.jquery.com/2016/01/08/jquery-2-2-and-1-12-released/",
+              "http://research.insecurelabs.org/jquery/test/",
+              "https://github.com/advisories/GHSA-rmxg-73gg-4p98"
+            ]
+          },
+          {
+            "severity": "medium",
+            "summary": "parseHTML() executes scripts in event handlers",
+            "cve": [],
+            "ghsa": null,
+            "below": "2.2.0",
+            "info": [
+              "http://research.insecurelabs.org/jquery/test/",
+              "https://bugs.jquery.com/ticket/11974"
+            ]
+          },
+          {
+            "severity": "low",
+            "summary": "jQuery 1.x and 2.x are End-of-Life and no longer receiving security updates",
+            "cve": [],
+            "ghsa": null,
+            "below": "2.999.999",
+            "info": [
+              "https://github.com/jquery/jquery.com/issues/162"
+            ]
+          },
+          {
+            "severity": "medium",
+            "summary": "jQuery before 3.4.0, as used in Drupal, Backdrop CMS, and other products, mishandles jQuery.extend(true, {}, ...) because of Object.prototype pollution",
+            "cve": [
+              "CVE-2019-11358"
+            ],
+            "ghsa": "GHSA-6c3j-c64m-qhgq",
+            "below": "3.4.0",
+            "info": [
+              "https://blog.jquery.com/2019/04/10/jquery-3-4-0-released/",
+              "https://github.com/jquery/jquery/commit/753d591aea698e57d6db58c9f722cd0808619b1b",
+              "https://nvd.nist.gov/vuln/detail/CVE-2019-11358"
+            ]
+          },
+          {
+            "severity": "medium",
+            "summary": "passing HTML containing <option> elements from untrusted sources - even after sanitizing it - to one of jQuery's DOM manipulation methods (i.e. .html(), .append(), and others) may execute untrusted code.",
+            "cve": [
+              "CVE-2020-11023"
+            ],
+            "ghsa": "GHSA-jpcq-cgw6-v4j6",
+            "below": "3.5.0",
+            "info": [
+              "https://blog.jquery.com/2020/04/10/jquery-3-5-0-released/"
+            ]
+          }
+        ],
+        "worst": "medium"
+      }
+    ]
+  },
+  "dns": {
+    "host": "sha1.lab.test",
+    "domain": "lab.test",
+    "a": [
+      "127.0.0.1"
+    ],
+    "aaaa": [],
+    "ns": [
+      "ns1.lab.test.",
+      "ns2.lab.test."
+    ],
+    "ns_networks": [
+      "192.0.2.0/24",
+      "198.51.100.0/24"
+    ],
+    "dnssec": {
+      "domain": "lab.test",
+      "status": "secure",
+      "detail": "Chain of trust validated from the root: . -> test. -> lab.test.",
+      "weak_algorithms": [],
+      "resolver_ad": false,
+      "chain": [
+        {
+          "zone": ".",
+          "signed": true,
+          "secure": true,
+          "ds": [],
+          "keys": [
+            "KSK 5262 ECDSAP256SHA256",
+            "ZSK 57325 ECDSAP256SHA256"
+          ],
+          "algorithms": [],
+          "error": null
+        },
+        {
+          "zone": "test.",
+          "signed": true,
+          "secure": true,
+          "ds": [
+            "19546 ECDSAP256SHA256 SHA-256"
+          ],
+          "keys": [
+            "ZSK 28529 ECDSAP256SHA256",
+            "KSK 19546 ECDSAP256SHA256"
+          ],
+          "algorithms": [
+            "ECDSAP256SHA256"
+          ],
+          "error": null
+        },
+        {
+          "zone": "lab.test.",
+          "signed": true,
+          "secure": true,
+          "ds": [
+            "27127 ECDSAP256SHA256 SHA-256"
+          ],
+          "keys": [
+            "KSK 27127 ECDSAP256SHA256",
+            "ZSK 58462 ECDSAP256SHA256"
+          ],
+          "algorithms": [
+            "ECDSAP256SHA256"
+          ],
+          "error": null
+        }
+      ]
+    },
+    "caa": {
+      "name": "lab.test",
+      "records": [
+        "0 iodef \"mailto:security@lab.test\"",
+        "0 issue \"letsencrypt.org\""
+      ]
+    }
+  },
+  "tls": {
+    "host": "sha1.lab.test",
+    "ip": "127.0.0.1",
+    "port": 10448,
+    "reachable": true,
+    "error": null,
+    "protocols": {
+      "TLS 1.3": false,
+      "TLS 1.2": true,
+      "TLS 1.1": true,
+      "TLS 1.0": true,
+      "SSL 3.0": false,
+      "SSL 2.0": false
+    },
+    "ciphers": {
+      "TLS 1.2": [
+        {
+          "code": "0x002F",
+          "name": "TLS_RSA_WITH_AES_128_CBC_SHA",
+          "openssl": "AES128-SHA",
+          "kx": "RSA",
+          "auth": "RSA",
+          "cipher": "AES_128_CBC",
+          "bits": 128,
+          "mac": "SHA",
+          "forward_secret": false,
+          "aead": false,
+          "strength": "weak"
+        },
+        {
+          "code": "0x000A",
+          "name": "TLS_RSA_WITH_3DES_EDE_CBC_SHA",
+          "openssl": "",
+          "kx": "RSA",
+          "auth": "RSA",
+          "cipher": "3DES_EDE_CBC",
+          "bits": 112,
+          "mac": "SHA",
+          "forward_secret": false,
+          "aead": false,
+          "strength": "weak"
+        }
+      ],
+      "TLS 1.1": [
+        {
+          "code": "0x002F",
+          "name": "TLS_RSA_WITH_AES_128_CBC_SHA",
+          "openssl": "AES128-SHA",
+          "kx": "RSA",
+          "auth": "RSA",
+          "cipher": "AES_128_CBC",
+          "bits": 128,
+          "mac": "SHA",
+          "forward_secret": false,
+          "aead": false,
+          "strength": "weak"
+        },
+        {
+          "code": "0x000A",
+          "name": "TLS_RSA_WITH_3DES_EDE_CBC_SHA",
+          "openssl": "",
+          "kx": "RSA",
+          "auth": "RSA",
+          "cipher": "3DES_EDE_CBC",
+          "bits": 112,
+          "mac": "SHA",
+          "forward_secret": false,
+          "aead": false,
+          "strength": "weak"
+        }
+      ],
+      "TLS 1.0": [
+        {
+          "code": "0x002F",
+          "name": "TLS_RSA_WITH_AES_128_CBC_SHA",
+          "openssl": "AES128-SHA",
+          "kx": "RSA",
+          "auth": "RSA",
+          "cipher": "AES_128_CBC",
+          "bits": 128,
+          "mac": "SHA",
+          "forward_secret": false,
+          "aead": false,
+          "strength": "weak"
+        },
+        {
+          "code": "0x000A",
+          "name": "TLS_RSA_WITH_3DES_EDE_CBC_SHA",
+          "openssl": "",
+          "kx": "RSA",
+          "auth": "RSA",
+          "cipher": "3DES_EDE_CBC",
+          "bits": 112,
+          "mac": "SHA",
+          "forward_secret": false,
+          "aead": false,
+          "strength": "weak"
+        }
+      ]
+    },
+    "server_preference": {
+      "TLS 1.2": false,
+      "TLS 1.1": false,
+      "TLS 1.0": false
+    },
+    "groups": [],
+    "groups_tls12": [],
+    "post_quantum": [],
+    "features": {
+      "ocsp_stapling": false,
+      "secure_renegotiation": true,
+      "extended_master_secret": false,
+      "session_tickets": true,
+      "tls_compression": false,
+      "heartbeat_extension": true,
+      "fallback_scsv": true,
+      "sct_tls_extension": false,
+      "alpn": [],
+      "tls13_downgrade_protection": null,
+      "sni_required": false
+    },
+    "sslv2_ciphers": [],
+    "handshakes": 29,
+    "notes": []
+  },
+  "certificates": [
+    {
+      "auth": "RSA",
+      "presented": [
+        {
+          "subject": "sha1.lab.test",
+          "subject_dn": "CN=sha1.lab.test",
+          "issuer": "sha1.lab.test",
+          "issuer_dn": "CN=sha1.lab.test",
+          "issuer_org": null,
+          "serial": "d2630dfd9c5812660ed290d6a2f9d8aca2c3fab",
+          "not_before": "2026-10-12T13:22:36+00:00",
+          "not_after": "2026-11-11T13:22:36+00:00",
+          "days_left": 29,
+          "lifetime_days": 30,
+          "key": "RSA 1024",
+          "key_type": "RSA",
+          "key_bits": 1024,
+          "signature": "SHA1 with sha1WithRSAEncryption",
+          "sha256": "aaaff9f6bd166a73dba008ef4d1968fe3986c51f40f8975b40fa037a16e35b31",
+          "spki_sha256": "46c537852f47d18015c81a215b890321545622b88437703d19ccb7f782a5da7c",
+          "self_signed": true,
+          "is_ca": true
+        }
+      ],
+      "leaf": {
+        "subject": "sha1.lab.test",
+        "subject_dn": "CN=sha1.lab.test",
+        "issuer": "sha1.lab.test",
+        "issuer_dn": "CN=sha1.lab.test",
+        "issuer_org": null,
+        "serial": "d2630dfd9c5812660ed290d6a2f9d8aca2c3fab",
+        "not_before": "2026-10-12T13:22:36+00:00",
+        "not_after": "2026-11-11T13:22:36+00:00",
+        "days_left": 29,
+        "lifetime_days": 30,
+        "key": "RSA 1024",
+        "key_type": "RSA",
+        "key_bits": 1024,
+        "signature": "SHA1 with sha1WithRSAEncryption",
+        "sha256": "aaaff9f6bd166a73dba008ef4d1968fe3986c51f40f8975b40fa037a16e35b31",
+        "spki_sha256": "46c537852f47d18015c81a215b890321545622b88437703d19ccb7f782a5da7c",
+        "self_signed": true,
+        "is_ca": true
+      },
+      "names": [
+        "sha1.lab.test"
+      ],
+      "trusted": false,
+      "trust_error": "validation failed: basicConstraints.cA must not be asserted in an EE certificate (encountered processing <Certificate(subject=<Name(CN=sha1.lab.test)>, ...)>)",
+      "path": [],
+      "aia_fetched": false,
+      "hostname_ok": true,
+      "validation": "unknown",
+      "scts": 0,
+      "must_staple": false,
+      "ocsp_urls": [],
+      "crl_urls": [],
+      "revocation": {}
+    }
+  ],
+  "mozilla": {
+    "modern": {
+      "compliant": false,
+      "problems": [
+        "protocols not in profile: TLSv1.0, TLSv1.1, TLSv1.2",
+        "TLS 1.3 missing",
+        "2 TLS 1.2 suites outside the profile",
+        "RSA certificate not allowed"
+      ],
+      "oldest_clients": [
+        "Firefox 63",
+        "Android 10.0",
+        "Chrome 70",
+        "Edge 75",
+        "Java 11",
+        "OpenSSL 1.1.1",
+        "Opera 57",
+        "Safari 12.1"
+      ]
+    },
+    "intermediate": {
+      "compliant": false,
+      "problems": [
+        "protocols not in profile: TLSv1.0, TLSv1.1",
+        "TLS 1.3 missing",
+        "2 TLS 1.2 suites outside the profile",
+        "RSA key below 2048 bits"
+      ],
+      "oldest_clients": [
+        "Firefox 31.3.0",
+        "Android 4.4.2",
+        "Chrome 49",
+        "Edge 15 on Windows 10",
+        "IE 11 on Windows 10",
+        "Java 8u161",
+        "OpenSSL 1.0.1l",
+        "Opera 20",
+        "Safari 9"
+      ]
+    },
+    "guidelines_version": 6.0
+  },
+  "email": {
+    "domain": "lab.test",
+    "mx": [
+      "mail.lab.test"
+    ],
+    "null_mx": false,
+    "spf": {
+      "record": "v=spf1 ip4:192.0.2.0/24 include:_spf.lab.test. -all",
+      "all": "-",
+      "lookups": 1,
+      "void_lookups": 0,
+      "errors": [],
+      "warnings": [],
+      "includes": [
+        "_spf.lab.test."
+      ],
+      "tree": {
+        "domain": "lab.test",
+        "record": "v=spf1 ip4:192.0.2.0/24 include:_spf.lab.test. -all",
+        "children": [
+          {
+            "domain": "_spf.lab.test.",
+            "record": "v=spf1 ip4:198.51.100.0/24 -all",
+            "children": []
+          }
+        ]
+      }
+    },
+    "dmarc": {
+      "record": "v=DMARC1; p=reject; rua=mailto:dmarc@lab.test; adkim=s; aspf=s",
+      "tags": {
+        "v": "DMARC1",
+        "p": "reject",
+        "rua": "mailto:dmarc@lab.test",
+        "adkim": "s",
+        "aspf": "s"
+      }
+    },
+    "dkim": [
+      {
+        "selector": "selector1",
+        "record": "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1gzUTpiFdjDi2BsrCQNBdUUmBv8efdyml92IS1LE2hp3qmGIUNLXT8s6MySLs0uo2xFGqI19ICxJQ6S6IvPAXGzO+C9yVxQNpjnNdHswLRSKL3XQXT6A3xX89CzBdVX05HRazCfoLR",
+        "testing": false,
+        "revoked": false,
+        "key_type": "rsa",
+        "bits": 2048
+      }
+    ],
+    "mta_sts": null
+  },
+  "grade": "F",
+  "score": 32.2,
+  "categories": {
+    "tls": {
+      "label": "TLS protocols & ciphers",
+      "score": 20,
+      "grade": "F",
+      "counts": {
+        "critical": 0,
+        "high": 1,
+        "medium": 2,
+        "low": 4,
+        "info": 2,
+        "pass": 3
+      },
+      "skipped": false
+    },
+    "certificate": {
+      "label": "Certificate",
+      "score": 0,
+      "grade": "F",
+      "counts": {
+        "critical": 1,
+        "high": 2,
+        "medium": 0,
+        "low": 0,
+        "info": 0,
+        "pass": 2
+      },
+      "skipped": false
+    },
+    "headers": {
+      "label": "HTTP security headers",
+      "score": 15,
+      "grade": "F",
+      "counts": {
+        "critical": 0,
+        "high": 1,
+        "medium": 3,
+        "low": 2,
+        "info": 5,
+        "pass": 0
+      },
+      "skipped": false
+    },
+    "cookies": {
+      "label": "Cookies",
+      "score": 100,
+      "grade": "A+",
+      "counts": {
+        "critical": 0,
+        "high": 0,
+        "medium": 0,
+        "low": 0,
+        "info": 1,
+        "pass": 0
+      },
+      "skipped": false
+    },
+    "content": {
+      "label": "Page content & scripts",
+      "score": 0,
+      "grade": "F",
+      "counts": {
+        "critical": 1,
+        "high": 3,
+        "medium": 3,
+        "low": 2,
+        "info": 1,
+        "pass": 0
+      },
+      "skipped": false
+    },
+    "dns": {
+      "label": "DNS & domain",
+      "score": 100,
+      "grade": "A+",
+      "counts": {
+        "critical": 0,
+        "high": 0,
+        "medium": 0,
+        "low": 0,
+        "info": 1,
+        "pass": 3
+      },
+      "skipped": false
+    },
+    "email": {
+      "label": "Email authentication",
+      "score": 85,
+      "grade": "A-",
+      "counts": {
+        "critical": 0,
+        "high": 0,
+        "medium": 1,
+        "low": 0,
+        "info": 0,
+        "pass": 4
+      },
+      "skipped": false
+    }
+  },
+  "capped_by": [],
+  "skipped": [],
+  "compliance": {
+    "pci_dss_4": {
+      "name": "PCI DSS v4.0 req. 4.2.1 (strong cryptography in transit)",
+      "compliant": false,
+      "problems": [
+        "SSL or early TLS (1.0) enabled",
+        "TLS 1.1 enabled (PCI SSC guidance treats it as insecure)",
+        "insecure cipher suites (export/NULL/RC4/DES/3DES)",
+        "certificate not valid and trusted"
+      ]
+    },
+    "nist_800_52r2": {
+      "name": "NIST SP 800-52 Rev. 2 (US federal TLS guidelines)",
+      "compliant": false,
+      "problems": [
+        "TLS 1.3 not supported (required since January 2024)",
+        "protocols older than TLS 1.2 enabled",
+        "2 suites outside the SP 800-52r2 approved list (e.g. TLS_RSA_WITH_3DES_EDE_CBC_SHA)",
+        "RSA key below 2048 bits"
+      ]
+    },
+    "mozilla_modern": {
+      "name": "Mozilla Modern profile (v6.0)",
+      "compliant": false,
+      "problems": [
+        "protocols not in profile: TLSv1.0, TLSv1.1, TLSv1.2",
+        "TLS 1.3 missing",
+        "2 TLS 1.2 suites outside the profile",
+        "RSA certificate not allowed"
+      ]
+    },
+    "mozilla_intermediate": {
+      "name": "Mozilla Intermediate profile (v6.0)",
+      "compliant": false,
+      "problems": [
+        "protocols not in profile: TLSv1.0, TLSv1.1",
+        "TLS 1.3 missing",
+        "2 TLS 1.2 suites outside the profile",
+        "RSA key below 2048 bits"
+      ]
+    },
+    "owasp_headers": {
+      "name": "OWASP Secure Headers baseline",
+      "compliant": false,
+      "problems": [
+        "missing or weak Strict-Transport-Security",
+        "missing or weak Content-Security-Policy",
+        "missing or weak frame-ancestors / X-Frame-Options",
+        "missing or weak X-Content-Type-Options"
+      ]
+    },
+    "bulk_sender": {
+      "name": "Gmail / Yahoo bulk-sender authentication (2024)",
+      "compliant": true,
+      "problems": []
+    }
+  },
+  "findings": [
+    {
+      "id": "cert.untrusted",
+      "category": "certificate",
+      "severity": "critical",
+      "title": "Self-signed certificate",
+      "detail": "Validation against the Mozilla root store failed: validation failed: basicConstraints.cA must not be asserted in an EE certificate (encountered processing <Certificate(subject=<Name(CN=sha1.lab.test)>, ...)>). Browsers will show a security warning, and users trained to click through warnings can be intercepted.",
+      "evidence": "Presented chain: sha1.lab.test",
+      "fix": "Use a certificate from a publicly trusted CA (Let's Encrypt is free) and serve the full chain.",
+      "snippets": {},
+      "refs": [],
+      "cap": "F",
+      "tags": [
+        "CWE-295"
+      ]
+    },
+    {
+      "id": "content.compromised_cdn",
+      "category": "content",
+      "severity": "critical",
+      "title": "Loads script from a known-compromised CDN",
+      "detail": "Sold in 2024 and used to inject malware into more than 100,000 sites (Sansec, June 2024). Whoever controls that host can run any code in your visitors' browsers.",
+      "evidence": "https://cdn.polyfill.io/v3/polyfill.min.js, https://cdn.polyfill.io/v3/polyfill.min.js",
+      "fix": "Remove the script tag immediately.",
+      "snippets": {},
+      "refs": [
+        "https://sansec.io/research/polyfill-supply-chain-attack"
+      ],
+      "cap": "F",
+      "tags": [
+        "CWE-829",
+        "CWE-506"
+      ]
+    },
+    {
+      "id": "cert.key",
+      "category": "certificate",
+      "severity": "high",
+      "title": "Weak certificate key (RSA 1024)",
+      "detail": "1024-bit RSA has been within reach of well-funded attackers for years and is no longer issued by public CAs.",
+      "evidence": null,
+      "fix": "Reissue with RSA 2048+ or ECDSA P-256.",
+      "snippets": {},
+      "refs": [],
+      "cap": "B",
+      "tags": [
+        "CWE-326"
+      ]
+    },
+    {
+      "id": "cert.signature",
+      "category": "certificate",
+      "severity": "high",
+      "title": "Certificate signed with a broken hash (SHA1 with sha1WithRSAEncryption)",
+      "detail": "SHA-1 collisions are practical (SHAttered, 2017); browsers reject SHA-1 leaf certificates.",
+      "evidence": null,
+      "fix": "Reissue the certificate; every public CA signs with SHA-256 or better.",
+      "snippets": {},
+      "refs": [],
+      "cap": "C",
+      "tags": []
+    },
+    {
+      "id": "content.form_http",
+      "category": "content",
+      "severity": "high",
+      "title": "Form submits over plain HTTP (password field)",
+      "detail": "Whatever the user types is sent unencrypted.",
+      "evidence": "<form action=\"http://legacy.lab.test:10080/login\">",
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": [
+        "CWE-319"
+      ]
+    },
+    {
+      "id": "content.mixed_active",
+      "category": "content",
+      "severity": "high",
+      "title": "Active mixed content: 1 script/style/frame URL(s) over HTTP",
+      "detail": "Browsers block these, which breaks the page; where they are not blocked (older browsers, some WebViews) a network attacker can replace them and take over the page.",
+      "evidence": "http://legacy.lab.test:10080/style.css",
+      "fix": "Load every subresource over HTTPS.",
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": [
+        "CWE-319",
+        "CWE-311"
+      ]
+    },
+    {
+      "id": "content.vulnerable_library",
+      "category": "content",
+      "severity": "high",
+      "title": "angularjs 1.5.8 has 20 known vulnerabilities",
+      "detail": "Angular (deprecated package) Cross-site Scripting; Angular's deprecated package has a Cross-Site Scripting issue; AngularJS Incomplete Filtering of Special Elements vulnerability; AngularJS Regular expression Denial of Service (ReDoS); AngularJS allows attackers to bypass common image source restrictions; AngularJS improperly sanitizes SVG elements; Cross-Site Scripting via JSONP; DOS in $sanitize",
+      "evidence": "https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js (cdn-url) | CVE-2019-10768, CVE-2020-7676, CVE-2022-25869, CVE-2023-26116, CVE-2023-26117, CVE-2023-26118",
+      "fix": "Upgrade angularjs to 1.999 or later.",
+      "snippets": {},
+      "refs": [
+        "https://github.com/advisories/GHSA-28hp-fgcr-2r4h",
+        "https://github.com/angular/angular.js/blob/master/CHANGELOG.md",
+        "https://github.com/angular/angular.js/pull/15699"
+      ],
+      "cap": null,
+      "tags": [
+        "CWE-1104",
+        "OWASP A06:2021",
+        "CVE-2019-10768",
+        "CVE-2020-7676",
+        "CVE-2022-25869",
+        "CVE-2023-26116"
+      ]
+    },
+    {
+      "id": "hdr.eol_software",
+      "category": "headers",
+      "severity": "high",
+      "title": "End-of-life software advertised: nginx/1.10.3",
+      "detail": "nginx 1.10.3 is several years out of date. Known vulnerabilities in it will not be patched.",
+      "evidence": "server: nginx/1.10.3",
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": [
+        "CWE-1104",
+        "OWASP A06:2021"
+      ]
+    },
+    {
+      "id": "tls.no_fs",
+      "category": "tls",
+      "severity": "high",
+      "title": "No forward secrecy",
+      "detail": "Every suite uses static RSA key exchange: anyone who later obtains the private key (breach, subpoena, cloud snapshot) can decrypt all recorded past traffic.",
+      "evidence": null,
+      "fix": "Offer ECDHE suites.",
+      "snippets": {
+        "nginx": "ssl_protocols TLSv1.2 TLSv1.3;\nssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305;\nssl_prefer_server_ciphers off;",
+        "apache": "SSLProtocol -all +TLSv1.2 +TLSv1.3\nSSLCipherSuite ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305\nSSLHonorCipherOrder off",
+        "caddy": "# Caddy's defaults already match Mozilla Intermediate; remove custom 'ciphers' lines.",
+        "haproxy": "ssl-default-bind-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305\nssl-default-bind-ciphersuites TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256"
+      },
+      "refs": [],
+      "cap": "B",
+      "tags": [
+        "CWE-327"
+      ]
+    },
+    {
+      "id": "content.sri",
+      "category": "content",
+      "severity": "medium",
+      "title": "2 CDN resource(s) without Subresource Integrity",
+      "detail": "If the CDN or the package is compromised, the modified file runs on your site. These are fixed, versioned files, so an integrity hash costs nothing.",
+      "evidence": "https://code.jquery.com/jquery-1.12.4.min.js, https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js",
+      "fix": null,
+      "snippets": {
+        "html": "<script src=\"https://cdn.example.com/lib.min.js\"\n        integrity=\"sha384-<base64 hash>\"\n        crossorigin=\"anonymous\"></script>\n<!-- hash: openssl dgst -sha384 -binary lib.min.js | openssl base64 -A -->"
+      },
+      "refs": [
+        "https://www.w3.org/TR/SRI/"
+      ],
+      "cap": null,
+      "tags": [
+        "CWE-353",
+        "CWE-829"
+      ]
+    },
+    {
+      "id": "content.vulnerable_library",
+      "category": "content",
+      "severity": "medium",
+      "title": "jquery 1.12.4 has 6 known vulnerabilities",
+      "detail": "3rd party CORS request may execute; Regex in its jQuery.htmlPrefilter sometimes may introduce XSS; jQuery 1.x and 2.x are End-of-Life and no longer receiving security updates; jQuery before 3.4.0, as used in Drupal, Backdrop CMS, and other products, mishandles jQuery.extend(true, {}, ...) because of Object.prototype pollution; parseHTML() executes scripts in event handlers; passing HTML containing",
+      "evidence": "https://code.jquery.com/jquery-1.12.4.min.js (cdn-url) | CVE-2015-9251, CVE-2019-11358, CVE-2020-11022, CVE-2020-11023",
+      "fix": "Upgrade jquery to 3.5.0 or later.",
+      "snippets": {},
+      "refs": [
+        "http://research.insecurelabs.org/jquery/test/",
+        "https://bugs.jquery.com/ticket/11974",
+        "https://github.com/jquery/jquery.com/issues/162"
+      ],
+      "cap": null,
+      "tags": [
+        "CWE-1104",
+        "OWASP A06:2021",
+        "CVE-2015-9251",
+        "CVE-2019-11358",
+        "CVE-2020-11022",
+        "CVE-2020-11023"
+      ]
+    },
+    {
+      "id": "content.vulnerable_library",
+      "category": "content",
+      "severity": "medium",
+      "title": "jquery 1.8.3 has 7 known vulnerabilities",
+      "detail": "3rd party CORS request may execute; Selector interpreted as HTML; Versions of jQuery prior to 1.9.0 are vulnerable to Cross-Site Scripting (XSS). The load method fails to recognize and strip script tags containing whitespace in the closing tag (e.g. </script >), allowing enclosed script logic to execute and enabling attackers to run arbitrary JavaScript in a victim's browser.; jQuery 1.x and 2.x a",
+      "evidence": "https://sha1.lab.test:10448/js/legacy.js (filecontent) | CVE-2012-6708, CVE-2015-9251, CVE-2019-11358, CVE-2020-11023, CVE-2020-7656",
+      "fix": "Upgrade jquery to 3.5.0 or later.",
+      "snippets": {},
+      "refs": [
+        "http://bugs.jquery.com/ticket/11290",
+        "http://research.insecurelabs.org/jquery/test/",
+        "https://nvd.nist.gov/vuln/detail/CVE-2012-6708"
+      ],
+      "cap": null,
+      "tags": [
+        "CWE-1104",
+        "OWASP A06:2021",
+        "CVE-2012-6708",
+        "CVE-2015-9251",
+        "CVE-2019-11358",
+        "CVE-2020-11023"
+      ]
+    },
+    {
+      "id": "mtasts.policy_unreachable",
+      "category": "email",
+      "severity": "medium",
+      "title": "MTA-STS policy file cannot be fetched",
+      "detail": "The DNS record exists but https://mta-sts.lab.test/.well-known/mta-sts.txt failed, so senders ignore the policy. It must be served over HTTPS with a valid certificate.",
+      "evidence": "connection refused",
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "csp.missing",
+      "category": "headers",
+      "severity": "medium",
+      "title": "No Content Security Policy",
+      "detail": "CSP is the main browser-side defence that stops injected scripts (XSS) from running. Without it, any markup-injection bug becomes code execution in your users' sessions.",
+      "evidence": null,
+      "fix": "Start with a nonce-based strict policy, deployed first as Report-Only.",
+      "snippets": {
+        "nginx": "add_header Content-Security-Policy \"default-src 'self'; script-src 'self' 'nonce-$request_id' 'strict-dynamic'; object-src 'none'; base-uri 'none'; frame-ancestors 'self'; form-action 'self'; upgrade-insecure-requests\" always;",
+        "apache": "Header always set Content-Security-Policy \"default-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'self'; form-action 'self'; upgrade-insecure-requests\"",
+        "caddy": "header Content-Security-Policy \"default-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'self'; form-action 'self'\"",
+        "express": "app.use(helmet.contentSecurityPolicy({ directives: { defaultSrc: [\"'self'\"], objectSrc: [\"'none'\"], baseUri: [\"'none'\"], frameAncestors: [\"'self'\"] } }));"
+      },
+      "refs": [
+        "https://web.dev/articles/strict-csp",
+        "https://csp-evaluator.withgoogle.com/"
+      ],
+      "cap": null,
+      "tags": [
+        "CWE-79",
+        "OWASP A05:2021"
+      ]
+    },
+    {
+      "id": "hdr.framing",
+      "category": "headers",
+      "severity": "medium",
+      "title": "Page can be embedded by any site (clickjacking)",
+      "detail": "No X-Frame-Options or CSP frame-ancestors. A malicious page can load this site in an invisible frame and trick users into clicking buttons on it.",
+      "evidence": null,
+      "fix": "Send CSP frame-ancestors 'self' (and X-Frame-Options: SAMEORIGIN for old browsers).",
+      "snippets": {
+        "nginx": "add_header Content-Security-Policy \"frame-ancestors 'self'\" always;\nadd_header X-Frame-Options SAMEORIGIN always;",
+        "apache": "Header always set X-Frame-Options SAMEORIGIN\nHeader always append Content-Security-Policy \"frame-ancestors 'self'\"",
+        "caddy": "header X-Frame-Options SAMEORIGIN",
+        "express": "app.use(helmet.frameguard({ action: 'sameorigin' }));"
+      },
+      "refs": [],
+      "cap": null,
+      "tags": [
+        "CWE-1021",
+        "OWASP A04:2021"
+      ]
+    },
+    {
+      "id": "hsts.missing",
+      "category": "headers",
+      "severity": "medium",
+      "title": "HTTP Strict Transport Security (HSTS) not enabled",
+      "detail": "Without HSTS a network attacker can strip HTTPS (sslstrip) whenever a user follows an http:// link or types the bare domain, and users can click through certificate warnings.",
+      "evidence": null,
+      "fix": "Send Strict-Transport-Security with max-age of at least one year.",
+      "snippets": {
+        "nginx": "add_header Strict-Transport-Security \"max-age=63072000; includeSubDomains; preload\" always;",
+        "apache": "Header always set Strict-Transport-Security \"max-age=63072000; includeSubDomains; preload\"",
+        "caddy": "header Strict-Transport-Security \"max-age=63072000; includeSubDomains; preload\"",
+        "express": "app.use(helmet.hsts({ maxAge: 63072000, includeSubDomains: true, preload: true }));",
+        "cloudflare": "SSL/TLS -> Edge Certificates -> HTTP Strict Transport Security (HSTS): enable, max-age 12 months, include subdomains, preload"
+      },
+      "refs": [
+        "https://www.rfc-editor.org/rfc/rfc6797"
+      ],
+      "cap": null,
+      "tags": [
+        "CWE-319",
+        "CWE-523"
+      ]
+    },
+    {
+      "id": "tls.legacy_protocols",
+      "category": "tls",
+      "severity": "medium",
+      "title": "TLS 1.0 and TLS 1.1 enabled",
+      "detail": "These versions are deprecated by RFC 8996, rely on MD5/SHA-1 in the handshake, and are banned for cardholder data by PCI DSS. Every browser removed support in 2020.",
+      "evidence": null,
+      "fix": "Allow only TLS 1.2 and TLS 1.3.",
+      "snippets": {
+        "nginx": "ssl_protocols TLSv1.2 TLSv1.3;",
+        "apache": "SSLProtocol -all +TLSv1.2 +TLSv1.3",
+        "caddy": "tls {\n    protocols tls1.2 tls1.3\n}",
+        "haproxy": "ssl-default-bind-options ssl-min-ver TLSv1.2 no-tls-tickets",
+        "iis": "# PowerShell (reboot required)\nNew-Item 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\SecurityProviders\\SCHANNEL\\Protocols\\TLS 1.0\\Server' -Force |\n  New-ItemProperty -Name Enabled -Value 0 -PropertyType DWord -Force\n# repeat for 'TLS 1.1', 'SSL 3.0', 'SSL 2.0'"
+      },
+      "refs": [
+        "https://www.rfc-editor.org/rfc/rfc8996"
+      ],
+      "cap": "B",
+      "tags": [
+        "CWE-327",
+        "PCI-DSS 4.2.1"
+      ]
+    },
+    {
+      "id": "tls.sweet32",
+      "category": "tls",
+      "severity": "medium",
+      "title": "64-bit block ciphers accepted (SWEET32)",
+      "detail": "3DES and IDEA use 64-bit blocks; birthday collisions on long-lived connections leak plaintext (CVE-2016-2183).",
+      "evidence": "TLS_RSA_WITH_3DES_EDE_CBC_SHA",
+      "fix": "Remove 3DES/IDEA suites.",
+      "snippets": {
+        "nginx": "ssl_protocols TLSv1.2 TLSv1.3;\nssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305;\nssl_prefer_server_ciphers off;",
+        "apache": "SSLProtocol -all +TLSv1.2 +TLSv1.3\nSSLCipherSuite ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305\nSSLHonorCipherOrder off",
+        "caddy": "# Caddy's defaults already match Mozilla Intermediate; remove custom 'ciphers' lines.",
+        "haproxy": "ssl-default-bind-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305\nssl-default-bind-ciphersuites TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256"
+      },
+      "refs": [],
+      "cap": "B",
+      "tags": [
+        "CVE-2016-2183"
+      ]
+    },
+    {
+      "id": "content.generator",
+      "category": "content",
+      "severity": "low",
+      "title": "CMS version disclosed: WordPress 4.9.8",
+      "detail": "The generator tag tells attackers exactly which CMS release (and known bugs) to target.",
+      "evidence": null,
+      "fix": "Remove the generator meta tag.",
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": [
+        "CWE-200"
+      ]
+    },
+    {
+      "id": "content.mixed_passive",
+      "category": "content",
+      "severity": "low",
+      "title": "Passive mixed content: 1 media URL(s) over HTTP",
+      "detail": "Images and media over HTTP can be swapped or used to track users; browsers now auto-upgrade or block them.",
+      "evidence": "http://legacy.lab.test:10080/logo.png",
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": [
+        "CWE-319"
+      ]
+    },
+    {
+      "id": "hdr.disclosure",
+      "category": "headers",
+      "severity": "low",
+      "title": "Software versions disclosed in headers",
+      "detail": "Exact version banners let attackers match the server against public exploits without probing.",
+      "evidence": "server: nginx/1.10.3",
+      "fix": null,
+      "snippets": {
+        "nginx": "server_tokens off;\nproxy_hide_header X-Powered-By;",
+        "apache": "ServerTokens Prod\nServerSignature Off\nHeader always unset X-Powered-By",
+        "php": "; php.ini\nexpose_php = Off",
+        "express": "app.disable('x-powered-by');",
+        "iis": "<system.webServer>\n  <security><requestFiltering removeServerHeader=\"true\" /></security>\n  <httpProtocol><customHeaders><remove name=\"X-Powered-By\" /></customHeaders></httpProtocol>\n</system.webServer>"
+      },
+      "refs": [],
+      "cap": null,
+      "tags": [
+        "CWE-200"
+      ]
+    },
+    {
+      "id": "hdr.nosniff",
+      "category": "headers",
+      "severity": "low",
+      "title": "X-Content-Type-Options: nosniff not set",
+      "detail": "Browsers may guess ('sniff') content types and run an uploaded file as script or HTML.",
+      "evidence": null,
+      "fix": null,
+      "snippets": {
+        "nginx": "add_header X-Content-Type-Options nosniff always;",
+        "apache": "Header always set X-Content-Type-Options nosniff",
+        "caddy": "header X-Content-Type-Options nosniff",
+        "express": "app.use(helmet.noSniff());"
+      },
+      "refs": [],
+      "cap": null,
+      "tags": [
+        "CWE-430"
+      ]
+    },
+    {
+      "id": "tls.cbc",
+      "category": "tls",
+      "severity": "low",
+      "title": "2 CBC-mode suites offered with TLS 1.2",
+      "detail": "CBC with MAC-then-encrypt has a long history of padding-oracle bugs (Lucky13, POODLE-TLS, GOLDENDOODLE). Mozilla's Intermediate profile uses AEAD suites only.",
+      "evidence": "TLS_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_3DES_EDE_CBC_SHA",
+      "fix": "Offer only AES-GCM and ChaCha20-Poly1305 suites.",
+      "snippets": {
+        "nginx": "ssl_protocols TLSv1.2 TLSv1.3;\nssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305;\nssl_prefer_server_ciphers off;",
+        "apache": "SSLProtocol -all +TLSv1.2 +TLSv1.3\nSSLCipherSuite ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305\nSSLHonorCipherOrder off",
+        "caddy": "# Caddy's defaults already match Mozilla Intermediate; remove custom 'ciphers' lines.",
+        "haproxy": "ssl-default-bind-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305\nssl-default-bind-ciphersuites TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256"
+      },
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "tls.client_preference",
+      "category": "tls",
+      "severity": "low",
+      "title": "Server follows client cipher order while weak suites exist",
+      "detail": "With weak suites still enabled, the server should enforce its own (strong-first) order.",
+      "evidence": null,
+      "fix": "Enable server cipher preference or remove the weak suites.",
+      "snippets": {
+        "nginx": "ssl_protocols TLSv1.2 TLSv1.3;\nssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305;\nssl_prefer_server_ciphers off;",
+        "apache": "SSLProtocol -all +TLSv1.2 +TLSv1.3\nSSLCipherSuite ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305\nSSLHonorCipherOrder off",
+        "caddy": "# Caddy's defaults already match Mozilla Intermediate; remove custom 'ciphers' lines.",
+        "haproxy": "ssl-default-bind-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305\nssl-default-bind-ciphersuites TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256"
+      },
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "tls.ems",
+      "category": "tls",
+      "severity": "low",
+      "title": "Extended Master Secret not supported",
+      "detail": "RFC 7627 binds the session keys to the full handshake and closes the triple-handshake attack.",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "tls.tls13",
+      "category": "tls",
+      "severity": "low",
+      "title": "TLS 1.3 not supported",
+      "detail": "TLS 1.3 is faster (one round trip) and drops every legacy algorithm. All current browsers use it.",
+      "evidence": null,
+      "fix": "Enable TLS 1.3 (OpenSSL 1.1.1+, nginx 1.13+).",
+      "snippets": {
+        "nginx": "ssl_protocols TLSv1.2 TLSv1.3;",
+        "apache": "SSLProtocol -all +TLSv1.2 +TLSv1.3",
+        "caddy": "tls {\n    protocols tls1.2 tls1.3\n}",
+        "haproxy": "ssl-default-bind-options ssl-min-ver TLSv1.2 no-tls-tickets",
+        "iis": "# PowerShell (reboot required)\nNew-Item 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\SecurityProviders\\SCHANNEL\\Protocols\\TLS 1.0\\Server' -Force |\n  New-ItemProperty -Name Enabled -Value 0 -PropertyType DWord -Force\n# repeat for 'TLS 1.1', 'SSL 3.0', 'SSL 2.0'"
+      },
+      "refs": [],
+      "cap": "A-",
+      "tags": []
+    },
+    {
+      "id": "content.third_party",
+      "category": "content",
+      "severity": "info",
+      "title": "3 third-party script host(s) can run code on this page",
+      "detail": "Every one of these providers, and anyone who compromises them, has full control over the page. Dynamic analytics/tag scripts cannot use SRI, so keep the list short and use CSP to pin it.",
+      "evidence": "cdn.polyfill.io, cdnjs.cloudflare.com, code.jquery.com",
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "cookie.none",
+      "category": "cookies",
+      "severity": "info",
+      "title": "No cookies set on the scanned pages",
+      "detail": "",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "dns.ipv6",
+      "category": "dns",
+      "severity": "info",
+      "title": "No IPv6 (AAAA) address",
+      "detail": "IPv6-only clients and networks cannot connect directly.",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "hdr.coop",
+      "category": "headers",
+      "severity": "info",
+      "title": "No Cross-Origin-Opener-Policy",
+      "detail": "COOP severs window references from cross-origin popups, blocking a class of cross-site leaks (XS-Leaks) and tabnabbing.",
+      "evidence": null,
+      "fix": null,
+      "snippets": {
+        "nginx": "add_header Cross-Origin-Opener-Policy same-origin always;\nadd_header Cross-Origin-Resource-Policy same-site always;",
+        "apache": "Header always set Cross-Origin-Opener-Policy same-origin\nHeader always set Cross-Origin-Resource-Policy same-site",
+        "caddy": "header Cross-Origin-Opener-Policy same-origin\nheader Cross-Origin-Resource-Policy same-site",
+        "express": "app.use(helmet.crossOriginOpenerPolicy()); app.use(helmet.crossOriginResourcePolicy({ policy: 'same-site' }));"
+      },
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "hdr.permissions",
+      "category": "headers",
+      "severity": "info",
+      "title": "No Permissions-Policy",
+      "detail": "Restricting powerful features (camera, microphone, geolocation, payment) limits what injected or third-party code can do.",
+      "evidence": null,
+      "fix": null,
+      "snippets": {
+        "nginx": "add_header Permissions-Policy \"camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()\" always;",
+        "apache": "Header always set Permissions-Policy \"camera=(), microphone=(), geolocation=(), payment=(), usb=()\"",
+        "caddy": "header Permissions-Policy \"camera=(), microphone=(), geolocation=(), payment=(), usb=()\""
+      },
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "hdr.referrer",
+      "category": "headers",
+      "severity": "info",
+      "title": "No Referrer-Policy header",
+      "detail": "Browsers default to strict-origin-when-cross-origin, which is reasonable. Setting it explicitly protects users of older browsers.",
+      "evidence": null,
+      "fix": null,
+      "snippets": {
+        "nginx": "add_header Referrer-Policy strict-origin-when-cross-origin always;",
+        "apache": "Header always set Referrer-Policy strict-origin-when-cross-origin",
+        "caddy": "header Referrer-Policy strict-origin-when-cross-origin",
+        "express": "app.use(helmet.referrerPolicy({ policy: 'strict-origin-when-cross-origin' }));"
+      },
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "http.port80_closed",
+      "category": "headers",
+      "severity": "info",
+      "title": "Port 80 (plain HTTP) is closed or unreachable",
+      "detail": "Visitors who type the bare domain rely on HSTS or the browser's HTTPS-first mode to reach you.",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "sectxt.missing",
+      "category": "headers",
+      "severity": "info",
+      "title": "No security.txt",
+      "detail": "RFC 9116 security.txt tells researchers how to report vulnerabilities. Without it, reports often go to the wrong inbox or nowhere.",
+      "evidence": null,
+      "fix": null,
+      "snippets": {
+        "file": "# /.well-known/security.txt (RFC 9116)\nContact: mailto:security@example.com\nExpires: 2027-12-31T23:59:59Z\nPreferred-Languages: en\nCanonical: https://example.com/.well-known/security.txt\nPolicy: https://example.com/security-policy"
+      },
+      "refs": [
+        "https://www.rfc-editor.org/rfc/rfc9116",
+        "https://securitytxt.org/"
+      ],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "tls.beast",
+      "category": "tls",
+      "severity": "info",
+      "title": "TLS 1.0 with CBC suites (BEAST)",
+      "detail": "BEAST (CVE-2011-3389) is mitigated in every modern browser by record splitting; it is listed for completeness.",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": [
+        "CVE-2011-3389"
+      ]
+    },
+    {
+      "id": "tls.heartbeat",
+      "category": "tls",
+      "severity": "info",
+      "title": "TLS heartbeat extension enabled",
+      "detail": "Heartbeat is unused by browsers and was the vector for Heartbleed (CVE-2014-0160). Sitewarden does not send heartbeat requests, so Heartbleed itself is not tested.",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": [
+        "CVE-2014-0160"
+      ]
+    },
+    {
+      "id": "cert.hostname",
+      "category": "certificate",
+      "severity": "pass",
+      "title": "Certificate covers sha1.lab.test",
+      "detail": "",
+      "evidence": "1 name(s): sha1.lab.test",
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "cert.validity",
+      "category": "certificate",
+      "severity": "pass",
+      "title": "Certificate valid for another 29 days",
+      "detail": "",
+      "evidence": "2026-10-12 to 2026-11-11",
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "caa.present",
+      "category": "dns",
+      "severity": "pass",
+      "title": "CAA restricts certificate issuance (at lab.test)",
+      "detail": "",
+      "evidence": "0 iodef \"mailto:security@lab.test\"; 0 issue \"letsencrypt.org\"",
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "dns.ns",
+      "category": "dns",
+      "severity": "pass",
+      "title": "2 name servers across 2 networks",
+      "detail": "",
+      "evidence": "ns1.lab.test, ns2.lab.test",
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "dnssec.secure",
+      "category": "dns",
+      "severity": "pass",
+      "title": "DNSSEC signed and validated from the root",
+      "detail": "Chain of trust validated from the root: . -> test. -> lab.test.",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "dkim.key",
+      "category": "email",
+      "severity": "pass",
+      "title": "DKIM key 'selector1' (rsa 2048)",
+      "detail": "",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "dmarc.enforced",
+      "category": "email",
+      "severity": "pass",
+      "title": "DMARC enforced (p=reject)",
+      "detail": "",
+      "evidence": "v=DMARC1; p=reject; rua=mailto:dmarc@lab.test; adkim=s; aspf=s",
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "spf.valid",
+      "category": "email",
+      "severity": "pass",
+      "title": "SPF record valid (-all hard fail, 1/10 lookups)",
+      "detail": "",
+      "evidence": "v=spf1 ip4:192.0.2.0/24 include:_spf.lab.test. -all",
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "tlsrpt.present",
+      "category": "email",
+      "severity": "pass",
+      "title": "SMTP TLS reporting (TLS-RPT) configured",
+      "detail": "",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "tls.fallback_scsv",
+      "category": "tls",
+      "severity": "pass",
+      "title": "Downgrade protection (TLS_FALLBACK_SCSV) works",
+      "detail": "",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "tls.renegotiation",
+      "category": "tls",
+      "severity": "pass",
+      "title": "Secure renegotiation supported",
+      "detail": "",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "tls.tls12",
+      "category": "tls",
+      "severity": "pass",
+      "title": "TLS 1.2 supported",
+      "detail": "",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    }
+  ],
+  "summary": {
+    "critical": 2,
+    "high": 7,
+    "medium": 9,
+    "low": 8,
+    "info": 10,
+    "pass": 12
+  },
+  "duration_ms": 258,
+  "limitations": [
+    "Passive checks only: Sitewarden sends ordinary TLS handshakes, page requests and DNS queries, the same traffic a browser or mail server produces.",
+    "Not tested: Heartbleed, ROBOT, application-level flaws (SQL injection, XSS) and anything behind a login."
+  ]
+}

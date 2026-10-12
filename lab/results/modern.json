@@ -1,0 +1,1466 @@
+{
+  "tool": "sitewarden",
+  "version": "1.0.0",
+  "target": "modern.lab.test",
+  "port": 9443,
+  "scanned_at": "2026-10-12T13:22:38+00:00",
+  "notes": [],
+  "errors": {},
+  "ip": "127.0.0.1",
+  "registrable_domain": "lab.test",
+  "http": {
+    "https_chain": [
+      {
+        "url": "https://modern.lab.test:9443/",
+        "status": 200,
+        "error": null,
+        "location": null,
+        "elapsed_ms": 10,
+        "tls": null
+      }
+    ],
+    "http_chain": [
+      {
+        "url": "http://modern.lab.test:9080/",
+        "status": 301,
+        "error": null,
+        "location": "https://modern.lab.test:9443/",
+        "elapsed_ms": 4,
+        "tls": null
+      },
+      {
+        "url": "https://modern.lab.test:9443/",
+        "status": 200,
+        "error": null,
+        "location": null,
+        "elapsed_ms": 12,
+        "tls": null
+      }
+    ],
+    "hsts_preloaded": false,
+    "hsts_preload_entry": null,
+    "http_redirects": [
+      {
+        "url": "http://modern.lab.test:9080/",
+        "status": 301,
+        "error": null
+      },
+      {
+        "url": "https://modern.lab.test:9443/",
+        "status": 200,
+        "error": null
+      }
+    ],
+    "https_redirects": [
+      {
+        "url": "https://modern.lab.test:9443/",
+        "status": 200,
+        "error": null
+      }
+    ],
+    "http_listening": true,
+    "hsts": {
+      "max_age": 63072000,
+      "include_subdomains": true,
+      "preload": true,
+      "valid": true,
+      "raw": "max-age=63072000; includeSubDomains; preload"
+    },
+    "status": 200,
+    "url": "https://modern.lab.test:9443/",
+    "cors": {
+      "allow_origin": null,
+      "allow_credentials": false,
+      "reflects_origin": false
+    },
+    "technology": {
+      "server": "nginx"
+    },
+    "response_headers": [
+      [
+        "Server",
+        "nginx"
+      ],
+      [
+        "Date",
+        "Mon, 12 Oct 2026 13:22:38 GMT"
+      ],
+      [
+        "Content-Type",
+        "text/html"
+      ],
+      [
+        "Transfer-Encoding",
+        "chunked"
+      ],
+      [
+        "Connection",
+        "close"
+      ],
+      [
+        "Strict-Transport-Security",
+        "max-age=63072000; includeSubDomains; preload"
+      ],
+      [
+        "Content-Security-Policy",
+        "default-src 'self'; script-src 'nonce-ed3bc537638486543782a680ac234846' 'strict-dynamic'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'; require-trusted-types-for 'script'; upgrade-insecure-requests"
+      ],
+      [
+        "X-Content-Type-Options",
+        "nosniff"
+      ],
+      [
+        "Referrer-Policy",
+        "strict-origin-when-cross-origin"
+      ],
+      [
+        "Permissions-Policy",
+        "camera=(), microphone=(), geolocation=()"
+      ],
+      [
+        "Cross-Origin-Opener-Policy",
+        "same-origin"
+      ],
+      [
+        "Cross-Origin-Resource-Policy",
+        "same-origin"
+      ],
+      [
+        "Set-Cookie",
+        "__Host-session=r4nd0m; Path=/; Secure; HttpOnly; SameSite=Lax"
+      ]
+    ],
+    "final_url": "https://modern.lab.test:9443/",
+    "csp": {
+      "level": "strict",
+      "policies": [
+        {
+          "source": "header",
+          "directives": {
+            "default-src": [
+              "'self'"
+            ],
+            "script-src": [
+              "'nonce-ed3bc537638486543782a680ac234846'",
+              "'strict-dynamic'"
+            ],
+            "object-src": [
+              "'none'"
+            ],
+            "base-uri": [
+              "'none'"
+            ],
+            "frame-ancestors": [
+              "'none'"
+            ],
+            "form-action": [
+              "'self'"
+            ],
+            "require-trusted-types-for": [
+              "'script'"
+            ],
+            "upgrade-insecure-requests": []
+          }
+        }
+      ]
+    },
+    "security_txt": {
+      "present": true,
+      "path": "/.well-known/security.txt",
+      "fields": {
+        "contact": [
+          "mailto:security@lab.test"
+        ],
+        "expires": [
+          "2027-04-10T13:22:36Z"
+        ],
+        "preferred-languages": [
+          "en"
+        ]
+      },
+      "signed": false
+    }
+  },
+  "dns": {
+    "host": "modern.lab.test",
+    "domain": "lab.test",
+    "a": [
+      "127.0.0.1"
+    ],
+    "aaaa": [
+      "::1"
+    ],
+    "ns": [
+      "ns1.lab.test.",
+      "ns2.lab.test."
+    ],
+    "ns_networks": [
+      "192.0.2.0/24",
+      "198.51.100.0/24"
+    ],
+    "dnssec": {
+      "domain": "lab.test",
+      "status": "secure",
+      "detail": "Chain of trust validated from the root: . -> test. -> lab.test.",
+      "weak_algorithms": [],
+      "resolver_ad": false,
+      "chain": [
+        {
+          "zone": ".",
+          "signed": true,
+          "secure": true,
+          "ds": [],
+          "keys": [
+            "KSK 5262 ECDSAP256SHA256",
+            "ZSK 57325 ECDSAP256SHA256"
+          ],
+          "algorithms": [],
+          "error": null
+        },
+        {
+          "zone": "test.",
+          "signed": true,
+          "secure": true,
+          "ds": [
+            "19546 ECDSAP256SHA256 SHA-256"
+          ],
+          "keys": [
+            "ZSK 28529 ECDSAP256SHA256",
+            "KSK 19546 ECDSAP256SHA256"
+          ],
+          "algorithms": [
+            "ECDSAP256SHA256"
+          ],
+          "error": null
+        },
+        {
+          "zone": "lab.test.",
+          "signed": true,
+          "secure": true,
+          "ds": [
+            "27127 ECDSAP256SHA256 SHA-256"
+          ],
+          "keys": [
+            "KSK 27127 ECDSAP256SHA256",
+            "ZSK 58462 ECDSAP256SHA256"
+          ],
+          "algorithms": [
+            "ECDSAP256SHA256"
+          ],
+          "error": null
+        }
+      ]
+    },
+    "caa": {
+      "name": "lab.test",
+      "records": [
+        "0 iodef \"mailto:security@lab.test\"",
+        "0 issue \"letsencrypt.org\""
+      ]
+    }
+  },
+  "cookies": [
+    {
+      "name": "__Host-session",
+      "value_length": 6,
+      "secure": true,
+      "httponly": true,
+      "samesite": "Lax",
+      "domain": null,
+      "path": "/",
+      "lifetime_days": null,
+      "partitioned": false,
+      "session_like": true,
+      "set_by": "https://modern.lab.test:9443/",
+      "over_https": true
+    },
+    {
+      "name": "__Host-session",
+      "value_length": 6,
+      "secure": true,
+      "httponly": true,
+      "samesite": "Lax",
+      "domain": null,
+      "path": "/",
+      "lifetime_days": null,
+      "partitioned": false,
+      "session_like": true,
+      "set_by": "https://modern.lab.test:9443/",
+      "over_https": true
+    }
+  ],
+  "content": {
+    "resources": 1,
+    "inline_scripts": 0,
+    "inline_event_handlers": 0,
+    "forms": 0,
+    "third_party_script_hosts": [],
+    "scripts": [
+      "https://modern.lab.test:9443/app.js"
+    ],
+    "libraries": []
+  },
+  "tls": {
+    "host": "modern.lab.test",
+    "ip": "127.0.0.1",
+    "port": 9443,
+    "reachable": true,
+    "error": null,
+    "protocols": {
+      "TLS 1.3": true,
+      "TLS 1.2": true,
+      "TLS 1.1": false,
+      "TLS 1.0": false,
+      "SSL 3.0": false,
+      "SSL 2.0": false
+    },
+    "ciphers": {
+      "TLS 1.3": [
+        {
+          "code": "0x1302",
+          "name": "TLS_AES_256_GCM_SHA384",
+          "openssl": "TLS_AES_256_GCM_SHA384",
+          "kx": "ANY",
+          "auth": "ANY",
+          "cipher": "AES_256_GCM",
+          "bits": 256,
+          "mac": "AEAD",
+          "forward_secret": true,
+          "aead": true,
+          "strength": "strong"
+        },
+        {
+          "code": "0x1303",
+          "name": "TLS_CHACHA20_POLY1305_SHA256",
+          "openssl": "TLS_CHACHA20_POLY1305_SHA256",
+          "kx": "ANY",
+          "auth": "ANY",
+          "cipher": "CHACHA20_POLY1305",
+          "bits": 256,
+          "mac": "AEAD",
+          "forward_secret": true,
+          "aead": true,
+          "strength": "strong"
+        },
+        {
+          "code": "0x1301",
+          "name": "TLS_AES_128_GCM_SHA256",
+          "openssl": "TLS_AES_128_GCM_SHA256",
+          "kx": "ANY",
+          "auth": "ANY",
+          "cipher": "AES_128_GCM",
+          "bits": 128,
+          "mac": "AEAD",
+          "forward_secret": true,
+          "aead": true,
+          "strength": "strong"
+        }
+      ],
+      "TLS 1.2": [
+        {
+          "code": "0xC02C",
+          "name": "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384",
+          "openssl": "ECDHE-ECDSA-AES256-GCM-SHA384",
+          "kx": "ECDHE",
+          "auth": "ECDSA",
+          "cipher": "AES_256_GCM",
+          "bits": 256,
+          "mac": "AEAD",
+          "forward_secret": true,
+          "aead": true,
+          "strength": "strong"
+        },
+        {
+          "code": "0xC030",
+          "name": "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
+          "openssl": "ECDHE-RSA-AES256-GCM-SHA384",
+          "kx": "ECDHE",
+          "auth": "RSA",
+          "cipher": "AES_256_GCM",
+          "bits": 256,
+          "mac": "AEAD",
+          "forward_secret": true,
+          "aead": true,
+          "strength": "strong"
+        },
+        {
+          "code": "0xCCA8",
+          "name": "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256",
+          "openssl": "ECDHE-RSA-CHACHA20-POLY1305",
+          "kx": "ECDHE",
+          "auth": "RSA",
+          "cipher": "CHACHA20_POLY1305",
+          "bits": 256,
+          "mac": "AEAD",
+          "forward_secret": true,
+          "aead": true,
+          "strength": "strong"
+        },
+        {
+          "code": "0xCCA9",
+          "name": "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256",
+          "openssl": "ECDHE-ECDSA-CHACHA20-POLY1305",
+          "kx": "ECDHE",
+          "auth": "ECDSA",
+          "cipher": "CHACHA20_POLY1305",
+          "bits": 256,
+          "mac": "AEAD",
+          "forward_secret": true,
+          "aead": true,
+          "strength": "strong"
+        },
+        {
+          "code": "0xC02B",
+          "name": "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256",
+          "openssl": "ECDHE-ECDSA-AES128-GCM-SHA256",
+          "kx": "ECDHE",
+          "auth": "ECDSA",
+          "cipher": "AES_128_GCM",
+          "bits": 128,
+          "mac": "AEAD",
+          "forward_secret": true,
+          "aead": true,
+          "strength": "strong"
+        },
+        {
+          "code": "0xC02F",
+          "name": "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
+          "openssl": "ECDHE-RSA-AES128-GCM-SHA256",
+          "kx": "ECDHE",
+          "auth": "RSA",
+          "cipher": "AES_128_GCM",
+          "bits": 128,
+          "mac": "AEAD",
+          "forward_secret": true,
+          "aead": true,
+          "strength": "strong"
+        }
+      ]
+    },
+    "server_preference": {
+      "TLS 1.3": false,
+      "TLS 1.2": false
+    },
+    "groups": [
+      "X25519MLKEM768",
+      "x25519",
+      "secp256r1",
+      "secp384r1"
+    ],
+    "groups_tls12": [
+      "x25519",
+      "secp256r1",
+      "secp384r1"
+    ],
+    "post_quantum": [
+      "X25519MLKEM768"
+    ],
+    "features": {
+      "ocsp_stapling": false,
+      "secure_renegotiation": true,
+      "extended_master_secret": true,
+      "session_tickets": false,
+      "tls_compression": false,
+      "heartbeat_extension": false,
+      "fallback_scsv": true,
+      "sct_tls_extension": false,
+      "alpn": [
+        "h2"
+      ],
+      "tls13_downgrade_protection": true,
+      "sni_required": false
+    },
+    "sslv2_ciphers": [],
+    "handshakes": 39,
+    "notes": []
+  },
+  "certificates": [
+    {
+      "auth": "ECDSA",
+      "presented": [
+        {
+          "subject": "modern.lab.test",
+          "subject_dn": "CN=modern.lab.test,O=Sitewarden Lab Site",
+          "issuer": "Sitewarden Lab Issuing CA",
+          "issuer_dn": "CN=Sitewarden Lab Issuing CA,O=Sitewarden Lab",
+          "issuer_org": "Sitewarden Lab",
+          "serial": "1837ba25c8d7766f4d7073e819d1226246450e48",
+          "not_before": "2026-10-11T13:22:35+00:00",
+          "not_after": "2027-01-09T13:22:35+00:00",
+          "days_left": 88,
+          "lifetime_days": 90,
+          "key": "ECDSA 256 (secp256r1)",
+          "key_type": "ECDSA",
+          "key_bits": 256,
+          "signature": "SHA256 with ecdsa-with-SHA256",
+          "sha256": "d3d15f33dad3efa383e3c4dbbdc66de32d89532c96469b4476b1805661e4673c",
+          "spki_sha256": "4f3682b3a5e00df0704bee4db783297088804f35c04b5ef98c461ccef4c51097",
+          "self_signed": false,
+          "is_ca": false
+        },
+        {
+          "subject": "Sitewarden Lab Issuing CA",
+          "subject_dn": "CN=Sitewarden Lab Issuing CA,O=Sitewarden Lab",
+          "issuer": "Sitewarden Lab Root CA",
+          "issuer_dn": "CN=Sitewarden Lab Root CA,O=Sitewarden Lab",
+          "issuer_org": "Sitewarden Lab",
+          "serial": "77527133154aa22f75171c3b5bb74ca2b43533ea",
+          "not_before": "2026-10-11T13:22:35+00:00",
+          "not_after": "2031-10-11T13:22:35+00:00",
+          "days_left": 1824,
+          "lifetime_days": 1826,
+          "key": "ECDSA 256 (secp256r1)",
+          "key_type": "ECDSA",
+          "key_bits": 256,
+          "signature": "SHA384 with ecdsa-with-SHA384",
+          "sha256": "0ee887bfdb13b2f258dfab7aa72277c3c3b76e3c5d3f3609e393297772f4a794",
+          "spki_sha256": "c537bda34cdd6b34eb148f6b2dea6805e48d480deeffcbe63b2017a06d6ec26e",
+          "self_signed": false,
+          "is_ca": true
+        }
+      ],
+      "leaf": {
+        "subject": "modern.lab.test",
+        "subject_dn": "CN=modern.lab.test,O=Sitewarden Lab Site",
+        "issuer": "Sitewarden Lab Issuing CA",
+        "issuer_dn": "CN=Sitewarden Lab Issuing CA,O=Sitewarden Lab",
+        "issuer_org": "Sitewarden Lab",
+        "serial": "1837ba25c8d7766f4d7073e819d1226246450e48",
+        "not_before": "2026-10-11T13:22:35+00:00",
+        "not_after": "2027-01-09T13:22:35+00:00",
+        "days_left": 88,
+        "lifetime_days": 90,
+        "key": "ECDSA 256 (secp256r1)",
+        "key_type": "ECDSA",
+        "key_bits": 256,
+        "signature": "SHA256 with ecdsa-with-SHA256",
+        "sha256": "d3d15f33dad3efa383e3c4dbbdc66de32d89532c96469b4476b1805661e4673c",
+        "spki_sha256": "4f3682b3a5e00df0704bee4db783297088804f35c04b5ef98c461ccef4c51097",
+        "self_signed": false,
+        "is_ca": false
+      },
+      "names": [
+        "modern.lab.test"
+      ],
+      "trusted": true,
+      "trust_error": null,
+      "path": [
+        "modern.lab.test",
+        "Sitewarden Lab Issuing CA",
+        "Sitewarden Lab Root CA"
+      ],
+      "aia_fetched": false,
+      "hostname_ok": true,
+      "validation": "DV",
+      "scts": 0,
+      "must_staple": false,
+      "ocsp_urls": [],
+      "crl_urls": [],
+      "revocation": {
+        "status": "not checked",
+        "detail": "certificate lists no OCSP or CRL location"
+      }
+    },
+    {
+      "auth": "RSA",
+      "presented": [
+        {
+          "subject": "modern.lab.test",
+          "subject_dn": "CN=modern.lab.test,O=Sitewarden Lab Site",
+          "issuer": "Sitewarden Lab Issuing CA",
+          "issuer_dn": "CN=Sitewarden Lab Issuing CA,O=Sitewarden Lab",
+          "issuer_org": "Sitewarden Lab",
+          "serial": "249c7e8ce2891049a6fa68949957accb0cf5b18e",
+          "not_before": "2026-10-11T13:22:36+00:00",
+          "not_after": "2027-01-09T13:22:36+00:00",
+          "days_left": 88,
+          "lifetime_days": 90,
+          "key": "RSA 2048",
+          "key_type": "RSA",
+          "key_bits": 2048,
+          "signature": "SHA256 with ecdsa-with-SHA256",
+          "sha256": "a86fe6ba5a97236804a11c0dd87851cf68cb9698857a6227dd5dabbed2551209",
+          "spki_sha256": "ef6051e41552ba1e6bddaf9bf7f2d8115b1709b7ea9df81706fdcf9683c44fd0",
+          "self_signed": false,
+          "is_ca": false
+        },
+        {
+          "subject": "Sitewarden Lab Issuing CA",
+          "subject_dn": "CN=Sitewarden Lab Issuing CA,O=Sitewarden Lab",
+          "issuer": "Sitewarden Lab Root CA",
+          "issuer_dn": "CN=Sitewarden Lab Root CA,O=Sitewarden Lab",
+          "issuer_org": "Sitewarden Lab",
+          "serial": "77527133154aa22f75171c3b5bb74ca2b43533ea",
+          "not_before": "2026-10-11T13:22:35+00:00",
+          "not_after": "2031-10-11T13:22:35+00:00",
+          "days_left": 1824,
+          "lifetime_days": 1826,
+          "key": "ECDSA 256 (secp256r1)",
+          "key_type": "ECDSA",
+          "key_bits": 256,
+          "signature": "SHA384 with ecdsa-with-SHA384",
+          "sha256": "0ee887bfdb13b2f258dfab7aa72277c3c3b76e3c5d3f3609e393297772f4a794",
+          "spki_sha256": "c537bda34cdd6b34eb148f6b2dea6805e48d480deeffcbe63b2017a06d6ec26e",
+          "self_signed": false,
+          "is_ca": true
+        }
+      ],
+      "leaf": {
+        "subject": "modern.lab.test",
+        "subject_dn": "CN=modern.lab.test,O=Sitewarden Lab Site",
+        "issuer": "Sitewarden Lab Issuing CA",
+        "issuer_dn": "CN=Sitewarden Lab Issuing CA,O=Sitewarden Lab",
+        "issuer_org": "Sitewarden Lab",
+        "serial": "249c7e8ce2891049a6fa68949957accb0cf5b18e",
+        "not_before": "2026-10-11T13:22:36+00:00",
+        "not_after": "2027-01-09T13:22:36+00:00",
+        "days_left": 88,
+        "lifetime_days": 90,
+        "key": "RSA 2048",
+        "key_type": "RSA",
+        "key_bits": 2048,
+        "signature": "SHA256 with ecdsa-with-SHA256",
+        "sha256": "a86fe6ba5a97236804a11c0dd87851cf68cb9698857a6227dd5dabbed2551209",
+        "spki_sha256": "ef6051e41552ba1e6bddaf9bf7f2d8115b1709b7ea9df81706fdcf9683c44fd0",
+        "self_signed": false,
+        "is_ca": false
+      },
+      "names": [
+        "modern.lab.test"
+      ],
+      "trusted": true,
+      "trust_error": null,
+      "path": [
+        "modern.lab.test",
+        "Sitewarden Lab Issuing CA",
+        "Sitewarden Lab Root CA"
+      ],
+      "aia_fetched": false,
+      "hostname_ok": true,
+      "validation": "DV",
+      "scts": 0,
+      "must_staple": false,
+      "ocsp_urls": [],
+      "crl_urls": [],
+      "revocation": {
+        "status": "not checked",
+        "detail": "certificate lists no OCSP or CRL location"
+      }
+    }
+  ],
+  "mozilla": {
+    "modern": {
+      "compliant": false,
+      "problems": [
+        "protocols not in profile: TLSv1.2",
+        "6 TLS 1.2 suites outside the profile",
+        "RSA certificate not allowed"
+      ],
+      "oldest_clients": [
+        "Firefox 63",
+        "Android 10.0",
+        "Chrome 70",
+        "Edge 75",
+        "Java 11",
+        "OpenSSL 1.1.1",
+        "Opera 57",
+        "Safari 12.1"
+      ]
+    },
+    "intermediate": {
+      "compliant": true,
+      "problems": [],
+      "oldest_clients": [
+        "Firefox 31.3.0",
+        "Android 4.4.2",
+        "Chrome 49",
+        "Edge 15 on Windows 10",
+        "IE 11 on Windows 10",
+        "Java 8u161",
+        "OpenSSL 1.0.1l",
+        "Opera 20",
+        "Safari 9"
+      ]
+    },
+    "guidelines_version": 6.0
+  },
+  "email": {
+    "domain": "lab.test",
+    "mx": [
+      "mail.lab.test"
+    ],
+    "null_mx": false,
+    "spf": {
+      "record": "v=spf1 ip4:192.0.2.0/24 include:_spf.lab.test. -all",
+      "all": "-",
+      "lookups": 1,
+      "void_lookups": 0,
+      "errors": [],
+      "warnings": [],
+      "includes": [
+        "_spf.lab.test."
+      ],
+      "tree": {
+        "domain": "lab.test",
+        "record": "v=spf1 ip4:192.0.2.0/24 include:_spf.lab.test. -all",
+        "children": [
+          {
+            "domain": "_spf.lab.test.",
+            "record": "v=spf1 ip4:198.51.100.0/24 -all",
+            "children": []
+          }
+        ]
+      }
+    },
+    "dmarc": {
+      "record": "v=DMARC1; p=reject; rua=mailto:dmarc@lab.test; adkim=s; aspf=s",
+      "tags": {
+        "v": "DMARC1",
+        "p": "reject",
+        "rua": "mailto:dmarc@lab.test",
+        "adkim": "s",
+        "aspf": "s"
+      }
+    },
+    "dkim": [
+      {
+        "selector": "selector1",
+        "record": "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1gzUTpiFdjDi2BsrCQNBdUUmBv8efdyml92IS1LE2hp3qmGIUNLXT8s6MySLs0uo2xFGqI19ICxJQ6S6IvPAXGzO+C9yVxQNpjnNdHswLRSKL3XQXT6A3xX89CzBdVX05HRazCfoLR",
+        "testing": false,
+        "revoked": false,
+        "key_type": "rsa",
+        "bits": 2048
+      }
+    ],
+    "mta_sts": null
+  },
+  "grade": "A",
+  "score": 95.5,
+  "categories": {
+    "tls": {
+      "label": "TLS protocols & ciphers",
+      "score": 100,
+      "grade": "A+",
+      "counts": {
+        "critical": 0,
+        "high": 0,
+        "medium": 0,
+        "low": 0,
+        "info": 1,
+        "pass": 8
+      },
+      "skipped": false
+    },
+    "certificate": {
+      "label": "Certificate",
+      "score": 85,
+      "grade": "A-",
+      "counts": {
+        "critical": 0,
+        "high": 0,
+        "medium": 1,
+        "low": 0,
+        "info": 0,
+        "pass": 9
+      },
+      "skipped": false
+    },
+    "headers": {
+      "label": "HTTP security headers",
+      "score": 100,
+      "grade": "A+",
+      "counts": {
+        "critical": 0,
+        "high": 0,
+        "medium": 0,
+        "low": 0,
+        "info": 0,
+        "pass": 13
+      },
+      "skipped": false
+    },
+    "cookies": {
+      "label": "Cookies",
+      "score": 100,
+      "grade": "A+",
+      "counts": {
+        "critical": 0,
+        "high": 0,
+        "medium": 0,
+        "low": 0,
+        "info": 0,
+        "pass": 2
+      },
+      "skipped": false
+    },
+    "content": {
+      "label": "Page content & scripts",
+      "score": 100,
+      "grade": "A+",
+      "counts": {
+        "critical": 0,
+        "high": 0,
+        "medium": 0,
+        "low": 0,
+        "info": 0,
+        "pass": 1
+      },
+      "skipped": false
+    },
+    "dns": {
+      "label": "DNS & domain",
+      "score": 100,
+      "grade": "A+",
+      "counts": {
+        "critical": 0,
+        "high": 0,
+        "medium": 0,
+        "low": 0,
+        "info": 0,
+        "pass": 4
+      },
+      "skipped": false
+    },
+    "email": {
+      "label": "Email authentication",
+      "score": 85,
+      "grade": "A-",
+      "counts": {
+        "critical": 0,
+        "high": 0,
+        "medium": 1,
+        "low": 0,
+        "info": 0,
+        "pass": 4
+      },
+      "skipped": false
+    }
+  },
+  "capped_by": [],
+  "skipped": [],
+  "compliance": {
+    "pci_dss_4": {
+      "name": "PCI DSS v4.0 req. 4.2.1 (strong cryptography in transit)",
+      "compliant": true,
+      "problems": []
+    },
+    "nist_800_52r2": {
+      "name": "NIST SP 800-52 Rev. 2 (US federal TLS guidelines)",
+      "compliant": false,
+      "problems": [
+        "3 suites outside the SP 800-52r2 approved list (e.g. TLS_CHACHA20_POLY1305_SHA256)"
+      ]
+    },
+    "mozilla_modern": {
+      "name": "Mozilla Modern profile (v6.0)",
+      "compliant": false,
+      "problems": [
+        "protocols not in profile: TLSv1.2",
+        "6 TLS 1.2 suites outside the profile",
+        "RSA certificate not allowed"
+      ]
+    },
+    "mozilla_intermediate": {
+      "name": "Mozilla Intermediate profile (v6.0)",
+      "compliant": true,
+      "problems": []
+    },
+    "owasp_headers": {
+      "name": "OWASP Secure Headers baseline",
+      "compliant": true,
+      "problems": []
+    },
+    "bulk_sender": {
+      "name": "Gmail / Yahoo bulk-sender authentication (2024)",
+      "compliant": true,
+      "problems": []
+    }
+  },
+  "findings": [
+    {
+      "id": "cert.ct",
+      "category": "certificate",
+      "severity": "medium",
+      "title": "No Certificate Transparency proof found",
+      "detail": "Chrome and Safari require SCTs for publicly trusted certificates. None are embedded, and none came in the TLS extension. They may still arrive in a stapled OCSP response.",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "mtasts.policy_unreachable",
+      "category": "email",
+      "severity": "medium",
+      "title": "MTA-STS policy file cannot be fetched",
+      "detail": "The DNS record exists but https://mta-sts.lab.test/.well-known/mta-sts.txt failed, so senders ignore the policy. It must be served over HTTPS with a valid certificate.",
+      "evidence": "connection refused",
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "tls.groups",
+      "category": "tls",
+      "severity": "info",
+      "title": "Key exchange groups: X25519MLKEM768, x25519, secp256r1, secp384r1",
+      "detail": "Most preferred: X25519MLKEM768.",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "cert.dual",
+      "category": "certificate",
+      "severity": "pass",
+      "title": "Serves both ECDSA and RSA certificates",
+      "detail": "Modern clients get the faster ECDSA certificate while legacy clients still connect.",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "cert.hostname",
+      "category": "certificate",
+      "severity": "pass",
+      "title": "Certificate covers modern.lab.test (ECDSA certificate)",
+      "detail": "",
+      "evidence": "1 name(s): modern.lab.test",
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "cert.hostname",
+      "category": "certificate",
+      "severity": "pass",
+      "title": "Certificate covers modern.lab.test (RSA certificate)",
+      "detail": "",
+      "evidence": "1 name(s): modern.lab.test",
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "cert.key",
+      "category": "certificate",
+      "severity": "pass",
+      "title": "Strong certificate key: ECDSA 256 (secp256r1) (ECDSA certificate)",
+      "detail": "",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "cert.key",
+      "category": "certificate",
+      "severity": "pass",
+      "title": "Strong certificate key: RSA 2048 (RSA certificate)",
+      "detail": "",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "cert.trusted",
+      "category": "certificate",
+      "severity": "pass",
+      "title": "Trusted by the Mozilla root store (ECDSA certificate)",
+      "detail": "",
+      "evidence": "modern.lab.test -> Sitewarden Lab Issuing CA -> Sitewarden Lab Root CA",
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "cert.trusted",
+      "category": "certificate",
+      "severity": "pass",
+      "title": "Trusted by the Mozilla root store (RSA certificate)",
+      "detail": "",
+      "evidence": "modern.lab.test -> Sitewarden Lab Issuing CA -> Sitewarden Lab Root CA",
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "cert.validity",
+      "category": "certificate",
+      "severity": "pass",
+      "title": "Certificate valid for another 88 days (ECDSA certificate)",
+      "detail": "",
+      "evidence": "2026-10-11 to 2027-01-09",
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "cert.validity",
+      "category": "certificate",
+      "severity": "pass",
+      "title": "Certificate valid for another 88 days (RSA certificate)",
+      "detail": "",
+      "evidence": "2026-10-11 to 2027-01-09",
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "content.no_mixed",
+      "category": "content",
+      "severity": "pass",
+      "title": "No mixed content",
+      "detail": "",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "cookie.host_prefix",
+      "category": "cookies",
+      "severity": "pass",
+      "title": "Uses __Host- prefixed cookies",
+      "detail": "The strongest cookie scoping: bound to this exact host and HTTPS.",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "cookie.session_flags",
+      "category": "cookies",
+      "severity": "pass",
+      "title": "Session cookies use Secure, HttpOnly and SameSite",
+      "detail": "",
+      "evidence": "__Host-session",
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "caa.present",
+      "category": "dns",
+      "severity": "pass",
+      "title": "CAA restricts certificate issuance (at lab.test)",
+      "detail": "",
+      "evidence": "0 iodef \"mailto:security@lab.test\"; 0 issue \"letsencrypt.org\"",
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "dns.ipv6",
+      "category": "dns",
+      "severity": "pass",
+      "title": "Reachable over IPv6",
+      "detail": "",
+      "evidence": "::1",
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "dns.ns",
+      "category": "dns",
+      "severity": "pass",
+      "title": "2 name servers across 2 networks",
+      "detail": "",
+      "evidence": "ns1.lab.test, ns2.lab.test",
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "dnssec.secure",
+      "category": "dns",
+      "severity": "pass",
+      "title": "DNSSEC signed and validated from the root",
+      "detail": "Chain of trust validated from the root: . -> test. -> lab.test.",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "dkim.key",
+      "category": "email",
+      "severity": "pass",
+      "title": "DKIM key 'selector1' (rsa 2048)",
+      "detail": "",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "dmarc.enforced",
+      "category": "email",
+      "severity": "pass",
+      "title": "DMARC enforced (p=reject)",
+      "detail": "",
+      "evidence": "v=DMARC1; p=reject; rua=mailto:dmarc@lab.test; adkim=s; aspf=s",
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "spf.valid",
+      "category": "email",
+      "severity": "pass",
+      "title": "SPF record valid (-all hard fail, 1/10 lookups)",
+      "detail": "",
+      "evidence": "v=spf1 ip4:192.0.2.0/24 include:_spf.lab.test. -all",
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "tlsrpt.present",
+      "category": "email",
+      "severity": "pass",
+      "title": "SMTP TLS reporting (TLS-RPT) configured",
+      "detail": "",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "csp.strict",
+      "category": "headers",
+      "severity": "pass",
+      "title": "Strict, nonce/hash-based Content Security Policy",
+      "detail": "Scripts must carry a per-response nonce or matching hash, the design Google recommends.",
+      "evidence": "script-src 'nonce-ed3bc537638486543782a680ac234846' 'strict-dynamic'",
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "csp.trusted_types",
+      "category": "headers",
+      "severity": "pass",
+      "title": "Trusted Types enforced",
+      "detail": "DOM XSS sinks only accept vetted objects: the strongest client-side XSS defence available.",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "csp.upgrade",
+      "category": "headers",
+      "severity": "pass",
+      "title": "upgrade-insecure-requests is set",
+      "detail": "",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "hdr.coop",
+      "category": "headers",
+      "severity": "pass",
+      "title": "Cross-Origin-Opener-Policy: same-origin",
+      "detail": "",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "hdr.corp",
+      "category": "headers",
+      "severity": "pass",
+      "title": "Cross-Origin-Resource-Policy: same-origin",
+      "detail": "",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "hdr.framing",
+      "category": "headers",
+      "severity": "pass",
+      "title": "Framing controlled by CSP frame-ancestors",
+      "detail": "",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "hdr.http2",
+      "category": "headers",
+      "severity": "pass",
+      "title": "HTTP/2 supported",
+      "detail": "",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "hdr.nosniff",
+      "category": "headers",
+      "severity": "pass",
+      "title": "X-Content-Type-Options: nosniff",
+      "detail": "",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "hdr.permissions",
+      "category": "headers",
+      "severity": "pass",
+      "title": "Permissions-Policy set",
+      "detail": "",
+      "evidence": "camera=(), microphone=(), geolocation=()",
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "hdr.referrer",
+      "category": "headers",
+      "severity": "pass",
+      "title": "Referrer-Policy: strict-origin-when-cross-origin",
+      "detail": "",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "hsts.enabled",
+      "category": "headers",
+      "severity": "pass",
+      "title": "HSTS enabled (max-age 2 years)",
+      "detail": "",
+      "evidence": "max-age=63072000; includeSubDomains; preload",
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "http.redirect",
+      "category": "headers",
+      "severity": "pass",
+      "title": "HTTP redirects to HTTPS",
+      "detail": "",
+      "evidence": "http://modern.lab.test:9080/ [301] -> https://modern.lab.test:9443/ [200]",
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "sectxt.present",
+      "category": "headers",
+      "severity": "pass",
+      "title": "Valid security.txt",
+      "detail": "",
+      "evidence": "mailto:security@lab.test",
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "tls.fallback_scsv",
+      "category": "tls",
+      "severity": "pass",
+      "title": "Downgrade protection (TLS_FALLBACK_SCSV) works",
+      "detail": "",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "tls.fs",
+      "category": "tls",
+      "severity": "pass",
+      "title": "Forward secrecy with every cipher suite",
+      "detail": "",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "tls.no_legacy",
+      "category": "tls",
+      "severity": "pass",
+      "title": "No deprecated protocol versions (SSL 2/3, TLS 1.0/1.1)",
+      "detail": "",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "tls.no_weak_ciphers",
+      "category": "tls",
+      "severity": "pass",
+      "title": "No insecure cipher suites (export, NULL, anonymous, RC4, DES, 3DES)",
+      "detail": "",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "tls.pq",
+      "category": "tls",
+      "severity": "pass",
+      "title": "Post-quantum key exchange supported (X25519MLKEM768)",
+      "detail": "Hybrid ML-KEM key exchange protects today's traffic against 'harvest now, decrypt later' attacks by future quantum computers.",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "tls.renegotiation",
+      "category": "tls",
+      "severity": "pass",
+      "title": "Secure renegotiation supported",
+      "detail": "",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "tls.tls12",
+      "category": "tls",
+      "severity": "pass",
+      "title": "TLS 1.2 supported",
+      "detail": "",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    },
+    {
+      "id": "tls.tls13",
+      "category": "tls",
+      "severity": "pass",
+      "title": "TLS 1.3 supported",
+      "detail": "TLS 1.3 removes legacy algorithms, always uses forward secrecy, and encrypts most of the handshake.",
+      "evidence": null,
+      "fix": null,
+      "snippets": {},
+      "refs": [],
+      "cap": null,
+      "tags": []
+    }
+  ],
+  "summary": {
+    "critical": 0,
+    "high": 0,
+    "medium": 2,
+    "low": 0,
+    "info": 1,
+    "pass": 41
+  },
+  "duration_ms": 453,
+  "limitations": [
+    "Passive checks only: Sitewarden sends ordinary TLS handshakes, page requests and DNS queries, the same traffic a browser or mail server produces.",
+    "Not tested: Heartbleed, ROBOT, application-level flaws (SQL injection, XSS) and anything behind a login."
+  ]
+}
